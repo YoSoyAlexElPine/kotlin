@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="botonIzquierda">Izquierda</string>
+    <string name="botonDerecho">Derecha</string>
+    <string name="botonCentral">Central</string>
+    <string name="mensajeCentro">mensaje desde el centro</string>
+</resources>

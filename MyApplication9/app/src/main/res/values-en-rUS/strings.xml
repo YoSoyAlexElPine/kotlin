@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="botonIzquierda">left</string>
+    <string name="botonCentral">right</string>
+    <string name="botonDerecho">center</string>
+    <string name="mensajeCentro">message from the center</string>
+</resources>

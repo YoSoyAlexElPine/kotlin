@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageButton
+        android:id="@+id/ib_9"
+        android:layout_width="102dp"
+        android:layout_height="105dp"
+        android:contentDescription="hola"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.851"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.565"
+        app:srcCompat="@drawable/blanco" />
+
+    <ImageButton
+        android:id="@+id/ib_4"
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        android:contentDescription="hola"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.377"
+        app:srcCompat="@drawable/blanco" />
+
+    <ImageButton
+        android:id="@+id/ib_1"
+        android:layout_width="101dp"
+        android:layout_height="106dp"
+        android:contentDescription="hola"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.193"
+        app:srcCompat="@drawable/blanco" />
+
+    <ImageButton
+        android:id="@+id/ib_7"
+        android:layout_width="102dp"
+        android:layout_height="105dp"
+        android:contentDescription="hola"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.097"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.565"
+        app:srcCompat="@drawable/blanco" />
+
+    <ImageButton
+        android:id="@+id/ib_2"
+        android:layout_width="102dp"
+        android:layout_height="105dp"
+        android:contentDescription="hola"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.193"
+        app:srcCompat="@drawable/blanco" />
+
+    <ImageButton
+        android:id="@+id/ib_3"
+        android:layout_width="102dp"
+        android:layout_height="105dp"
+        android:contentDescription="hola"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.851"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.193"
+        app:srcCompat="@drawable/blanco" />
+
+    <ImageButton
+        android:id="@+id/ib_5"
+        android:layout_width="102dp"
+        android:layout_height="105dp"
+        android:contentDescription="hola"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.375"
+        app:srcCompat="@drawable/blanco" />
+
+    <ImageButton
+        android:id="@+id/ib_8"
+        android:layout_width="102dp"
+        android:layout_height="105dp"
+        android:contentDescription="hola"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.565"
+        app:srcCompat="@drawable/blanco" />
+
+    <ImageButton
+        android:id="@+id/ib_6"
+        android:layout_width="102dp"
+        android:layout_height="105dp"
+        android:contentDescription="hola"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.851"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.375"
+        app:srcCompat="@drawable/blanco" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reiniciar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.938" />
+
+    <TextView
+        android:id="@+id/tv_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tres en Raya"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.048" />
+
+    <TextView
+        android:id="@+id/tv_ganador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tres en Raya"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.774" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
