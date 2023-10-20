@@ -13,48 +13,80 @@ import android.os.CountDownTimer
 
 class MainActivity : AppCompatActivity() {
 
+    var b = ActivityMainBinding.inflate(layoutInflater)
+    val random = Random.Default
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root);
-
-        val random = Random.Default
-        val numeroAleatorio = random.nextInt(4) // Genera un número aleatorio entre 0 y 3
-        var contador: Int;
 
         var secuencia = LinkedList<Int>();
         var secuenciaJugador = LinkedList<Int>();
+        val numeroAleatorio = random.nextInt(4)
 
         secuencia.add(numeroAleatorio)
+
+        mostrarSecuencia(secuencia)
+
+        b.ibVerde.setOnClickListener(){
+            secuenciaJugador.add(0);
+        }
+        b.ibAmarillo.setOnClickListener(){
+            secuenciaJugador.add(1);
+        }
+
+        b.ibRojo.setOnClickListener(){
+            secuenciaJugador.add(2);
+        }
+
+        b.ibAzul.setOnClickListener(){
+            secuenciaJugador.add(3);
+        }
+
+
+    }
+
+    fun mostrarSecuencia(secuencia:LinkedList<Int>) {
+
+        setContentView(b.root);
+
+        b.ibAzul.isEnabled=false
+        b.ibRojo.isEnabled=false
+        b.ibAmarillo.isEnabled=false
+        b.ibVerde.isEnabled=false
 
         for (i in secuencia) {
             when (i) {
                 0 -> {
                     b.ibAzul.setImageResource(R.drawable.verde);
                     temporizador(2)
+                    b.ibAzul.setImageResource(R.drawable.verdeo);
                 }
                 1 -> {
-
+                    b.ibAzul.setImageResource(R.drawable.amarillo);
+                    temporizador(2)
+                    b.ibAzul.setImageResource(R.drawable.amarilloo);
                 }
                 2 -> {
-
+                    b.ibAzul.setImageResource(R.drawable.rojo);
+                    temporizador(2)
+                    b.ibAzul.setImageResource(R.drawable.rojoo);
                 }
                 3 -> {
-
+                    b.ibAzul.setImageResource(R.drawable.azul);
+                    temporizador(2)
+                    b.ibAzul.setImageResource(R.drawable.azulo);
                 }
-
-
             }
+            temporizador(1)
         }
 
-
-
-
-        contador = 0;
-
+        b.ibAzul.isEnabled=true
+        b.ibRojo.isEnabled=true
+        b.ibAmarillo.isEnabled=true
+        b.ibVerde.isEnabled=true
 
     }
 
