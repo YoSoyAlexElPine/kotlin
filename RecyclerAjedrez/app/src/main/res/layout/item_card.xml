@@ -10,16 +10,17 @@
         android:layout_height="88dp">
 
         <ImageView
-            android:id="@+id/imgImagen"
+            android:id="@+id/i_fotoAjedrecista"
             android:layout_width="73dp"
             android:layout_height="81dp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.047"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.571"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/carlsen" />
 
         <TextView
             android:id="@+id/txtNombre"

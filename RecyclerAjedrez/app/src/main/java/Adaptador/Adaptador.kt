@@ -61,7 +61,7 @@ class Adaptador(var personajes: ArrayList<Ajedrecista>, var context: Context) :
 
         val nombrePersonaje = vista.findViewById(R.id.txtNombre) as TextView
         val elo = vista.findViewById(R.id.txtElo) as TextView
-        val avatar = vista.findViewById(R.id.imgImagen) as ImageView
+        val avatar = vista.findViewById(R.id.i_fotoAjedrecista) as ImageView
 
         val btnDetalleEspcifico = vista.findViewById<Button>(R.id.b_detalle2) as Button
 
@@ -71,8 +71,8 @@ class Adaptador(var personajes: ArrayList<Ajedrecista>, var context: Context) :
             nombrePersonaje.text = pers.nombre
             elo.text = pers.elo
 
-            if (pers.nombre.equals("Hikaru")){
-                val uri = "@drawable/" + pers.imagen
+            if (pers.nombre.equals("Magnus Carlsen")){
+                val uri = "@drawable/carlsen"
                 val imageResource: Int = context.getResources().getIdentifier(uri, null, context.getPackageName())
                 var res: Drawable = context.resources.getDrawable(imageResource)
                 avatar.setImageDrawable(res)
