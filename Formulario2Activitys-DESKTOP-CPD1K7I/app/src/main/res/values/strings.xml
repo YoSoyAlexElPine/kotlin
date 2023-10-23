@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Formulario2Activitys</string>
+    <string name="contrasena">contrasena</string>
+    <string name="nombre">nombre</string>
+    <string name="mail">mail</string>
+    <string name="dni">dni</string>
+    <string name="contrasena_confir">Confirmar contrasena</string>
+    <string name="boton">Aceptar</string>
+    <string name="titulo">Datos</string>
+    <string name="Volver">volver</string>
+    <string name="Apellido">Apellido</string>
+    <string name="Inicio">Inicio</string>
+</resources>
