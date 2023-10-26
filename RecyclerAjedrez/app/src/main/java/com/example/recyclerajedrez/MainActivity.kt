@@ -25,37 +25,47 @@ class MainActivity : AppCompatActivity() {
         lateinit var contextoPrincipal: Context
     }
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        Almacen.ajedrecistas = FactoriaListaPersonaje.generaLista(12)
+        //var segundaPantalla = Intent(this, Pantalla2::class.java)
+        //startActivity(segundaPantalla)
 
-        miRecyclerView = binding.listaRecycler
-        miRecyclerView.setHasFixedSize(true)
-        miRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        var miAdapter = Adaptador(Almacen.ajedrecistas, this)
-
-        miRecyclerView.adapter = miAdapter
-
-        binding.bDetalle.setOnClickListener {
-
-            if (Adaptador.seleccionado >= 0) {
-
-                var segundaPantalla = Intent(this, Pantalla2::class.java)
-
-                segundaPantalla.putExtra("ajedrecista", Adaptador.ajedrecistaSeleccionado)
-
-                ContextCompat.startActivity(contextoPrincipal, segundaPantalla, null)
-
-                startActivity(segundaPantalla)
+        try {
 
 
+            super.onCreate(savedInstanceState)
+
+            binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+            Almacen.ajedrecistas = FactoriaListaPersonaje.generaLista(12)
+
+            miRecyclerView = binding.listaRecycler
+            miRecyclerView.setHasFixedSize(true)
+            miRecyclerView.layoutManager = LinearLayoutManager(this)
+
+            var miAdapter = Adaptador(Almacen.ajedrecistas, this)
+
+            miRecyclerView.adapter = miAdapter
+
+            binding.bDetalle.setOnClickListener {
+
+                if (Adaptador.seleccionado >= 0) {
+
+                    var segundaPantalla = Intent(this, Pantalla2::class.java)
+
+                    segundaPantalla.putExtra("ajedrecista", Adaptador.ajedrecistaSeleccionado)
+
+                    startActivity(segundaPantalla)
+
+
+
+
+
+                } else {
+                    Toast.makeText(this, "Selecciona algo previamente", Toast.LENGTH_SHORT).show()
+                }
             }
-            else {
-                Toast.makeText(this,"Selecciona algo previamente", Toast.LENGTH_SHORT).show()
-            }
+        }catch (e:Exception){
+            e.printStackTrace()
         }
     }
 }
