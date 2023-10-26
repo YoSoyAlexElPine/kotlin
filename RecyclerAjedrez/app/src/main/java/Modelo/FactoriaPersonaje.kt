@@ -36,18 +36,6 @@ object FactoriaPersonaje {
             nombrePersonaje, 2000.toString(), imagenes[(imagenes.indices).random()]
         )
 
-        when(p.nombre){
-            "Magnus Carlsen"->p.imagen=R.drawable.carlsen.toString()
-            "Viswanathan Anand"->p.imagen=R.drawable.anand.toString()
-            "Jose Capablanca"->p.imagen=R.drawable.capablanca.toString()
-            "Bobby Fischer"->p.imagen=R.drawable.fischer.toString()
-            "Mikhail Tal"->p.imagen=R.drawable.tal.toString()
-            "Anatoly Karpov"->p.imagen=R.drawable.karpov.toString()
-            "Garry Kasparov"->p.imagen=R.drawable.kasparov.toString()
-            "Judith Polgar"->p.imagen=R.drawable.polgar.toString()
-            "Veselin Topalov"->p.imagen=R.drawable.topalov.toString()
-            "Vladimir Kramnik"->p.imagen=R.drawable.vladimir.toString()
-        }
 
         return p
     }

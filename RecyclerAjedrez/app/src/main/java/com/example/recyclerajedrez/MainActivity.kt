@@ -1,5 +1,6 @@
 package com.example.recyclerajedrez
 
+import Adaptador.Adaptador
 import Modelo.Almacen
 import Modelo.FactoriaListaPersonaje
 import android.annotation.SuppressLint
@@ -28,29 +29,33 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Almacen.personajes = FactoriaListaPersonaje.generaLista(12)
-        Log.e("ACSCO", Almacen.personajes.toString())
+        Almacen.ajedrecistas = FactoriaListaPersonaje.generaLista(12)
 
         miRecyclerView = binding.listaRecycler
         miRecyclerView.setHasFixedSize(true)
         miRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        var miAdapter = Adaptador.Adaptador(Almacen.personajes, this)
+        var miAdapter = Adaptador(Almacen.ajedrecistas, this)
 
         miRecyclerView.adapter = miAdapter
 
         binding.bDetalle.setOnClickListener {
-            if (Adaptador.Adaptador.seleccionado >= 0) {
-                val pe = Almacen.personajes.get(Adaptador.Adaptador.seleccionado)
-                Log.e("ACSCO",pe.toString())
-                var inte : Intent = Intent(contextoPrincipal, MainActivity2::class.java)
-                inte.putExtra("obj", Almacen.personajes.get(Adaptador.Adaptador.seleccionado))
-                ContextCompat.startActivity(contextoPrincipal, inte, null)
+
+            if (Adaptador.seleccionado >= 0) {
+
+                var segundaPantalla = Intent(this, Pantalla2::class.java)
+
+                segundaPantalla.putExtra("ajedrecista", Adaptador.ajedrecistaSeleccionado)
+
+                ContextCompat.startActivity(contextoPrincipal, segundaPantalla, null)
+
+                startActivity(segundaPantalla)
+
+
             }
             else {
                 Toast.makeText(this,"Selecciona algo previamente", Toast.LENGTH_SHORT).show()
             }
         }
-        contextoPrincipal = this
     }
 }

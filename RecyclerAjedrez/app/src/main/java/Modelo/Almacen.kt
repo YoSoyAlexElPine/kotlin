@@ -1,5 +1,5 @@
 package Modelo
 
 object Almacen {
-    lateinit var personajes : ArrayList<Ajedrecista>
+    lateinit var ajedrecistas : ArrayList<Ajedrecista>
 }

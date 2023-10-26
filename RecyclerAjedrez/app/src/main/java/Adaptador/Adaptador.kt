@@ -16,116 +16,120 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.recyclerajedrez.MainActivity
-import com.example.recyclerajedrez.MainActivity2
+import com.example.recyclerajedrez.Pantalla2
 import com.example.recyclerajedrez.R
 
-class Adaptador(var personajes: ArrayList<Ajedrecista>, var context: Context) :
+class Adaptador(var ajedrecistas: ArrayList<Ajedrecista>, var contexto: Context) :
     RecyclerView.Adapter<Adaptador.ViewHolder>() {
 
     companion object {
         var seleccionado: Int = -1
+        lateinit var ajedrecistaSeleccionado: Ajedrecista
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = personajes.get(position)
-        holder.bind(item, context, position, this)
+        val item = ajedrecistas.get(position)
+        holder.bind(item, contexto, position, this)
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val vista = LayoutInflater.from(parent.context).inflate(R.layout.item_card, parent, false)
         val viewHolder = ViewHolder(vista)
 
         viewHolder.itemView.setOnClickListener {
-            val intent = Intent(context, MainActivity2::class.java)
-            context.startActivity(intent)
+            val intent = Intent(contexto, Pantalla2::class.java)
+            contexto.startActivity(intent)
         }
 
         return viewHolder
     }
 
-
     override fun getItemCount(): Int {
-        return personajes.size
+        return ajedrecistas.size
     }
 
+    class ViewHolder(vista: View) : RecyclerView.ViewHolder(vista) {
 
-
-
-
-
-
-    class ViewHolder(vista: View) :RecyclerView.ViewHolder(vista){
-
-        val nombrePersonaje = vista.findViewById(R.id.txtNombre) as TextView
+        val nombreAjedrecista = vista.findViewById(R.id.txtNombre) as TextView
         val elo = vista.findViewById(R.id.txtElo) as TextView
         val avatar = vista.findViewById(R.id.i_fotoAjedrecista) as ImageView
 
-        val btnDetalleEspcifico = vista.findViewById<Button>(R.id.b_detalle2) as Button
-
+        val btnDetalleEspecifico = vista.findViewById<Button>(R.id.b_detalle2) as Button
 
         @SuppressLint("ResourceAsColor")
-        fun bind(pers: Ajedrecista, context: Context, pos: Int, miAdaptadorRecycler: Adaptador){
-            nombrePersonaje.text = pers.nombre
-            elo.text = pers.elo
+        fun bind(ajedrecista: Ajedrecista, contexto: Context, pos: Int, miAdaptadorRecycler: Adaptador) {
+            nombreAjedrecista.text = ajedrecista.nombre
+            elo.text = ajedrecista.elo
 
-            if (pers.nombre.equals("Magnus Carlsen")){
-                val uri = "@drawable/carlsen"
-                val imageResource: Int = context.getResources().getIdentifier(uri, null, context.getPackageName())
-                var res: Drawable = context.resources.getDrawable(imageResource)
-                avatar.setImageDrawable(res)
+            var uri:String="";
+
+            when (ajedrecista.nombre){
+                ("Magnus Carlsen")-> {uri = "@drawable/carlsen"}
+                ("Viswanathan Anand")-> {uri = "@drawable/anand"}
+                ("Jose Capablanca")-> {uri = "@drawable/capablanca"}
+                ("Bobby Fischer")-> {uri = "@drawable/fischer"}
+                ("Anatoly Karpov")-> {uri = "@drawable/karpov"}
+                ("Garry Kasparov")-> {uri = "@drawable/kasparov"}
+                ("Judith Polgar")-> {uri = "@drawable/polgar"}
+                ("Mikhail Tal")-> {uri = "@drawable/tal"}
+                ("Veselin Topalov")-> {uri = "@drawable/topalov"}
+                ("Vladimir Kramnik")-> {uri = "@drawable/vladimir"}
             }
-            else {
-                Glide.with(context).load(pers.imagen).into(avatar)
-                }
+
+
+            if (uri!=""){
+                val imageResource: Int = contexto.resources.getIdentifier(uri, null, contexto.packageName)
+                var res: Drawable = contexto.resources.getDrawable(imageResource)
+                avatar.setImageDrawable(res)
+
+            }
+
 
             if (pos == Adaptador.seleccionado) {
-                with(nombrePersonaje) {
-                    this.setTextColor(resources.getColor(R.color.blue))
+                with(nombreAjedrecista) {
+                    this.setTextColor(contexto.resources.getColor(R.color.blue))
                 }
                 elo.setTextColor(R.color.blue)
-            }
-            else {
-                with(nombrePersonaje) {
-                    this.setTextColor(resources.getColor(R.color.black))
+            } else {
+                with(nombreAjedrecista) {
+                    this.setTextColor(contexto.resources.getColor(R.color.black))
                 }
                 elo.setTextColor(R.color.black)
             }
 
             itemView.setOnClickListener {
-                if (pos == Adaptador.seleccionado){
+                if (pos == Adaptador.seleccionado) {
                     Adaptador.seleccionado = -1
-                }
-                else {
+                } else {
                     Adaptador.seleccionado = pos
-                    Log.e("ACSC0", "Seleccionado: ${Almacen.personajes.get(Adaptador.seleccionado).toString()}")
+                    Log.e("ACSC0", "Seleccionado: ${Almacen.ajedrecistas.get(Adaptador.seleccionado)}")
                 }
 
                 miAdaptadorRecycler.notifyDataSetChanged()
 
+                Toast.makeText(contexto, ajedrecista.nombre, Toast.LENGTH_SHORT).show()
 
-                Toast.makeText(context, "Valor seleccionado " +  Adaptador.seleccionado.toString(), Toast.LENGTH_SHORT).show()
+                ajedrecistaSeleccionado=ajedrecista
 
             }
             itemView.setOnLongClickListener(View.OnLongClickListener {
-                Log.e("ACSCO","Seleccionado con long click: ${Almacen.personajes.get(pos).toString()}")
-                Almacen.personajes.removeAt(pos)
+
+                Almacen.ajedrecistas.removeAt(pos)
+
                 miAdaptadorRecycler.notifyDataSetChanged()
+
                 true
             })
 
+            btnDetalleEspecifico.setOnClickListener {
 
-            btnDetalleEspcifico.setOnClickListener {
-                Log.e("Fernando","Has pulsado el botón de ${pers}")
-                var inte : Intent = Intent(MainActivity.contextoPrincipal, MainActivity2::class.java)
-                inte.putExtra("obj",pers)
-                ContextCompat.startActivity(MainActivity.contextoPrincipal, inte, null)
+                var intent: Intent = Intent(MainActivity.contextoPrincipal, Pantalla2::class.java)
+                intent.putExtra("obj", ajedrecista)
+                ContextCompat.startActivity(MainActivity.contextoPrincipal, intent, null)
+
+
             }
         }
-
-
     }
 }
-
