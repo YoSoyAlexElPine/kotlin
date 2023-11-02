@@ -1,6 +1,7 @@
 package com.example.recyclerajedrez
 
 import Adaptador.Adaptador
+import AuxiliarDB.Conexion
 import Modelo.Almacen
 import Modelo.FactoriaListaPersonaje
 import android.annotation.SuppressLint
@@ -26,17 +27,17 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        //var segundaPantalla = Intent(this, Pantalla2::class.java)
-        //startActivity(segundaPantalla)
-
         try {
 
+            contextoPrincipal=this
 
             super.onCreate(savedInstanceState)
 
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
-            Almacen.ajedrecistas = FactoriaListaPersonaje.generaLista(12)
+
+            Almacen.ajedrecistas = Conexion.obtenerAjedrecistas(this)
+
 
             miRecyclerView = binding.listaRecycler
             miRecyclerView.setHasFixedSize(true)
@@ -50,20 +51,51 @@ class MainActivity : AppCompatActivity() {
 
                 if (Adaptador.seleccionado >= 0) {
 
-                    var segundaPantalla = Intent(this, Pantalla2::class.java)
-
-                    segundaPantalla.putExtra("ajedrecista", Adaptador.ajedrecistaSeleccionado)
-
-                    startActivity(segundaPantalla)
-
-
-
-
+                    val pe = Almacen.ajedrecistas.get(Adaptador.seleccionado)
+                    Log.e("ACSCO",pe.toString())
+                    var inte : Intent = Intent(contextoPrincipal, Pantalla2::class.java)
+                    inte.putExtra("ajedrecista",Almacen.ajedrecistas.get(Adaptador.seleccionado))
+                    ContextCompat.startActivity(contextoPrincipal, inte, null)
 
                 } else {
                     Toast.makeText(this, "Selecciona algo previamente", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            binding.bMantenimiento.setOnClickListener(){
+
+                for (a in Conexion.obtenerAjedrecistas(this)){
+                    Conexion.delAjedrecista(this, a.nombre)
+                }
+
+                for (a in Almacen.ajedrecistas){
+                    Conexion.addAjedrecista(this,a)
+                }
+
+                var inte:Intent = Intent(contextoPrincipal,Mantenimiento::class.java)
+                ContextCompat.startActivity(contextoPrincipal,inte,null)
+            }
+
+            binding.bReiniciar.setOnClickListener(){
+
+                Almacen.ajedrecistas=FactoriaListaPersonaje.generaLista(12)
+
+                for (a in Almacen.ajedrecistas){
+                    Conexion.addAjedrecista(this,a)
+                }
+
+                miRecyclerView = binding.listaRecycler
+                miRecyclerView.setHasFixedSize(true)
+                miRecyclerView.layoutManager = LinearLayoutManager(this)
+
+                var miAdapter = Adaptador(Almacen.ajedrecistas, this)
+
+                miRecyclerView.adapter = miAdapter
+
+
+            }
+
+
         }catch (e:Exception){
             e.printStackTrace()
         }

@@ -1,10 +1,12 @@
 package Adaptador
 
+import AuxiliarDB.Conexion
 import Modelo.Ajedrecista
 import Modelo.Almacen
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,9 +18,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.recyclerajedrez.MainActivity
 import com.example.recyclerajedrez.Pantalla2
 import com.example.recyclerajedrez.R
+
 
 class Adaptador(var ajedrecistas: ArrayList<Ajedrecista>, var contexto: Context) :
     RecyclerView.Adapter<Adaptador.ViewHolder>() {
@@ -49,6 +53,7 @@ class Adaptador(var ajedrecistas: ArrayList<Ajedrecista>, var contexto: Context)
         return ajedrecistas.size
     }
 
+
     class ViewHolder(vista: View) : RecyclerView.ViewHolder(vista) {
 
         val nombreAjedrecista = vista.findViewById(R.id.txtNombre) as TextView
@@ -57,32 +62,29 @@ class Adaptador(var ajedrecistas: ArrayList<Ajedrecista>, var contexto: Context)
 
         val btnDetalleEspecifico = vista.findViewById<Button>(R.id.b_detalle2) as Button
 
+        /*
+        * Nose
+        * */
         @SuppressLint("ResourceAsColor")
         fun bind(ajedrecista: Ajedrecista, contexto: Context, pos: Int, miAdaptadorRecycler: Adaptador) {
             nombreAjedrecista.text = ajedrecista.nombre
             elo.text = ajedrecista.elo
 
-            var uri:String="";
-
-            when (ajedrecista.nombre){
-                ("Magnus Carlsen")-> {uri = "@drawable/carlsen"}
-                ("Viswanathan Anand")-> {uri = "@drawable/anand"}
-                ("Jose Capablanca")-> {uri = "@drawable/capablanca"}
-                ("Bobby Fischer")-> {uri = "@drawable/fischer"}
-                ("Anatoly Karpov")-> {uri = "@drawable/karpov"}
-                ("Garry Kasparov")-> {uri = "@drawable/kasparov"}
-                ("Judith Polgar")-> {uri = "@drawable/polgar"}
-                ("Mikhail Tal")-> {uri = "@drawable/tal"}
-                ("Veselin Topalov")-> {uri = "@drawable/topalov"}
-                ("Vladimir Kramnik")-> {uri = "@drawable/vladimir"}
-            }
-
-
-            if (uri!=""){
-                val imageResource: Int = contexto.resources.getIdentifier(uri, null, contexto.packageName)
+            try {
+                val imageResource: Int = contexto.resources.getIdentifier("@drawable/"+ajedrecista.nombre.toLowerCase(), null, contexto.packageName)
                 var res: Drawable = contexto.resources.getDrawable(imageResource)
                 avatar.setImageDrawable(res)
+            }catch (e: Exception){
 
+                var imagen="@drawable/nuevo"
+                ajedrecista.imagen=imagen
+
+                //Glide.with(contexto).load(ajedrecista.imagen).into(avatar)
+
+                ajedrecista.imagen=imagen
+                val imageResource: Int = contexto.resources.getIdentifier(imagen, null, contexto.packageName)
+                var res: Drawable = contexto.resources.getDrawable(imageResource)
+                avatar.setImageDrawable(res)
             }
 
 
@@ -98,6 +100,11 @@ class Adaptador(var ajedrecistas: ArrayList<Ajedrecista>, var contexto: Context)
                 elo.setTextColor(R.color.black)
             }
 
+
+            /**
+             * Accion de pulsar el item_Card
+             * */
+
             itemView.setOnClickListener {
                 if (pos == Adaptador.seleccionado) {
                     Adaptador.seleccionado = -1
@@ -108,25 +115,36 @@ class Adaptador(var ajedrecistas: ArrayList<Ajedrecista>, var contexto: Context)
 
                 miAdaptadorRecycler.notifyDataSetChanged()
 
-                Toast.makeText(contexto, ajedrecista.nombre, Toast.LENGTH_SHORT).show()
 
                 ajedrecistaSeleccionado=ajedrecista
 
             }
+             /*
+             * Dejar pulsado item para borrarlo
+             * */
             itemView.setOnLongClickListener(View.OnLongClickListener {
+
+                var nombre=Almacen.ajedrecistas[pos].nombre
+
 
                 Almacen.ajedrecistas.removeAt(pos)
 
                 miAdaptadorRecycler.notifyDataSetChanged()
 
+
+
                 true
             })
 
+            /*
+            * Boton Detalle
+            * */
             btnDetalleEspecifico.setOnClickListener {
 
                 var intent: Intent = Intent(MainActivity.contextoPrincipal, Pantalla2::class.java)
-                intent.putExtra("obj", ajedrecista)
+                intent.putExtra("ajedrecista", ajedrecista)
                 ContextCompat.startActivity(MainActivity.contextoPrincipal, intent, null)
+
 
 
             }
