@@ -27,8 +27,13 @@ class Inicio : AppCompatActivity() {
         val rv=binding.rvInicio
         val adaptador=Adaptador()
 
+        adaptador.imagenes= arrayOf(R.drawable.camion,R.drawable.tarea)
+        adaptador.titulos = arrayOf("Camiones","Asignar tarea")
+
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter=adaptador
+
+
 
 
         //Para la autenticación, de cualquier tipo.

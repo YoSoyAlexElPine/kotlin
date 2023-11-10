@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <application
         android:allowBackup="true"
@@ -11,18 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GestionViajes"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".AsignarTarea"
+            android:exported="false" />
+        <activity
+            android:name=".Camiones"
+            android:exported="false" />
         <activity
             android:name=".Registro"
             android:exported="false" />
         <activity
-            android:name=".Presentacion"
+            android:name=".Inicio"
             android:exported="false" />
         <activity
-            android:name=".Inicio"
+            android:name=".Presentacion"
             android:exported="true"
-            android:theme="@style/Base.Theme.GestionViajes">
-
+            android:theme="@style/Base.Theme.GestionViajes" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

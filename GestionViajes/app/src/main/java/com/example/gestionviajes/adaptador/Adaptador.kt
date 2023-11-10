@@ -10,8 +10,8 @@ import com.example.gestionviajes.R
 
 class Adaptador: RecyclerView.Adapter<Adaptador.Vista>() {
 
-    val titulos = arrayOf("Lista camiones","Asignar viaje")
-    val imagenes = arrayOf(R.drawable.fantasma,R.drawable.fantasma)
+    var titulos = arrayOf("titulo1","titulo2")
+    var imagenes = arrayOf(R.drawable.logo,R.drawable.logo)
     inner class Vista(vistaItem: View): RecyclerView.ViewHolder(vistaItem){
         var imagen:ImageView
         var titulo:TextView
