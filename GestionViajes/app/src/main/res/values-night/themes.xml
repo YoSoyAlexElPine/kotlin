@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.GestionViajes" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorPrimaryDark">#000</item>
+        <item name="android:windowBackground">#000</item>
+        <item name="android:textColor">@color/white</item>
+
+        <item name="android:windowContentTransitions">true</item>
+
+    </style>
+    <!-- res/values/styles.xml -->
+
+    <style name="blanco" parent="Widget.MaterialComponents.Button">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+
+        <!-- Agrega otros atributos de estilo según sea necesario -->
+    </style>
+
+    <style name="Theme.GestionViajes" parent="Base.Theme.GestionViajes" />
+</resources>

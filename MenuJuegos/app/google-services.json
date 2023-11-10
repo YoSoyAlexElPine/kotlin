@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "430325528182",
+    "project_id": "menujuegos",
+    "storage_bucket": "menujuegos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430325528182:android:87205be42de1ab8d20d157",
+        "android_client_info": {
+          "package_name": "com.example.menujuegos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430325528182-nk4mso2ccp1vbqtb1lbi10vi0u5uqptk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.application",
+            "certificate_hash": "7b32e4368fd53813c7347460362914387bcfab1f"
+          }
+        },
+        {
+          "client_id": "430325528182-1bn3p97dd0k24csipo1aq5pau1641m1b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvlqgsLtDR6yrn9FbPp6EIia8lfbpnGSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430325528182-1bn3p97dd0k24csipo1aq5pau1641m1b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

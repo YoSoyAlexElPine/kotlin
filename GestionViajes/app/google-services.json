@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "54315647192",
+    "project_id": "gestionviajes-211ee",
+    "storage_bucket": "gestionviajes-211ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54315647192:android:5cb4b84283c574d05d57ad",
+        "android_client_info": {
+          "package_name": "com.example.gestionviajes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54315647192-s328bkjnfj9m808s6p8ps3kh2ela13a1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gestionviajes",
+            "certificate_hash": "7b32e4368fd53813c7347460362914387bcfab1f"
+          }
+        },
+        {
+          "client_id": "54315647192-i0utimuj8ses7jsn5uomi23l0v3ncouv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE_Db01vyBvhyOnW-TOtLFAArQYmkH3XE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54315647192-i0utimuj8ses7jsn5uomi23l0v3ncouv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
