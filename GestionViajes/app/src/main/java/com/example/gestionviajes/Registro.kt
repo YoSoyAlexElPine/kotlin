@@ -41,10 +41,19 @@ class Registro : AppCompatActivity() {
             setContentView(binding.root)
 
 
+            binding.bRegistroRegistrarse.setOnClickListener(){
+                var i = Intent(this,RegistarNuevoUsuario::class.java)
+                startActivity(i)
+            }
+
+
+
+
+
             //Para la autenticación, de cualquier tipo.
             firebaseauth = FirebaseAuth.getInstance()
             //------------------------------ Autenticación con email y password ------------------------------------
-            binding.bRegistroRegistrarse.setOnClickListener {
+            /*binding.bRegistroRegistrarse.setOnClickListener {
                 if (binding.tbMail.text!!.isNotEmpty() && binding.tbContrasena.text!!.isNotEmpty()) {
                     firebaseauth.createUserWithEmailAndPassword(
                         binding.tbMail.text.toString(),
@@ -64,7 +73,7 @@ class Registro : AppCompatActivity() {
                 } else {
                     showAlert("Rellene los campos")
                 }
-            }
+            }*/
 
             binding.bRegistroEntrar.setOnClickListener {
 

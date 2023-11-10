@@ -34,15 +34,17 @@
             android:layout_alignParentTop="true"
 
             android:layout_centerVertical="true"
+            android:layout_marginStart="19dp"
+
+
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="26dp"
             android:layout_toEndOf="@id/card_image"
-
-
             android:layout_toRightOf="@id/card_image"
-            android:text="Texto"
-            android:textSize="30dp"
             android:fontFamily="@font/baloo_da"
+            android:text="Texto"
             android:textColor="@color/white"
-            />
+            android:textSize="30dp" />
 
 
     </RelativeLayout>

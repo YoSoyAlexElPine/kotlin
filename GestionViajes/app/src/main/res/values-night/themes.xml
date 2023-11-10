@@ -8,7 +8,6 @@
         <item name="colorPrimaryDark">#000</item>
         <item name="android:windowBackground">#000</item>
         <item name="android:textColor">@color/white</item>
-
         <item name="android:windowContentTransitions">true</item>
 
     </style>

@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 class Inicio : AppCompatActivity() {
     lateinit var binding: InicioBinding
     private lateinit var firebaseauth : FirebaseAuth
-    val TAG = "ACSCO"
+    val TAG = "APS"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_home)
@@ -25,7 +25,7 @@ class Inicio : AppCompatActivity() {
         )
 
         val rv=binding.rvInicio
-        val adaptador=Adaptador()
+        val adaptador=Adaptador(this)
 
         adaptador.imagenes= arrayOf(R.drawable.camion,R.drawable.tarea)
         adaptador.titulos = arrayOf("Camiones","Asignar tarea")
