@@ -10,12 +10,17 @@ class RegistarNuevoUsuario : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         var b=RegistarNuevoUsuarioBinding.inflate(layoutInflater)
         setContentView(b.root)
 
+        b.admin.isVisible=false
+
         b.sAdministrador.setOnCheckedChangeListener { _, a ->
             b.admin.isVisible = b.sAdministrador.isChecked
+        }
+
+        b.bCerrarSesionCrearUsuario.setOnClickListener (){
+            finish()
         }
 
 

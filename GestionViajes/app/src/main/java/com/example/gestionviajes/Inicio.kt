@@ -1,5 +1,7 @@
 package com.example.gestionviajes
 
+import Modelo.Almacen
+import Modelo.FactoriaCard
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,9 +15,11 @@ class Inicio : AppCompatActivity() {
     lateinit var binding: InicioBinding
     private lateinit var firebaseauth : FirebaseAuth
     val TAG = "APS"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_home)
+        val contexto=this
         binding = InicioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -25,10 +29,11 @@ class Inicio : AppCompatActivity() {
         )
 
         val rv=binding.rvInicio
-        val adaptador=Adaptador(this)
 
-        adaptador.imagenes= arrayOf(R.drawable.camion,R.drawable.tarea)
-        adaptador.titulos = arrayOf("Camiones","Asignar tarea")
+
+        Almacen.cards=FactoriaCard.inicioAdmin(this)
+        val adaptador=Adaptador(Almacen.cards,this)
+
 
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter=adaptador

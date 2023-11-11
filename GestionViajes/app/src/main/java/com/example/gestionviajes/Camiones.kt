@@ -1,5 +1,7 @@
 package com.example.gestionviajes
 
+import Modelo.Almacen
+import Modelo.FactoriaCard
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,13 +23,18 @@ class Camiones : AppCompatActivity() {
         )
 
         val rv=binding.rvCamiones
-        val adaptador= Adaptador(this)
 
-        adaptador.imagenes= arrayOf(R.drawable.camion,R.drawable.tarea)
-        adaptador.titulos = arrayOf("Camiones","Asignar tarea")
+
+        rv.layoutManager = LinearLayoutManager(this)
+
+
+        Almacen.camiones = FactoriaCard.camiones(this)
+        val adaptador=Adaptador(Almacen.camiones,this)
+
 
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter=adaptador
+
 
 
         binding.bAddCamion.setOnClickListener(){

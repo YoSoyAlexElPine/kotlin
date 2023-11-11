@@ -54,10 +54,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Mail"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 android:outlineAmbientShadowColor="@color/white"
                 android:outlineSpotShadowColor="@color/white"
+                android:text="machupichu0409@gmail.com"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 app:boxStrokeColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,11 +77,12 @@
                 android:id="@+id/tb_contrasena"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:hint="Contraseña"
                 android:inputType="textPassword"
+                android:text="asdfasdf1234"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -1,12 +1,11 @@
 package Adaptador
 
-import AuxiliarDB.Conexion
+
 import Modelo.Ajedrecista
 import Modelo.Almacen
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
@@ -88,7 +87,7 @@ class Adaptador(var ajedrecistas: ArrayList<Ajedrecista>, var contexto: Context)
             }
 
 
-            if (pos == Adaptador.seleccionado) {
+            if (pos == seleccionado) {
                 with(nombreAjedrecista) {
                     this.setTextColor(contexto.resources.getColor(R.color.blue))
                 }

@@ -12,6 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GestionViajes"
         tools:targetApi="31">
+
+        <activity
+            android:name=".Presentacion"
+            android:exported="true"
+            android:theme="@style/Base.Theme.GestionViajes">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".RegistarNuevoUsuario"
             android:exported="false" />
@@ -33,16 +45,7 @@
         <activity
             android:name=".Inicio"
             android:exported="false" />
-        <activity
-            android:name=".Presentacion"
-            android:exported="true"
-            android:theme="@style/Base.Theme.GestionViajes">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
