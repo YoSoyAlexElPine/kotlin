@@ -6,38 +6,39 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.gestionviajes.databinding.AsignarTareaBinding
 import com.example.gestionviajes.databinding.CrearCamionBinding
+import com.example.gestionviajes.databinding.CrearEmpleadoBinding
 
-class CrearCamion : AppCompatActivity() {
+class CrearEmpleado : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var b = CrearCamionBinding.inflate(layoutInflater)
+        var b = CrearEmpleadoBinding.inflate(layoutInflater)
         setContentView(b.root)
 
         b.bCrearCamion.setOnClickListener(){
-            if (!b.tbChofer.text.isNullOrEmpty() && !b.tbMarca.text.isNullOrEmpty()&& !b.tbNombre.text.isNullOrEmpty()){
+            if (!b.tbNombre.text.isNullOrEmpty()){
 
-                var marca=b.tbMarca.text.toString().trim().toLowerCase()
-
-                if(!Almacen.camiones.any {it.titulo == b.tbNombre.text.toString()}) {
+                if(!Almacen.empleados.any {it.titulo == b.tbNombre.text.toString()}) {
 
                     try {
 
-                        Almacen.camiones.add(
+                        Almacen.empleados.add(
                             Card(
                                 b.tbNombre.text.toString(),
-                                "@drawable/" + marca,
-                                Intent(this, DetalleCamion::class.java)
+                                "@drawable/empleado",
+                                Intent(this, DetalleEmpleado::class.java)
                             )
                         )
+
+
+
                     } catch (e: Exception) {
-                        Almacen.camiones.add(
+                        Almacen.empleados.add(
                             Card(
                                 b.tbNombre.text.toString(),
-                                "@drawable/camion2",
-                                Intent(this, DetalleCamion::class.java)
+                                "@drawable/empleado",
+                                Intent(this, DetalleEmpleado::class.java)
                             )
                         )
                     }
@@ -45,7 +46,7 @@ class CrearCamion : AppCompatActivity() {
                     val mensaje = b.tbNombre.text.toString()+" ya existe"
                     Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
                 }
-                }
+            }
         }
 
         b.bCerrarAsignar.setOnClickListener {

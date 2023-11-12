@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.Intent
 import com.example.gestionviajes.AsignarTarea
 import com.example.gestionviajes.Camiones
+import com.example.gestionviajes.DetalleCamion
+import com.example.gestionviajes.DetalleEmpleado
+import com.example.gestionviajes.Empleados
 import com.example.gestionviajes.Inicio
 
 object FactoriaCard {
@@ -13,6 +16,11 @@ object FactoriaCard {
                 "Camiones",
                 "@drawable/camion",
                 Intent(contexto, Camiones::class.java)
+            ),
+            Card(
+                "Empleados",
+                "@drawable/logoempleado",
+                Intent(contexto, Empleados::class.java)
             ),
             Card(
                 "Asignar Viaje",
@@ -58,22 +66,45 @@ object FactoriaCard {
             Card(
                 "Iveco naranja",
                 "@drawable/iveco",
-                Intent(contexto,Inicio::class.java)
+                Intent(contexto,DetalleCamion::class.java)
             ),
             Card(
                 "Scania 1",
                 "@drawable/scania",
-                Intent(contexto,Inicio::class.java)
+                Intent(contexto,DetalleCamion::class.java)
             ),
             Card(
                 "Scania 2",
                 "@drawable/scania",
-                Intent(contexto,Inicio::class.java)
+                Intent(contexto,DetalleCamion::class.java)
             ),
             Card(
                 "Mercedes",
                 "@drawable/mercedes",
-                Intent(contexto, Inicio::class.java)
+                Intent(contexto, DetalleCamion::class.java)
+            )
+        )
+
+
+        return listaCards
+    }
+
+    fun empleados(contexto: Context):ArrayList<Card> {
+        val listaCards = arrayListOf(
+            Card(
+                "Fede",
+                "@drawable/empleado",
+                Intent(contexto,DetalleEmpleado::class.java)
+            ),
+            Card(
+                "Xuxo",
+                "@drawable/empleado",
+                Intent(contexto,DetalleEmpleado::class.java)
+            ),
+            Card(
+                "Jesus",
+                "@drawable/empleado",
+                Intent(contexto,DetalleEmpleado::class.java)
             )
         )
 

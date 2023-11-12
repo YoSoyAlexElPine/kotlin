@@ -1,6 +1,7 @@
 package com.example.gestionviajes
 
 import Modelo.Almacen
+import Modelo.Card
 import Modelo.FactoriaCard
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,18 +9,18 @@ import android.util.Log
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gestionviajes.adaptador.Adaptador
+import com.example.gestionviajes.adaptador.OnCardClickListener
 import com.example.gestionviajes.databinding.InicioBinding
 import com.google.firebase.auth.FirebaseAuth
 
-class Inicio : AppCompatActivity() {
+class Inicio : AppCompatActivity(), OnCardClickListener {
     lateinit var binding: InicioBinding
     private lateinit var firebaseauth : FirebaseAuth
     val TAG = "APS"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_home)
-        val contexto=this
+
         binding = InicioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -32,13 +33,10 @@ class Inicio : AppCompatActivity() {
 
 
         Almacen.cards=FactoriaCard.inicioAdmin(this)
-        val adaptador=Adaptador(Almacen.cards,this)
-
+        val adaptador=Adaptador(Almacen.cards,this,this)
 
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter=adaptador
-
-
 
 
         //Para la autenticación, de cualquier tipo.
@@ -50,5 +48,11 @@ class Inicio : AppCompatActivity() {
             firebaseauth.signOut()
             finish()
         }
+    }
+    // Implementa la función de la interfaz para manejar la navegación
+    override fun onCardClick(card: Card) {
+        // Aquí puedes manejar la navegación según el clic en el RecyclerView
+        val intent = card.link
+        startActivity(intent)
     }
 }

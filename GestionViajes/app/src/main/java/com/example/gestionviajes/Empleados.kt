@@ -8,17 +8,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gestionviajes.R
 import com.example.gestionviajes.adaptador.Adaptador
 import com.example.gestionviajes.adaptador.OnCardClickListener
 import com.example.gestionviajes.databinding.CamionesBinding
+import com.example.gestionviajes.databinding.EmpleadosBinding
 
-class Camiones : AppCompatActivity(), OnCardClickListener {
+class Empleados : AppCompatActivity(), OnCardClickListener {
 
-    lateinit var binding: CamionesBinding // Declaración de la propiedad de la vista
+    lateinit var binding: EmpleadosBinding // Declaración de la propiedad de la vista
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = CamionesBinding.inflate(layoutInflater)
+        binding = EmpleadosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         window.setFlags(
@@ -28,14 +30,14 @@ class Camiones : AppCompatActivity(), OnCardClickListener {
 
         val rv2 = binding.rvCamiones
 
-        Almacen.camiones = FactoriaCard.camiones(this)
-        val adaptador2 = Adaptador(Almacen.camiones, this, this)
+        Almacen.empleados = FactoriaCard.empleados(this)
+        val adaptador2 = Adaptador(Almacen.empleados, this, this)
 
         rv2.layoutManager = LinearLayoutManager(this)
         rv2.adapter = adaptador2
 
         binding.bAddCamion.setOnClickListener() {
-            val i = Intent(this, CrearCamion::class.java)
+            val i = Intent(this, CrearEmpleado::class.java)
             startActivity(i)
         }
 
@@ -48,7 +50,7 @@ class Camiones : AppCompatActivity(), OnCardClickListener {
         super.onResume()
 
         // Actualiza el adaptador y notifica los cambios en los datos
-        val adaptador2 = Adaptador(Almacen.camiones, this, this)
+        val adaptador2 = Adaptador(Almacen.empleados, this, this)
         binding.rvCamiones.adapter = adaptador2
         adaptador2.notifyDataSetChanged()
     }

@@ -12,9 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GestionViajes"
         tools:targetApi="31">
-
         <activity
-            android:name=".Presentacion"
+            android:name=".DetalleEmpleado"
+            android:exported="false" />
+        <activity
+            android:name=".CrearEmpleado"
+            android:exported="false" />
+        <activity
+            android:name=".Empleados"
+            android:exported="false" />
+        <activity
+            android:name=".DetalleCamion"
+            android:exported="false" />
+        <activity
+            android:name=".Inicio"
             android:exported="true"
             android:theme="@style/Base.Theme.GestionViajes">
             <intent-filter>
@@ -23,7 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".RegistarNuevoUsuario"
             android:exported="false" />
@@ -37,15 +47,14 @@
             android:name=".AsignarTarea"
             android:exported="false" />
         <activity
-            android:name=".Camiones"
+            android:name=".Presentacion"
             android:exported="false" />
         <activity
             android:name=".Registro"
             android:exported="false" />
         <activity
-            android:name=".Inicio"
+            android:name=".Camiones"
             android:exported="false" />
-
 
         <meta-data
             android:name="preloaded_fonts"
