@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GestionViajes</string>
     <string name="your_web_client_id">54315647192-s328bkjnfj9m808s6p8ps3kh2ela13a1.apps.googleusercontent.com</string>
     <string name="Bienvenida">Buenos dias y bienvenido</string>
     <string name="BienvenidaRegistro">Registrate para continuar</string>
-    <string name="Constrasena">Contraseña</string>
+    <string name="Constrasena">Constraseña</string>
     <string name="CrearCuenta">Crear Cuenta</string>
     <string name="Entrar">Entrar</string>
     <string name="Google">Entrar con Google</string>
@@ -13,7 +14,7 @@
     <string name="Camion">Camion</string>
     <string name="Empleados">Empleados</string>
     <string name="Empleado">Empleado</string>
-    <string name="AsignarViaje">Asignar Viaje</string>
+    <string name="AsignarViaje">Asingnar Viaje</string>
     <string name="AddCamion">Añadir Camion</string>
     <string name="AddEmploye">Añadir Chofer</string>
     <string name="Add">Añadir</string>
@@ -22,7 +23,7 @@
     <string name="Marca">Marca</string>
     <string name="Viaje">Viaje</string>
     <string name="Eliminar">Eliminar</string>
-    <string name="Detalle">Detalles</string>
+    <string name="Detalle">Detalle</string>
     <string name="Administrador">Administrador</string>
     <string name="AdminContrasena">Contraseña Aministrador</string>
     <string name="Usuario">Usuario</string>

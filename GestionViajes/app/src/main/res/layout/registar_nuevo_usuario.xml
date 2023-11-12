@@ -25,22 +25,20 @@
             android:id="@+id/b_cerrarSesionCrearUsuario"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Salir"
             android:background="#0000"
-            android:textColor="@color/white"
-            />
+            android:text="@string/Salir"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/textViewCrearUsuario"
-            android:textSize="40dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/baloo_da"
-            android:text="Usuario"
-            android:textColor="@color/white"
             android:gravity="center"
-            />
+            android:text="@string/Usuario"
+            android:textColor="@color/white"
+            android:textSize="40dp" />
 
         <ImageView
             android:layout_width="70dp"
@@ -98,11 +96,11 @@
                 android:id="@+id/tb_chofer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contraseña"
+                android:layout_marginTop="10dp"
+                android:hint="@string/Constrasena"
                 android:inputType="textPassword"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -139,10 +137,10 @@
                 android:id="@+id/tb_apodo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Apodo"
+                android:layout_marginTop="10dp"
+                android:hint="@string/NombreSignificativo"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:layout_marginTop="10dp"
                 app:boxStrokeColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -151,9 +149,9 @@
             android:id="@+id/s_administrador"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Administrador"
-            android:textColor="@color/white"
             android:layout_margin="20dp"
+            android:text="@string/Administrador"
+            android:textColor="@color/white"
 
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -175,7 +173,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Contraseña Administrador"
+                android:hint="@string/AdminContrasena"
                 android:inputType="textPassword"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
@@ -192,7 +190,7 @@
             android:layout_margin="20dp"
             android:backgroundTint="@color/white"
             android:fontFamily="@font/baloo_da"
-            android:text="Crear"
+            android:text="@string/CrearCuenta"
             android:textColor="@color/black"
 
 

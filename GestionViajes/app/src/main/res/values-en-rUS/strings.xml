@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GestionViajes</string>
+    <string name="your_web_client_id">54315647192-s328bkjnfj9m808s6p8ps3kh2ela13a1.apps.googleusercontent.com</string>
+    <string name="Bienvenida">Hello there, and wellcome</string>
+    <string name="BienvenidaRegistro">Log in to continue</string>
+    <string name="Constrasena">Password</string>
+    <string name="CrearCuenta">Create Acount</string>
+    <string name="Entrar">Go</string>
+    <string name="Google">Sing in with Google</string>
+    <string name="Inicio">Home</string>
+    <string name="Camiones">Trucks</string>
+    <string name="Salir">Exit</string>
+    <string name="Camion">Truck</string>
+    <string name="Empleados">Employees</string>
+    <string name="Empleado">Employe</string>
+    <string name="AsignarViaje">Asing Trip</string>
+    <string name="AddCamion">Add Truck</string>
+    <string name="AddEmploye">Add Employe</string>
+    <string name="Add">Add</string>
+    <string name="NombreSignificativo">meaningful name</string>
+    <string name="Chofer">Driver</string>
+    <string name="Marca">Brand</string>
+    <string name="Viaje">Trip</string>
+    <string name="Eliminar">Delete</string>
+    <string name="Detalle">Details</string>
+    <string name="Administrador">Admin</string>
+    <string name="AdminContrasena">Admin password</string>
+    <string name="Usuario">User</string>
+</resources>

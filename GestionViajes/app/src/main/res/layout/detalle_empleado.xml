@@ -25,22 +25,20 @@
             android:id="@+id/b_cerrarAsignar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Salir"
             android:background="#0000"
-            android:textColor="@color/white"
-            />
+            android:text="@string/Salir"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/textViewCrearCamion"
-            android:textSize="40dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/baloo_da"
-            android:text="Detalle"
-            android:textColor="@color/white"
             android:gravity="center"
-            />
+            android:text="@string/Detalle"
+            android:textColor="@color/white"
+            android:textSize="40dp" />
 
         <ImageView
             android:layout_width="70dp"
@@ -99,7 +97,7 @@
             android:layout_margin="20dp"
             android:backgroundTint="@color/white"
             android:fontFamily="@font/baloo_da"
-            android:text="Eliminar"
+            android:text="@string/Eliminar"
             android:textColor="@color/black"
 
 

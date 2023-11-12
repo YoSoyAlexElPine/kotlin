@@ -53,7 +53,7 @@ class Registro : AppCompatActivity() {
             //Para la autenticación, de cualquier tipo.
             firebaseauth = FirebaseAuth.getInstance()
             //------------------------------ Autenticación con email y password ------------------------------------
-            /*binding.bRegistroRegistrarse.setOnClickListener {
+            binding.bRegistroRegistrarse.setOnClickListener {
                 if (binding.tbMail.text!!.isNotEmpty() && binding.tbContrasena.text!!.isNotEmpty()) {
                     firebaseauth.createUserWithEmailAndPassword(
                         binding.tbMail.text.toString(),
@@ -73,7 +73,7 @@ class Registro : AppCompatActivity() {
                 } else {
                     showAlert("Rellene los campos")
                 }
-            }*/
+            }
 
             binding.bRegistroEntrar.setOnClickListener {
 

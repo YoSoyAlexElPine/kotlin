@@ -25,20 +25,20 @@
             android:id="@+id/b_cerrarSesionCamiones"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Salir"
             android:background="#0000"
+            android:text="@string/Salir"
             android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/textViewCamiones"
-            android:textSize="40dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/baloo_da"
-            android:text="Camiones"
+            android:gravity="center"
+            android:text="@string/Camiones"
             android:textColor="@color/white"
-            android:gravity="center" />
+            android:textSize="40dp" />
 
         <ImageView
             android:layout_width="70dp"
@@ -69,13 +69,13 @@
         <Button
 
             android:id="@+id/b_addCamion"
-            android:layout_margin="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Añadir Camion"
-            android:fontFamily="@font/baloo_da"
             android:layout_gravity="center"
+            android:layout_margin="20dp"
             android:backgroundTint="@color/white"
+            android:fontFamily="@font/baloo_da"
+            android:text="@string/AddCamion"
             android:textColor="@color/black"
 
 
