@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/baloo_da"
-        android:text="Buenos dias y bienvenido"
+        android:text="@string/Bienvenida"
         android:textColor="#FFFFFF"
         android:textSize="40sp"
         android:transitionName="presentacion_titulo" />
@@ -30,7 +30,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrate para continuar"
+        android:text="@string/BienvenidaRegistro"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Contraseña"
+                android:hint="@string/Constrasena"
                 android:inputType="textPassword"
                 android:text="asdfasdf1234"
                 android:textColor="@color/white"
@@ -94,9 +94,8 @@
             android:layout_margin="5dp"
             android:background="#0000"
             android:elevation="0dp"
-            android:text="Crear cuenta"
-            android:textColor="@color/white"
-            />
+            android:text="@string/CrearCuenta"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/b_registroEntrar"
@@ -106,11 +105,10 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="#FFFFFF"
-            android:textColor="#000000"
             android:elevation="0dp"
             android:hapticFeedbackEnabled="true"
-            android:text="Entrar"
-            />
+            android:text="@string/Entrar"
+            android:textColor="#000000" />
 
         <Button
             android:id="@+id/b_registroGoogle"
@@ -120,7 +118,7 @@
             android:layout_margin="5dp"
             android:background="#0000"
             android:elevation="0dp"
-            android:text="Entrar con Google"
+            android:text="@string/Google"
             android:textColor="@color/white" />
 
     </LinearLayout>
