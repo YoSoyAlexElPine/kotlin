@@ -31,7 +31,7 @@ class CrearEmpleado : AppCompatActivity() {
                             )
                         )
 
-
+                        b.tbNombre.setText("")
 
                     } catch (e: Exception) {
                         Almacen.empleados.add(
@@ -41,12 +41,14 @@ class CrearEmpleado : AppCompatActivity() {
                                 Intent(this, DetalleEmpleado::class.java)
                             )
                         )
+                        b.tbNombre.setText("")
                     }
                 }else{
                     val mensaje = b.tbNombre.text.toString()+" ya existe"
                     Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
                 }
             }
+
         }
 
         b.bCerrarAsignar.setOnClickListener {

@@ -32,6 +32,7 @@ class CrearCamion : AppCompatActivity() {
                                 Intent(this, DetalleCamion::class.java)
                             )
                         )
+                        b.tbNombre.setText("")
                     } catch (e: Exception) {
                         Almacen.camiones.add(
                             Card(
@@ -40,6 +41,7 @@ class CrearCamion : AppCompatActivity() {
                                 Intent(this, DetalleCamion::class.java)
                             )
                         )
+                        b.tbNombre.setText("")
                     }
                 }else{
                     val mensaje = b.tbNombre.text.toString()+" ya existe"

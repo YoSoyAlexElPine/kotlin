@@ -25,7 +25,7 @@
             android:name=".DetalleCamion"
             android:exported="false" />
         <activity
-            android:name=".Inicio"
+            android:name=".Registro"
             android:exported="true"
             android:theme="@style/Base.Theme.GestionViajes">
             <intent-filter>
@@ -50,7 +50,7 @@
             android:name=".Presentacion"
             android:exported="false" />
         <activity
-            android:name=".Registro"
+            android:name=".Inicio"
             android:exported="false" />
         <activity
             android:name=".Camiones"

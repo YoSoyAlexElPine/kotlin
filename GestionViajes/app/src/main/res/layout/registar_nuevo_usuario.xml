@@ -179,6 +179,7 @@
                 android:inputType="textPassword"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
+                android:visibility="visible"
                 app:boxStrokeColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -2,6 +2,7 @@ package com.example.gestionviajes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.isVisible
 import com.example.gestionviajes.databinding.RegistarNuevoUsuarioBinding
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -13,10 +14,16 @@ class RegistarNuevoUsuario : AppCompatActivity() {
         var b=RegistarNuevoUsuarioBinding.inflate(layoutInflater)
         setContentView(b.root)
 
-        b.admin.isVisible=false
+        b.admin.visibility= View.INVISIBLE
 
         b.sAdministrador.setOnCheckedChangeListener { _, a ->
-            b.admin.isVisible = b.sAdministrador.isChecked
+            if(b.sAdministrador.isChecked){
+                b.admin.visibility = View.VISIBLE
+            } else {
+                b.tbContrasenaAdministrador.setText("")
+                b.admin.visibility = View.INVISIBLE
+            }
+
         }
 
         b.bCerrarSesionCrearUsuario.setOnClickListener (){

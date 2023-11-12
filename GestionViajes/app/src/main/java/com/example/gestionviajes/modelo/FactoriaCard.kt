@@ -69,18 +69,23 @@ object FactoriaCard {
                 Intent(contexto,DetalleCamion::class.java)
             ),
             Card(
-                "Scania 1",
+                "Scania",
                 "@drawable/scania",
                 Intent(contexto,DetalleCamion::class.java)
             ),
             Card(
-                "Scania 2",
-                "@drawable/scania",
+                "Volvo",
+                "@drawable/volvo",
                 Intent(contexto,DetalleCamion::class.java)
             ),
             Card(
                 "Mercedes",
                 "@drawable/mercedes",
+                Intent(contexto, DetalleCamion::class.java)
+            ),
+            Card(
+                "Renault",
+                "@drawable/renault",
                 Intent(contexto, DetalleCamion::class.java)
             )
         )
