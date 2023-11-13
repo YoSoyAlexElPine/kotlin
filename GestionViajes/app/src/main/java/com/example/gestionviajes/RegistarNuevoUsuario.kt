@@ -77,6 +77,9 @@ class RegistarNuevoUsuario : AppCompatActivity() {
                             )
                         )
 
+                        fa.createUserWithEmailAndPassword(b.tbMail.text.toString(),b.tbClave.text.toString())
+
+
                         /*fa.signInWithEmailAndPassword(
                             b.tbMail.text.toString(),
                             b.tbClave.text.toString()
@@ -90,6 +93,16 @@ class RegistarNuevoUsuario : AppCompatActivity() {
                 } else {
 
                     // Crear empleado
+
+                    fa.createUserWithEmailAndPassword(b.tbMail.text.toString(),b.tbClave.text.toString()).addOnCompleteListener {
+                        if (it.isSuccessful){
+                              //Esto de los interrogantes es por si está vacío el email, que enviaría una cadena vacía.
+                        } else {
+                            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                        }
+                    }.addOnFailureListener{
+                        Toast.makeText(this, "Conexión no establecida", Toast.LENGTH_SHORT).show()
+                    }
 
                     /*fa.signInWithEmailAndPassword(
                         b.tbMail.text.toString(),
