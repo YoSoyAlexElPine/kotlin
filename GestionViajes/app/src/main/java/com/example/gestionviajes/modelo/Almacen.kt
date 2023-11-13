@@ -1,7 +1,7 @@
 package Modelo
 
 object Almacen {
-    lateinit var cards : ArrayList<Card>
-    lateinit var camiones : ArrayList<Card>
-    lateinit var empleados : ArrayList<Card>
+    var cards : MutableList<Card> = mutableListOf()
+    var camiones: MutableList<Card> = mutableListOf()
+    var empleados : MutableList<Card> = mutableListOf()
 }

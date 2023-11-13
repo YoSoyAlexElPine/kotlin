@@ -8,8 +8,11 @@ import com.example.gestionviajes.DetalleCamion
 import com.example.gestionviajes.DetalleEmpleado
 import com.example.gestionviajes.Empleados
 import com.example.gestionviajes.Inicio
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 
 object FactoriaCard {
+    private val db= FirebaseFirestore.getInstance()
     fun inicioAdmin(contexto: Context):ArrayList<Card> {
         val listaCards = arrayListOf(
             Card(
@@ -61,38 +64,6 @@ object FactoriaCard {
         return listaCards
     }
 
-    fun camiones(contexto: Context):ArrayList<Card> {
-        val listaCards = arrayListOf(
-            Card(
-                "Iveco naranja",
-                "@drawable/iveco",
-                Intent(contexto,DetalleCamion::class.java)
-            ),
-            Card(
-                "Scania",
-                "@drawable/scania",
-                Intent(contexto,DetalleCamion::class.java)
-            ),
-            Card(
-                "Volvo",
-                "@drawable/volvo",
-                Intent(contexto,DetalleCamion::class.java)
-            ),
-            Card(
-                "Mercedes",
-                "@drawable/mercedes",
-                Intent(contexto, DetalleCamion::class.java)
-            ),
-            Card(
-                "Renault",
-                "@drawable/renault",
-                Intent(contexto, DetalleCamion::class.java)
-            )
-        )
-
-
-        return listaCards
-    }
 
     fun empleados(contexto: Context):ArrayList<Card> {
         val listaCards = arrayListOf(
@@ -115,5 +86,12 @@ object FactoriaCard {
 
 
         return listaCards
+    }
+
+    fun documentoACardCamion(contexto: Context, document: DocumentSnapshot):Card{
+        return Card(document.id,"@drawable/"+document.getString("marca").toString(),Intent(contexto,DetalleCamion::class.java))
+    }
+    fun documentoACardEmpleado(contexto: Context, document: DocumentSnapshot):Card{
+        return Card(document.id,"@drawable/empleado",Intent(contexto,DetalleEmpleado::class.java))
     }
 }

@@ -8,8 +8,10 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.gestionviajes.databinding.CrearCamionBinding
 import com.example.gestionviajes.databinding.CrearEmpleadoBinding
+import com.google.firebase.firestore.FirebaseFirestore
 
 class CrearEmpleado : AppCompatActivity() {
+    private val db= FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,7 +24,7 @@ class CrearEmpleado : AppCompatActivity() {
                 if(!Almacen.empleados.any {it.titulo == b.tbNombre.text.toString()}) {
 
                     try {
-
+                        db.collection("empleados").document(b.tbNombre.text.toString()).set(hashMapOf("nombre" to b.tbNombre.text.toString()))
                         Almacen.empleados.add(
                             Card(
                                 b.tbNombre.text.toString(),
@@ -34,6 +36,9 @@ class CrearEmpleado : AppCompatActivity() {
                         b.tbNombre.setText("")
 
                     } catch (e: Exception) {
+
+                        db.collection("empleados").document(b.tbNombre.text.toString()).set(hashMapOf("nombre" to b.tbNombre.text.toString()))
+
                         Almacen.empleados.add(
                             Card(
                                 b.tbNombre.text.toString(),

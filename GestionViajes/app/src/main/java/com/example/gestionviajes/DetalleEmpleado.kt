@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.gestionviajes.databinding.DetalleCamionBinding
 import com.example.gestionviajes.databinding.DetalleEmpleadoBinding
+import com.google.firebase.firestore.FirebaseFirestore
 
 class DetalleEmpleado : AppCompatActivity() {
+    private val db= FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,6 +27,8 @@ class DetalleEmpleado : AppCompatActivity() {
         b.tvImagen.setImageDrawable(res)
 
         b.bEliminarCard.setOnClickListener(){
+
+            db.collection("empleados").document(nombre.toString()).delete()
 
             Almacen.empleados.removeIf { it.titulo == nombre}
 

@@ -24,7 +24,7 @@ interface OnCardClickListener {
     fun onCardClick(card: Card)
 }
 
-class Adaptador(var Cards: ArrayList<Card>, var contexto: Context, private val onCardClickListener: OnCardClickListener) :
+class Adaptador(var Cards: MutableList<Card>, var contexto: Context, private val onCardClickListener: OnCardClickListener) :
     RecyclerView.Adapter<Adaptador.ViewHolder>() {
 
     companion object {

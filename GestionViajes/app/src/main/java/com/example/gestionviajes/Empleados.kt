@@ -8,14 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gestionviajes.R
 import com.example.gestionviajes.adaptador.Adaptador
 import com.example.gestionviajes.adaptador.OnCardClickListener
-import com.example.gestionviajes.databinding.CamionesBinding
 import com.example.gestionviajes.databinding.EmpleadosBinding
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Empleados : AppCompatActivity(), OnCardClickListener {
-
+    private val db= FirebaseFirestore.getInstance()
     lateinit var binding: EmpleadosBinding // Declaración de la propiedad de la vista
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +29,26 @@ class Empleados : AppCompatActivity(), OnCardClickListener {
 
         val rv2 = binding.rvCamiones
 
-        Almacen.empleados = FactoriaCard.empleados(this)
-        val adaptador2 = Adaptador(Almacen.empleados, this, this)
+        val camionesCollection = db.collection("empleados")
 
-        rv2.layoutManager = LinearLayoutManager(this)
-        rv2.adapter = adaptador2
+        camionesCollection.get()
+            .addOnSuccessListener { documents ->
+                Almacen.empleados.clear()
+                for (document in documents) {
+                    // Convierte cada documento en un objeto Card y agrégalo a Almacen.camiones
+                    val card = FactoriaCard.documentoACardEmpleado(this,document)
+                    Almacen.empleados.add(card)
+                }
+
+                // Configura el RecyclerView con los datos actualizados
+                val adaptador2 = Adaptador(Almacen.empleados, this, this)
+                rv2.layoutManager = LinearLayoutManager(this)
+                rv2.adapter = adaptador2
+            }
+            .addOnFailureListener { exception ->
+                // Manejar errores al obtener documentos
+                exception.printStackTrace()
+            }
 
         binding.bAddCamion.setOnClickListener() {
             val i = Intent(this, CrearEmpleado::class.java)

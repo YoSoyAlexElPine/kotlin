@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gestionviajes.adaptador.Adaptador
 import com.example.gestionviajes.adaptador.OnCardClickListener
 import com.example.gestionviajes.databinding.CamionesBinding
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Camiones : AppCompatActivity(), OnCardClickListener {
 
+    val db = FirebaseFirestore.getInstance()
     lateinit var binding: CamionesBinding // Declaración de la propiedad de la vista
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,11 +30,28 @@ class Camiones : AppCompatActivity(), OnCardClickListener {
 
         val rv2 = binding.rvCamiones
 
-        Almacen.camiones = FactoriaCard.camiones(this)
-        val adaptador2 = Adaptador(Almacen.camiones, this, this)
+        // Obtén todos los documentos de la colección "camiones" en Firestore
 
-        rv2.layoutManager = LinearLayoutManager(this)
-        rv2.adapter = adaptador2
+        val camionesCollection = db.collection("camiones")
+
+        camionesCollection.get()
+            .addOnSuccessListener { documents ->
+                Almacen.camiones.clear()
+                for (document in documents) {
+                    // Convierte cada documento en un objeto Card y agrégalo a Almacen.camiones
+                    val card = FactoriaCard.documentoACardCamion(this,document)
+                    Almacen.camiones.add(card)
+                }
+
+                // Configura el RecyclerView con los datos actualizados
+                val adaptador2 = Adaptador(Almacen.camiones, this, this)
+                rv2.layoutManager = LinearLayoutManager(this)
+                rv2.adapter = adaptador2
+            }
+            .addOnFailureListener { exception ->
+                // Manejar errores al obtener documentos
+                exception.printStackTrace()
+            }
 
         binding.bAddCamion.setOnClickListener() {
             val i = Intent(this, CrearCamion::class.java)
