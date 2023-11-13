@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -60,10 +59,7 @@ class Registro : AppCompatActivity() {
                         binding.tbContrasena.text.toString()
                     ).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            irHome(
-                                it.result?.user?.email ?: "",
-                                Proveedor.BASIC
-                            )  //Esto de los interrogantes es por si está vacío el email, que enviaría una cadena vacía.
+                            irHome()  //Esto de los interrogantes es por si está vacío el email, que enviaría una cadena vacía.
                         } else {
                             showAlert("Error registrando al usuario.")
                         }
@@ -77,27 +73,7 @@ class Registro : AppCompatActivity() {
 
             binding.bRegistroEntrar.setOnClickListener {
 
-
-                if (binding.tbMail.text!!.isNotEmpty() && binding.tbContrasena.text!!.isNotEmpty()) {
-                    firebaseauth.signInWithEmailAndPassword(
-                        binding.tbMail.text.toString(),
-                        binding.tbContrasena.text.toString()
-                    ).addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            irHome(
-                                it.result?.user?.email ?: "",
-                                Proveedor.BASIC
-                            )  //Esto de los interrogantes es por si está vacío el email.
-                        } else {
-                            showAlert()
-                        }
-                    }.addOnFailureListener {
-                        Toast.makeText(this, "Conexión no establecida", Toast.LENGTH_SHORT).show()
-                    }
-
-                } else {
-                    showAlert("Rellene los campos")
-                }
+                startActivity(Intent(this,RegistarNuevoUsuario::class.java))
             }
 
             //------------------ Login Google -------------------
@@ -152,7 +128,7 @@ class Registro : AppCompatActivity() {
         firebaseauth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful){
                 //hacer account. y ver otras propiedades interesantes.
-                irHome(account.email.toString(),Proveedor.GOOGLE, account.displayName.toString())
+                irHome()
             }
             else {
                 Toast.makeText(this,it.exception.toString(), Toast.LENGTH_SHORT).show()
@@ -182,13 +158,9 @@ class Registro : AppCompatActivity() {
 
 
     //*********************************************************************************
-    private fun irHome(email:String, provider:Proveedor, nombre:String = "Usuario"){
-        Log.e(TAG,"Valores: ${email}, ${provider}, ${nombre}")
-        val homeIntent = Intent(this, Inicio::class.java).apply {
-            putExtra("email",email)
-            putExtra("provider",provider.name)
-            putExtra("nombre",nombre)
-        }
+    private fun irHome() {
+
+        val homeIntent = Intent(this, Inicio::class.java)
         startActivity(homeIntent)
     }
 }

@@ -6,7 +6,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.gestionviajes.databinding.CrearCamionBinding
 import com.example.gestionviajes.databinding.CrearEmpleadoBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -29,7 +28,7 @@ class CrearEmpleado : AppCompatActivity() {
                             Card(
                                 b.tbNombre.text.toString(),
                                 "@drawable/empleado",
-                                Intent(this, DetalleEmpleado::class.java)
+                                Intent(this, Detalle::class.java)
                             )
                         )
 
@@ -43,7 +42,7 @@ class CrearEmpleado : AppCompatActivity() {
                             Card(
                                 b.tbNombre.text.toString(),
                                 "@drawable/empleado",
-                                Intent(this, DetalleEmpleado::class.java)
+                                Intent(this, Detalle::class.java)
                             )
                         )
                         b.tbNombre.setText("")

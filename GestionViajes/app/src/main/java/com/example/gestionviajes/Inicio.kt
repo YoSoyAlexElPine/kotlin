@@ -31,6 +31,7 @@ class Inicio : AppCompatActivity(), OnCardClickListener {
 
         val rv=binding.rvInicio
 
+        FactoriaCard.sincronizar(this)
 
         Almacen.cards=FactoriaCard.inicioAdmin(this)
         val adaptador=Adaptador(Almacen.cards,this,this)

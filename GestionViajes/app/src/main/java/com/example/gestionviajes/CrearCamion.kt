@@ -6,7 +6,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.gestionviajes.databinding.AsignarTareaBinding
 import com.example.gestionviajes.databinding.CrearCamionBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -17,6 +16,9 @@ class CrearCamion : AppCompatActivity() {
 
         var b = CrearCamionBinding.inflate(layoutInflater)
         setContentView(b.root)
+
+
+
 
         b.bCrearCamion.setOnClickListener(){
             if (!b.tbChofer.text.isNullOrEmpty() && !b.tbMarca.text.isNullOrEmpty()&& !b.tbNombre.text.isNullOrEmpty()){
@@ -40,7 +42,7 @@ class CrearCamion : AppCompatActivity() {
                             Card(
                                 b.tbNombre.text.toString(),
                                 "@drawable/" + marca,
-                                Intent(this, DetalleCamion::class.java)
+                                Intent(this, Detalle::class.java)
                             )
                         )
                         b.tbNombre.setText("")
@@ -54,7 +56,7 @@ class CrearCamion : AppCompatActivity() {
                             Card(
                                 b.tbNombre.text.toString(),
                                 "@drawable/camion2",
-                                Intent(this, DetalleCamion::class.java)
+                                Intent(this, Detalle::class.java)
                             )
                         )
                         b.tbNombre.setText("")

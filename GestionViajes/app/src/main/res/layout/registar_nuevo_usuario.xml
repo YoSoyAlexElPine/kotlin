@@ -71,7 +71,7 @@
             app:boxStrokeColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tb_marca"
+                android:id="@+id/tb_mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Mail"
@@ -93,7 +93,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tb_chofer"
+                android:id="@+id/tb_clave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

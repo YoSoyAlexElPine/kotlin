@@ -29,27 +29,11 @@ class Empleados : AppCompatActivity(), OnCardClickListener {
 
         val rv2 = binding.rvCamiones
 
-        val camionesCollection = db.collection("empleados")
 
-        camionesCollection.get()
-            .addOnSuccessListener { documents ->
-                Almacen.empleados.clear()
-                for (document in documents) {
-                    // Convierte cada documento en un objeto Card y agrégalo a Almacen.camiones
-                    val card = FactoriaCard.documentoACardEmpleado(this,document)
-                    Almacen.empleados.add(card)
-                }
-
-                // Configura el RecyclerView con los datos actualizados
-                val adaptador2 = Adaptador(Almacen.empleados, this, this)
-                rv2.layoutManager = LinearLayoutManager(this)
-                rv2.adapter = adaptador2
-            }
-            .addOnFailureListener { exception ->
-                // Manejar errores al obtener documentos
-                exception.printStackTrace()
-            }
-
+        // Configura el RecyclerView con los datos actualizados
+        val adaptador2 = Adaptador(Almacen.empleados, this, this)
+        rv2.layoutManager = LinearLayoutManager(this)
+        rv2.adapter = adaptador2
         binding.bAddCamion.setOnClickListener() {
             val i = Intent(this, CrearEmpleado::class.java)
             startActivity(i)
@@ -73,6 +57,7 @@ class Empleados : AppCompatActivity(), OnCardClickListener {
     override fun onCardClick(card: Card) {
         // Aquí puedes manejar la navegación según el clic en el RecyclerView
         val intent = card.link
+        intent.putExtra("objeto", "empleado")
         intent.putExtra("marca", card.imagen)
         intent.putExtra("nombre", card.titulo)
 

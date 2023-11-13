@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.Intent
 import com.example.gestionviajes.AsignarTarea
 import com.example.gestionviajes.Camiones
-import com.example.gestionviajes.DetalleCamion
-import com.example.gestionviajes.DetalleEmpleado
+import com.example.gestionviajes.Detalle
 import com.example.gestionviajes.Empleados
 import com.example.gestionviajes.Inicio
+import com.example.gestionviajes.R
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -16,17 +16,17 @@ object FactoriaCard {
     fun inicioAdmin(contexto: Context):ArrayList<Card> {
         val listaCards = arrayListOf(
             Card(
-                "Camiones",
+                contexto.getString(R.string.Camiones),
                 "@drawable/camion",
                 Intent(contexto, Camiones::class.java)
             ),
             Card(
-                "Empleados",
+                contexto.getString(R.string.Empleados),
                 "@drawable/logoempleado",
                 Intent(contexto, Empleados::class.java)
             ),
             Card(
-                "Asignar Viaje",
+                contexto.getString(R.string.AsignarViaje),
                 "@drawable/tarea",
                 Intent(contexto, AsignarTarea::class.java)
             )
@@ -70,17 +70,17 @@ object FactoriaCard {
             Card(
                 "Fede",
                 "@drawable/empleado",
-                Intent(contexto,DetalleEmpleado::class.java)
+                Intent(contexto,Detalle::class.java)
             ),
             Card(
                 "Xuxo",
                 "@drawable/empleado",
-                Intent(contexto,DetalleEmpleado::class.java)
+                Intent(contexto,Detalle::class.java)
             ),
             Card(
                 "Jesus",
                 "@drawable/empleado",
-                Intent(contexto,DetalleEmpleado::class.java)
+                Intent(contexto,Detalle::class.java)
             )
         )
 
@@ -89,9 +89,65 @@ object FactoriaCard {
     }
 
     fun documentoACardCamion(contexto: Context, document: DocumentSnapshot):Card{
-        return Card(document.id,"@drawable/"+document.getString("marca").toString(),Intent(contexto,DetalleCamion::class.java))
+        return Card(document.id,"@drawable/"+document.getString("marca").toString(),Intent(contexto,Detalle::class.java))
     }
     fun documentoACardEmpleado(contexto: Context, document: DocumentSnapshot):Card{
-        return Card(document.id,"@drawable/empleado",Intent(contexto,DetalleEmpleado::class.java))
+        return Card(document.id,"@drawable/empleado",Intent(contexto,Detalle::class.java))
+    }
+
+    fun sincronizar(contexto: Context) {
+        val db = FirebaseFirestore.getInstance()
+        val camionesCollection = db.collection("camiones")
+
+
+        camionesCollection.get()
+            .addOnSuccessListener { documents ->
+                Almacen.camiones.clear()
+                for (document in documents) {
+                    // Convierte cada documento en un objeto Card y agrégalo a Almacen.camiones
+                    val card = documentoACardCamion(contexto,document)
+                    Almacen.camiones.add(card)
+                }
+
+
+            }
+            .addOnFailureListener { exception ->
+                // Manejar errores al obtener documentos
+                exception.printStackTrace()
+            }
+
+        val empleadosCollection = db.collection("empleados")
+
+        empleadosCollection.get()
+            .addOnSuccessListener { documents ->
+                Almacen.empleados.clear()
+                for (document in documents) {
+                    // Convierte cada documento en un objeto Card y agrégalo a Almacen.camiones
+                    val card = documentoACardEmpleado(contexto,document)
+                    Almacen.empleados.add(card)
+                }
+
+
+            }
+            .addOnFailureListener { exception ->
+                // Manejar errores al obtener documentos
+                exception.printStackTrace()
+            }
+
+        val claves = db.collection("claveAdmin")
+
+        claves.get()
+            .addOnSuccessListener { documents ->
+                Almacen.adminClaves.clear()
+                for (document in documents) {
+                    Almacen.adminClaves.add(document.getString("clave").toString())
+                }
+
+
+            }
+            .addOnFailureListener { exception ->
+                // Manejar errores al obtener documentos
+                exception.printStackTrace()
+            }
     }
 }

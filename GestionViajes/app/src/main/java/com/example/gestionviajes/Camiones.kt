@@ -15,7 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class Camiones : AppCompatActivity(), OnCardClickListener {
 
-    val db = FirebaseFirestore.getInstance()
+
     lateinit var binding: CamionesBinding // Declaración de la propiedad de la vista
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,26 +32,11 @@ class Camiones : AppCompatActivity(), OnCardClickListener {
 
         // Obtén todos los documentos de la colección "camiones" en Firestore
 
-        val camionesCollection = db.collection("camiones")
 
-        camionesCollection.get()
-            .addOnSuccessListener { documents ->
-                Almacen.camiones.clear()
-                for (document in documents) {
-                    // Convierte cada documento en un objeto Card y agrégalo a Almacen.camiones
-                    val card = FactoriaCard.documentoACardCamion(this,document)
-                    Almacen.camiones.add(card)
-                }
-
-                // Configura el RecyclerView con los datos actualizados
-                val adaptador2 = Adaptador(Almacen.camiones, this, this)
-                rv2.layoutManager = LinearLayoutManager(this)
-                rv2.adapter = adaptador2
-            }
-            .addOnFailureListener { exception ->
-                // Manejar errores al obtener documentos
-                exception.printStackTrace()
-            }
+        // Configura el RecyclerView con los datos actualizados
+        val adaptador2 = Adaptador(Almacen.camiones, this, this)
+        rv2.layoutManager = LinearLayoutManager(this)
+        rv2.adapter = adaptador2
 
         binding.bAddCamion.setOnClickListener() {
             val i = Intent(this, CrearCamion::class.java)
@@ -76,6 +61,7 @@ class Camiones : AppCompatActivity(), OnCardClickListener {
     override fun onCardClick(card: Card) {
         // Aquí puedes manejar la navegación según el clic en el RecyclerView
         val intent = card.link
+        intent.putExtra("objeto", "camion")
         intent.putExtra("marca", card.imagen)
         intent.putExtra("nombre", card.titulo)
 

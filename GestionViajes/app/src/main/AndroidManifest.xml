@@ -22,7 +22,7 @@
             android:name=".Empleados"
             android:exported="false" />
         <activity
-            android:name=".DetalleCamion"
+            android:name=".Detalle"
             android:exported="false" />
         <activity
             android:name=".Registro"
