@@ -33,7 +33,7 @@ class Registro : AppCompatActivity() {
         //try{
 
         super.onCreate(savedInstanceState)
-        
+
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
