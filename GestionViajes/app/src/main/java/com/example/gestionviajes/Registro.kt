@@ -25,30 +25,31 @@ import com.google.firebase.firestore.FirebaseFirestore
 class Registro : AppCompatActivity() {
     lateinit var binding: RegistroBinding
     //Para la autenticación, de cualquier tipo.
-    private lateinit var firebaseauth : FirebaseAuth
+    private var firebaseauth  = FirebaseAuth.getInstance()
     private val db=FirebaseFirestore.getInstance()
     val TAG = "ACSCO"
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         //try{
 
-            super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
+        
 
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-
-
-            //setContentView(R.layout.activity_main)
-            binding = RegistroBinding.inflate(layoutInflater)
-            setContentView(binding.root)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
 
 
-            binding.bRegistroRegistrarse.setOnClickListener(){
-                var i = Intent(this,RegistarNuevoUsuario::class.java)
-                startActivity(i)
-            }
+        //setContentView(R.layout.activity_main)
+        binding = RegistroBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
+        binding.bRegistroRegistrarse.setOnClickListener(){
+            var i = Intent(this,RegistarNuevoUsuario::class.java)
+            startActivity(i)
+        }
 
         binding.bYoutube.setOnClickListener(){
 
@@ -62,7 +63,25 @@ class Registro : AppCompatActivity() {
 
         }
 
+        binding.bRegistroEntrar.setOnClickListener {
+            if (binding.tbMail.text!!.isNotEmpty() && binding.tbContrasena.text!!.isNotEmpty()) {
+                firebaseauth.signInWithEmailAndPassword(
+                    binding.tbMail.text.toString(),
+                    binding.tbContrasena.text.toString()
+                ).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        irHome(binding.tbMail.text.toString())  //Esto de los interrogantes es por si está vacío el email.
+                    } else {
+                        showAlert()
+                    }
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Conexión no establecida", Toast.LENGTH_SHORT).show()
+                }
 
+            } else {
+                showAlert("Rellene los campos")
+            }
+        }
 
 
 
@@ -70,10 +89,7 @@ class Registro : AppCompatActivity() {
             firebaseauth = FirebaseAuth.getInstance()
 
 
-            binding.bRegistroEntrar.setOnClickListener {
 
-                irHome(binding.tbMail.text.toString())
-            }
 
             //------------------ Login Google -------------------
             //------------------------------- -Autenticación Google --------------------------------------------------
