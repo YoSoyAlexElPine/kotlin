@@ -38,7 +38,27 @@ class RegistarNuevoUsuario : AppCompatActivity() {
                 Toast.makeText(this,"Rellena los campos",Toast.LENGTH_SHORT).show()
             }else{
 
+                val claves = db.collection("claveAdmin")
+
+                claves.get()
+                    .addOnSuccessListener { documents ->
+                        Almacen.adminClaves.clear()
+                        for (document in documents) {
+                            Almacen.adminClaves.add(document.getString("clave").toString())
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        // Manejar errores al obtener documentos
+                        exception.printStackTrace()
+                        Toast.makeText(this,"error",Toast.LENGTH_SHORT).show()
+                    }
+
+                Almacen.adminClaves.add("admin")
+
                 if (b.sAdministrador.isChecked && !b.tbContrasenaAdministrador.text.isNullOrEmpty()){
+
+
+
 
                     // Verificar si es administrador
                     if(Almacen.adminClaves.contains(b.tbContrasenaAdministrador.text.toString())){

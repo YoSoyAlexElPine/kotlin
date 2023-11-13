@@ -141,8 +141,6 @@ object FactoriaCard {
                 for (document in documents) {
                     Almacen.adminClaves.add(document.getString("clave").toString())
                 }
-
-
             }
             .addOnFailureListener { exception ->
                 // Manejar errores al obtener documentos

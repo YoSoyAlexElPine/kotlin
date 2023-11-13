@@ -5,6 +5,7 @@ import Modelo.FactoriaCard
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
@@ -48,6 +49,18 @@ class Registro : AppCompatActivity() {
                 var i = Intent(this,RegistarNuevoUsuario::class.java)
                 startActivity(i)
             }
+
+        binding.bYoutube.setOnClickListener(){
+
+            val url = "https://www.youtube.com"
+
+            // Crear un Intent con la acción ACTION_VIEW y la URL como datos
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+
+            // Abrir la página web
+            startActivity(intent)
+
+        }
 
 
 
@@ -176,4 +189,9 @@ class Registro : AppCompatActivity() {
 
         startActivity(homeIntent)
     }
+
+
+
+
+
 }
