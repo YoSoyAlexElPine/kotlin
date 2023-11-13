@@ -1,5 +1,7 @@
 package com.example.gestionviajes
 
+import Modelo.Almacen
+import Modelo.FactoriaCard
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -17,11 +19,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Registro : AppCompatActivity() {
     lateinit var binding: RegistroBinding
     //Para la autenticación, de cualquier tipo.
     private lateinit var firebaseauth : FirebaseAuth
+    private val db=FirebaseFirestore.getInstance()
     val TAG = "ACSCO"
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,29 +55,11 @@ class Registro : AppCompatActivity() {
 
             //Para la autenticación, de cualquier tipo.
             firebaseauth = FirebaseAuth.getInstance()
-            //------------------------------ Autenticación con email y password ------------------------------------
-            binding.bRegistroRegistrarse.setOnClickListener {
-                if (binding.tbMail.text!!.isNotEmpty() && binding.tbContrasena.text!!.isNotEmpty()) {
-                    firebaseauth.createUserWithEmailAndPassword(
-                        binding.tbMail.text.toString(),
-                        binding.tbContrasena.text.toString()
-                    ).addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            irHome()  //Esto de los interrogantes es por si está vacío el email, que enviaría una cadena vacía.
-                        } else {
-                            showAlert("Error registrando al usuario.")
-                        }
-                    }.addOnFailureListener {
-                        Toast.makeText(this, "Conexión no establecida", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    showAlert("Rellene los campos")
-                }
-            }
+
 
             binding.bRegistroEntrar.setOnClickListener {
 
-                startActivity(Intent(this,RegistarNuevoUsuario::class.java))
+                irHome(binding.tbMail.text.toString())
             }
 
             //------------------ Login Google -------------------
@@ -128,7 +114,7 @@ class Registro : AppCompatActivity() {
         firebaseauth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful){
                 //hacer account. y ver otras propiedades interesantes.
-                irHome()
+                irHome(binding.tbMail.text.toString())
             }
             else {
                 Toast.makeText(this,it.exception.toString(), Toast.LENGTH_SHORT).show()
@@ -158,9 +144,36 @@ class Registro : AppCompatActivity() {
 
 
     //*********************************************************************************
-    private fun irHome() {
+    private fun irHome(mail:String) {
 
-        val homeIntent = Intent(this, Inicio::class.java)
+        val camionesCollection = db.collection("usuarios")
+        var admin:Boolean=true
+
+        camionesCollection.get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+
+                    if (document.getString("mail").toString()==mail){
+                        admin=document.getString("admin").toBoolean()
+                    }
+
+                }
+
+
+            }
+            .addOnFailureListener { exception ->
+                // Manejar errores al obtener documentos
+                exception.printStackTrace()
+            }
+
+        var homeIntent:Intent
+
+        if(admin){
+            homeIntent = Intent(this, Inicio::class.java)
+        } else {
+            homeIntent = Intent(this, InicioEmpleado::class.java)
+        }
+
         startActivity(homeIntent)
     }
 }

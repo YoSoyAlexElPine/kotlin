@@ -38,10 +38,10 @@ class RegistarNuevoUsuario : AppCompatActivity() {
                 Toast.makeText(this,"Rellena los campos",Toast.LENGTH_SHORT).show()
             }else{
 
-                if (b.sAdministrador.isActivated && !b.tbContrasenaAdministrador.text.isNullOrEmpty()){
+                if (b.sAdministrador.isChecked && !b.tbContrasenaAdministrador.text.isNullOrEmpty()){
 
                     // Verificar si es administrador
-                    if(b.tbContrasenaAdministrador.text.toString() in Almacen.adminClaves){
+                    if(Almacen.adminClaves.contains(b.tbContrasenaAdministrador.text.toString())){
                         // Crear administrador
                         db.collection("usuarios").document(b.tbApodo.text.toString()).set(
                             hashMapOf(
@@ -51,38 +51,41 @@ class RegistarNuevoUsuario : AppCompatActivity() {
                             )
                         )
 
-                        fa.signInWithEmailAndPassword(
+                        db.collection("claveAdmin").document(b.tbApodo.text.toString()).set(
+                            hashMapOf(
+                                "clave" to b.tbClave.text.toString(),
+                            )
+                        )
+
+                        /*fa.signInWithEmailAndPassword(
                             b.tbMail.text.toString(),
                             b.tbClave.text.toString()
-                        )
+                        )*/
 
                         Toast.makeText(this,"creado",Toast.LENGTH_SHORT).show()
 
                     } else {
                         Toast.makeText(this,"Administrador incorrecto",Toast.LENGTH_SHORT).show()
                     }
+                } else {
 
+                    // Crear empleado
 
+                    /*fa.signInWithEmailAndPassword(
+                        b.tbMail.text.toString(),
+                        b.tbClave.text.toString()
+                    )*/
 
-                }
-
-                // Crear empleado
-
-                fa.signInWithEmailAndPassword(
-                    b.tbMail.text.toString(),
-                    b.tbClave.text.toString()
-                )
-
-                db.collection("usuarios").document(b.tbApodo.text.toString()).set(
-                    hashMapOf(
-                        "mail" to b.tbMail.text.toString(),
-                        "nombre" to b.tbNombreCompleto.text.toString(),
-                        "admin" to false,
+                    db.collection("usuarios").document(b.tbApodo.text.toString()).set(
+                        hashMapOf(
+                            "mail" to b.tbMail.text.toString(),
+                            "nombre" to b.tbNombreCompleto.text.toString(),
+                            "admin" to false,
+                        )
                     )
-                )
 
-                Toast.makeText(this,"creado",Toast.LENGTH_SHORT).show()
-
+                    Toast.makeText(this, "creado", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

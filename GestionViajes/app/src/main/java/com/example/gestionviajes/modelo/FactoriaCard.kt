@@ -99,7 +99,6 @@ object FactoriaCard {
         val db = FirebaseFirestore.getInstance()
         val camionesCollection = db.collection("camiones")
 
-
         camionesCollection.get()
             .addOnSuccessListener { documents ->
                 Almacen.camiones.clear()
