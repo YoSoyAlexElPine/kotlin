@@ -181,29 +181,26 @@ class Registro : AppCompatActivity() {
         camionesCollection.get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-
-                    if (document.getString("mail").toString()==mail){
-                        admin=document.getString("admin").toBoolean()
+                    if (document.getString("mail").toString() == mail){
+                        admin = document.getBoolean("admin") ?: false // Utiliza el valor por defecto false si el campo 'admin' no está presente o es nulo
                     }
-
                 }
 
+                var homeIntent: Intent
 
+                if(admin){
+                    homeIntent = Intent(this, Inicio::class.java)
+                } else {
+                    homeIntent = Intent(this, InicioEmpleado::class.java)
+                }
+
+                startActivity(homeIntent)
             }
             .addOnFailureListener { exception ->
                 // Manejar errores al obtener documentos
                 exception.printStackTrace()
             }
 
-        var homeIntent:Intent
-
-        if(admin){
-            homeIntent = Intent(this, Inicio::class.java)
-        } else {
-            homeIntent = Intent(this, InicioEmpleado::class.java)
-        }
-
-        startActivity(homeIntent)
     }
 
 
