@@ -14,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class RegistarNuevoUsuario : AppCompatActivity() {
     private val db=FirebaseFirestore.getInstance()
-    private lateinit var fa : FirebaseAuth
+    var fa = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -80,11 +80,6 @@ class RegistarNuevoUsuario : AppCompatActivity() {
                         fa.createUserWithEmailAndPassword(b.tbMail.text.toString(),b.tbClave.text.toString())
 
 
-                        /*fa.signInWithEmailAndPassword(
-                            b.tbMail.text.toString(),
-                            b.tbClave.text.toString()
-                        )*/
-
                         Toast.makeText(this,"creado",Toast.LENGTH_SHORT).show()
 
                     } else {
@@ -104,10 +99,6 @@ class RegistarNuevoUsuario : AppCompatActivity() {
                         Toast.makeText(this, "Conexión no establecida", Toast.LENGTH_SHORT).show()
                     }
 
-                    /*fa.signInWithEmailAndPassword(
-                        b.tbMail.text.toString(),
-                        b.tbClave.text.toString()
-                    )*/
 
                     db.collection("usuarios").document(b.tbApodo.text.toString()).set(
                         hashMapOf(
