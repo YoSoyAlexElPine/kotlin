@@ -12,6 +12,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import com.example.gestionviajes.Notificacion.mostrarNotificacion
 import com.example.gestionviajes.databinding.RegistroBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -51,15 +52,9 @@ class Registro : AppCompatActivity() {
             startActivity(i)
         }
 
-        binding.bYoutube.setOnClickListener(){
+        binding.bNotificacion.setOnClickListener(){
 
-            val url = "https://www.youtube.com"
-
-            // Crear un Intent con la acción ACTION_VIEW y la URL como datos
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-
-            // Abrir la página web
-            startActivity(intent)
+            mostrarNotificacion(this, "Título de la Notificación", "Contenido de la Notificación")
 
         }
 

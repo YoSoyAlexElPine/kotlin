@@ -122,15 +122,16 @@
             android:textColor="@color/white" />
 
         <Button
-            android:id="@+id/b_youtube"
+            android:id="@+id/b_notificacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_margin="5dp"
             android:background="#0000"
             android:elevation="0dp"
-            android:text="Youtube"
+            android:text="Notificacion"
             android:textColor="@color/white" />
+
 
     </LinearLayout>
 

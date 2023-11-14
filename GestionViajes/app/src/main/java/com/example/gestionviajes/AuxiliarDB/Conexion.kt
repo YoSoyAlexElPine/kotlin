@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gestionviajes.AuxiliarDB.AdminConexion
 import com.example.gestionviajes.Detalle
+import java.util.Locale
 
 
 object Conexion {
@@ -87,21 +88,39 @@ object Conexion {
         return p
     }
 
-    fun obtenerCards(contexto: AppCompatActivity):ArrayList<Card>{
-        var Cards:ArrayList<Card> = ArrayList(1)
+    fun obtenerEmpleados(contexto: AppCompatActivity):MutableList<Card>{
+        val Cards:MutableList<Card> = mutableListOf()
 
         val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
 
         val bd = admin.readableDatabase
-        val fila = bd.rawQuery("select nombre,elo,nacionalidad from personas", null)
+        val fila = bd.rawQuery("select nombre,telefono from empleados", null)
         while (fila.moveToNext()) {
 
-            var imagen="@drawable/"+fila.getString(0).toString().toLowerCase()
+            val imagen="@drawable/empleado"
 
-            // var p:Card = Card(fila.getString(0),fila.getString(1),imagen,fila.getString(2),0,0,"","","",0)
-            // Cards.add(p)
+            val p = Card(fila.getString(0),imagen,Intent(contexto,Detalle::class.java),fila.getString(1))
+            Cards.add(p)
         }
         bd.close()
-        return Cards //este arrayList lo puedo poner en un adapter de un RecyclerView por ejemplo.
+        return Cards
+    }
+
+    fun obtenerCamiones(contexto: AppCompatActivity):MutableList<Card>{
+        val Cards:MutableList<Card> = mutableListOf()
+
+        val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
+
+        val bd = admin.readableDatabase
+        val fila = bd.rawQuery("select nombre,marca,km from camiones", null)
+        while (fila.moveToNext()) {
+
+            val imagen="@drawable/"+fila.getString(1).toString().toLowerCase(Locale.ROOT)
+
+            val p = Card(fila.getString(0),imagen,Intent(contexto,Detalle::class.java),fila.getString(2))
+            Cards.add(p)
+        }
+        bd.close()
+        return Cards
     }
 }

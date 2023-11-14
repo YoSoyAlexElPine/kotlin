@@ -2,16 +2,14 @@ package com.example.gestionviajes
 
 import Modelo.Almacen
 import Modelo.Card
-import Modelo.FactoriaCard
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gestionviajes.adaptador.Adaptador
-import com.example.gestionviajes.adaptador.OnCardClickListener
+import com.example.gestionviajes.Adaptador.Adaptador
+import com.example.gestionviajes.Adaptador.OnCardClickListener
 import com.example.gestionviajes.databinding.CamionesBinding
-import com.google.firebase.firestore.FirebaseFirestore
 
 class Camiones : AppCompatActivity(), OnCardClickListener {
 
