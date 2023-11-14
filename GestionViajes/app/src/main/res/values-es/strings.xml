@@ -27,4 +27,5 @@
     <string name="Administrador">Administrador</string>
     <string name="AdminContrasena">Contraseña Aministrador</string>
     <string name="Usuario">Usuario</string>
+    <string name="Telefono">Telefono</string>
 </resources>

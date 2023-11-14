@@ -18,45 +18,20 @@ object FactoriaCard {
             Card(
                 contexto.getString(R.string.Camiones),
                 "@drawable/camion",
-                Intent(contexto, Camiones::class.java)
+                Intent(contexto, Camiones::class.java),
+                ""
             ),
             Card(
                 contexto.getString(R.string.Empleados),
                 "@drawable/logoempleado",
-                Intent(contexto, Empleados::class.java)
+                Intent(contexto, Empleados::class.java),
+                ""
             ),
             Card(
                 contexto.getString(R.string.AsignarViaje),
                 "@drawable/tarea",
-                Intent(contexto, AsignarTarea::class.java)
-            )
-        )
-
-
-        return listaCards
-    }
-
-    fun inicioEmpleado(contexto: Context):ArrayList<Card> {
-        val listaCards = arrayListOf(
-            Card(
-                "titulo",
-                "@drawable/fantasma",
-                Intent(contexto,Inicio::class.java)
-            ),
-            Card(
-                "titulo",
-                "@drawable/fantasma",
-                Intent(contexto,Inicio::class.java)
-            ),
-            Card(
-                "titulo",
-                "@drawable/fantasma",
-                Intent(contexto,Inicio::class.java)
-            ),
-            Card(
-                "titulo",
-                "@drawable/fantasma",
-                Intent(contexto, Inicio::class.java)
+                Intent(contexto, AsignarTarea::class.java),
+                ""
             )
         )
 
@@ -65,34 +40,13 @@ object FactoriaCard {
     }
 
 
-    fun empleados(contexto: Context):ArrayList<Card> {
-        val listaCards = arrayListOf(
-            Card(
-                "Fede",
-                "@drawable/empleado",
-                Intent(contexto,Detalle::class.java)
-            ),
-            Card(
-                "Xuxo",
-                "@drawable/empleado",
-                Intent(contexto,Detalle::class.java)
-            ),
-            Card(
-                "Jesus",
-                "@drawable/empleado",
-                Intent(contexto,Detalle::class.java)
-            )
-        )
 
-
-        return listaCards
-    }
 
     fun documentoACardCamion(contexto: Context, document: DocumentSnapshot):Card{
-        return Card(document.id,"@drawable/"+document.getString("marca").toString(),Intent(contexto,Detalle::class.java))
+        return Card(document.id,"@drawable/"+document.getString("marca").toString(),Intent(contexto,Detalle::class.java),document.getString("km").toString())
     }
     fun documentoACardEmpleado(contexto: Context, document: DocumentSnapshot):Card{
-        return Card(document.id,"@drawable/empleado",Intent(contexto,Detalle::class.java))
+        return Card(document.id,"@drawable/empleado",Intent(contexto,Detalle::class.java),document.getString("telefono").toString())
     }
 
     fun sincronizar(contexto: Context) {

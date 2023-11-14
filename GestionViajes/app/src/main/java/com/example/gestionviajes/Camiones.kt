@@ -64,6 +64,7 @@ class Camiones : AppCompatActivity(), OnCardClickListener {
         intent.putExtra("objeto", "camion")
         intent.putExtra("marca", card.imagen)
         intent.putExtra("nombre", card.titulo)
+        intent.putExtra("detalle", card.detalle)
 
         startActivity(intent)
     }

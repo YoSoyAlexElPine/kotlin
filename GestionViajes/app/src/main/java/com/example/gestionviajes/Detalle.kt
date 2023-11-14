@@ -19,9 +19,11 @@ class Detalle : AppCompatActivity() {
 
         var nombre = intent.getStringExtra("nombre")
         var marca = intent.getStringExtra("marca")
+        var detalle = intent.getStringExtra("detalle")
 
         b.tvTitulo.isEnabled=false
         b.tvTitulo.setText(nombre)
+        b.tvDetalle.setText(detalle)
 
         val imageResource: Int = this.resources.getIdentifier(marca, null, this.packageName)
         var res: Drawable = this.resources.getDrawable(imageResource)
@@ -33,11 +35,17 @@ class Detalle : AppCompatActivity() {
 
         if(intent.getStringExtra("objeto")=="camion"){
             coleccion="camiones"
+
+            b.tvTituloDetalle.text="KM"
+
             almacen=Almacen.camiones
         }
 
         if(intent.getStringExtra("objeto")=="empleado"){
             coleccion="empleados"
+
+            b.tvTituloDetalle.text=this.getString(R.string.Telefono)
+
             almacen=Almacen.empleados
         }
 

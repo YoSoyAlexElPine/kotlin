@@ -18,31 +18,36 @@ class CrearEmpleado : AppCompatActivity() {
         setContentView(b.root)
 
         b.bCrearCamion.setOnClickListener(){
-            if (!b.tbNombre.text.isNullOrEmpty()){
+            if (!b.tbNombre.text.isNullOrEmpty() && !b.tbTelefono.text.isNullOrEmpty()){
 
                 if(!Almacen.empleados.any {it.titulo == b.tbNombre.text.toString()}) {
 
                     try {
-                        db.collection("empleados").document(b.tbNombre.text.toString()).set(hashMapOf("nombre" to b.tbNombre.text.toString()))
+                        db.collection("empleados").document(b.tbNombre.text.toString()).set(hashMapOf("nombre" to b.tbNombre.text.toString(),
+                            "telefono" to b.tbTelefono.text.toString()))
                         Almacen.empleados.add(
                             Card(
                                 b.tbNombre.text.toString(),
                                 "@drawable/empleado",
-                                Intent(this, Detalle::class.java)
+                                Intent(this, Detalle::class.java),
+                                b.tbTelefono.text.toString()
+                                )
                             )
-                        )
 
                         b.tbNombre.setText("")
 
                     } catch (e: Exception) {
 
-                        db.collection("empleados").document(b.tbNombre.text.toString()).set(hashMapOf("nombre" to b.tbNombre.text.toString()))
+                        db.collection("empleados").document(b.tbNombre.text.toString()).set(hashMapOf(
+                            "nombre" to b.tbNombre.text.toString(),
+                            "telefono" to b.tbTelefono.text.toString()))
 
                         Almacen.empleados.add(
                             Card(
                                 b.tbNombre.text.toString(),
                                 "@drawable/empleado",
-                                Intent(this, Detalle::class.java)
+                                Intent(this, Detalle::class.java),
+                                b.tbTelefono.text.toString()
                             )
                         )
                         b.tbNombre.setText("")

@@ -21,10 +21,11 @@ class CrearCamion : AppCompatActivity() {
 
 
         b.bCrearCamion.setOnClickListener(){
-            if (!b.tbChofer.text.isNullOrEmpty() && !b.tbMarca.text.isNullOrEmpty()&& !b.tbNombre.text.isNullOrEmpty()){
+            if (!b.tbChofer.text.isNullOrEmpty() && !b.tbMarca.text.isNullOrEmpty()&& !b.tbNombre.text.isNullOrEmpty()&& !b.tbKm.text.isNullOrEmpty()){
 
                 var chofer = b.tbChofer.text.toString()
                 var nombre = b.tbNombre.text.toString()
+                var km = b.tbKm.text.toString()
 
                 var marca=b.tbMarca.text.toString().trim().toLowerCase()
 
@@ -35,14 +36,16 @@ class CrearCamion : AppCompatActivity() {
                         db.collection("camiones").document(nombre).set(
                             hashMapOf(
                             "chofer" to chofer,
-                            "marca" to marca)
+                            "marca" to marca,
+                                "km" to km)
                         )
 
                         Almacen.camiones.add(
                             Card(
                                 b.tbNombre.text.toString(),
                                 "@drawable/" + marca,
-                                Intent(this, Detalle::class.java)
+                                Intent(this, Detalle::class.java),
+                                km
                             )
                         )
                         b.tbNombre.setText("")
@@ -50,13 +53,15 @@ class CrearCamion : AppCompatActivity() {
                         db.collection("camiones").document(nombre).set(
                             hashMapOf(
                                 "chofer" to chofer,
-                                "marca" to marca)
-                        )
+                                "marca" to marca,
+                                "km" to km))
+
                         Almacen.camiones.add(
                             Card(
                                 b.tbNombre.text.toString(),
                                 "@drawable/camion2",
-                                Intent(this, Detalle::class.java)
+                                Intent(this, Detalle::class.java),
+                                km
                             )
                         )
                         b.tbNombre.setText("")

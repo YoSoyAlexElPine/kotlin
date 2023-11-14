@@ -60,6 +60,7 @@ class Empleados : AppCompatActivity(), OnCardClickListener {
         intent.putExtra("objeto", "empleado")
         intent.putExtra("marca", card.imagen)
         intent.putExtra("nombre", card.titulo)
+        intent.putExtra("detalle", card.detalle)
 
         startActivity(intent)
     }

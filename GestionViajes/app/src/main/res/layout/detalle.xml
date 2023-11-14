@@ -98,6 +98,57 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_detalle2"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_margin="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_detalle">
+
+
+        <TextView
+            android:id="@+id/tv_tituloDetalle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo_da"
+
+            android:text="Detalle"
+            android:textColor="@color/white"
+            android:textSize="30dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="@color/white"
+            app:boxStrokeColor="@color/white"
+            app:hintTextColor="@color/white">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tv_detalle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+
+                android:layout_weight="1"
+                android:fontFamily="@font/baloo_da"
+                android:gravity="left"
+                android:outlineAmbientShadowColor="@color/white"
+                android:outlineSpotShadowColor="@color/white"
+                android:text="Camion"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="30dp"
+                app:boxStrokeColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -105,7 +156,7 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_detalle">
+        app:layout_constraintTop_toBottomOf="@+id/ll_detalle2">
 
         <Button
             android:id="@+id/b_eliminarCard"
