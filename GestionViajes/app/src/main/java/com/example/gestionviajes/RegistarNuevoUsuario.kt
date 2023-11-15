@@ -1,52 +1,57 @@
 package com.example.gestionviajes
 
-import Modelo.Almacen
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.isVisible
 import com.example.gestionviajes.databinding.RegistarNuevoUsuarioBinding
-import com.google.android.material.switchmaterial.SwitchMaterial
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * Actividad para registrar nuevos usuarios.
+ * Permite crear nuevos usuarios y almacenar sus datos en Firestore.
+ * @author Alex Pineño Sanchez
+ */
 class RegistarNuevoUsuario : AppCompatActivity() {
-    private val db=FirebaseFirestore.getInstance()
-    var fa = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
+    private var fa = FirebaseAuth.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var b=RegistarNuevoUsuarioBinding.inflate(layoutInflater)
+        val b = RegistarNuevoUsuarioBinding.inflate(layoutInflater)
         setContentView(b.root)
 
-        b.admin.visibility= View.INVISIBLE
+        // Inicialmente, oculta el campo de administrador hasta que se active la opción correspondiente
+        b.admin.visibility = View.INVISIBLE
 
-        b.sAdministrador.setOnCheckedChangeListener { _, a ->
-            if(b.sAdministrador.isChecked){
+        // Mostrar el campo de contraseña para administradores si se activa la opción de administrador
+        b.sAdministrador.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
                 b.admin.visibility = View.VISIBLE
             } else {
                 b.tbContrasenaAdministrador.setText("")
                 b.admin.visibility = View.INVISIBLE
             }
-
         }
 
-        b.bCrearUsuario.setOnClickListener(){
-            if(b.tbMail.text.isNullOrEmpty() || b.tbClave.text.isNullOrEmpty() || b.tbNombreCompleto.text.isNullOrEmpty() || b.tbApodo.text.isNullOrEmpty()){
-                Toast.makeText(this,"Rellena los campos",Toast.LENGTH_SHORT).show()
+        // Crear un nuevo usuario
+        b.bCrearUsuario.setOnClickListener {
+            if (b.tbMail.text.isNullOrEmpty() || b.tbClave.text.isNullOrEmpty() || b.tbNombreCompleto.text.isNullOrEmpty() || b.tbApodo.text.isNullOrEmpty()) {
+                // Verificar si algún campo está vacío y mostrar un mensaje
+                Toast.makeText(this, this.getString(R.string.RellenaCampos), Toast.LENGTH_SHORT).show()
             } else {
                 val mail = b.tbMail.text.toString()
                 val nombre = b.tbNombreCompleto.text.toString()
 
-                // Verificar si el mail ya está en uso en la colección 'usuarios'
+                // Verificar si el correo ya está en uso en la colección 'usuarios'
                 db.collection("usuarios")
                     .whereEqualTo("mail", mail)
                     .get()
                     .addOnSuccessListener { documents ->
                         if (!documents.isEmpty) {
-                            Toast.makeText(this, "El mail ya está en uso", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, this.getString(R.string.MailEnUso), Toast.LENGTH_SHORT).show()
                         } else {
                             // Verificar si el nombre ya está en uso en la colección 'usuarios'
                             db.collection("usuarios")
@@ -54,49 +59,37 @@ class RegistarNuevoUsuario : AppCompatActivity() {
                                 .get()
                                 .addOnSuccessListener { documents ->
                                     if (!documents.isEmpty) {
-                                        Toast.makeText(this, "El nombre ya está en uso", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this, this.getString(R.string.NombreEnUso), Toast.LENGTH_SHORT).show()
                                     } else {
-                                        // Aquí puedes continuar con la lógica para crear el usuario
-                                        // ...
-
-                                        // Por ejemplo:
-                                        // Crear el usuario con los datos proporcionados
+                                        // Almacenar los datos del nuevo usuario en Firestore
                                         db.collection("usuarios").document(b.tbApodo.text.toString()).set(
                                             hashMapOf(
                                                 "mail" to mail,
                                                 "nombre" to nombre,
                                                 "admin" to b.sAdministrador.isChecked,
-                                                // Otros campos que desees guardar
                                             )
                                         )
-
-                                        // También puedes realizar otras operaciones aquí, como crear el usuario en la autenticación de Firebase
-                                        // ...
-
-                                        // Mostrar mensaje de éxito
-                                        Toast.makeText(this, "Usuario creado exitosamente", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this, this.getString(R.string.UsuarioCreado), Toast.LENGTH_SHORT).show()
                                     }
                                 }
                                 .addOnFailureListener { exception ->
                                     // Manejar errores al obtener documentos
                                     exception.printStackTrace()
-                                    Toast.makeText(this,"Error al verificar el nombre",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this, this.getString(R.string.ErrorNombre), Toast.LENGTH_SHORT).show()
                                 }
                         }
                     }
                     .addOnFailureListener { exception ->
                         // Manejar errores al obtener documentos
                         exception.printStackTrace()
-                        Toast.makeText(this,"Error al verificar el mail",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, this.getString(R.string.ErroMail), Toast.LENGTH_SHORT).show()
                     }
             }
         }
 
-
-        b.bCerrarSesionCrearUsuario.setOnClickListener (){
+        // Cerrar la actividad de registro de usuario
+        b.bCerrarSesionCrearUsuario.setOnClickListener {
             finish()
         }
-
-
     }
 }

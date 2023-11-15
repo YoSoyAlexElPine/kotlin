@@ -17,7 +17,7 @@
     <string name="AddCamion">Añadir Camion</string>
     <string name="AddEmploye">Añadir Chofer</string>
     <string name="Add">Añadir</string>
-    <string name="NombreSignificativo">Nombre significativo</string>
+    <string name="NombreSignificativo">Nombre usuario</string>
     <string name="Chofer">Chofer</string>
     <string name="Marca">Marca</string>
     <string name="Viaje">Viaje</string>
@@ -27,4 +27,15 @@
     <string name="AdminContrasena">Contraseña Aministrador</string>
     <string name="Usuario">Usuario</string>
     <string name="Telefono">Telefono</string>
+    <string name="prefs_file">com.expample.gestionviajes.PREFERENCE_FILE_KEY</string>
+    <string name="YaExiste">ya existe</string>
+    <string name="IntroduceNombre">Introduce un nombre</string>
+    <string name="Editar">Editar</string>
+    <string name="Confirmar">Confirmar</string>
+    <string name="MailEnUso">El mail ya esta en uso</string>
+    <string name="NombreEnUso">El usuario esta en uso</string>
+    <string name="RellenaCampos">Rellena los campos</string>
+    <string name="UsuarioCreado">Usuario creado</string>
+    <string name="ErroMail">Error verificando mail</string>
+    <string name="ErrorNombre">Error verificando nombre usuario</string>
 </resources>

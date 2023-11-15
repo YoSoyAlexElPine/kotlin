@@ -3,6 +3,7 @@ package com.example.gestionviajes
 import Modelo.Almacen
 import Modelo.Card
 import Modelo.FactoriaCard
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,43 +14,53 @@ import com.example.gestionviajes.Adaptador.OnCardClickListener
 import com.example.gestionviajes.databinding.InicioBinding
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * Actividad principal que muestra la interfaz de inicio de la aplicación.
+ * Gestiona la visualización de tarjetas en el RecyclerView y la navegación al hacer clic en ellas.
+ * @author Alex Pineño Sanchez
+ */
 class Inicio : AppCompatActivity(), OnCardClickListener {
     lateinit var binding: InicioBinding
-    private lateinit var firebaseauth : FirebaseAuth
-    val TAG = "APS"
+    private lateinit var firebaseauth: FirebaseAuth
+    val TAG = "APS" // Etiqueta para logs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Inflar y establecer la vista de la actividad
         binding = InicioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Establecer la pantalla en modo de pantalla completa
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        val rv=binding.rvInicio
+        val recyclerView = binding.rvInicio
 
+        // Sincronizar datos de Firestore y actualizar la lista de tarjetas en Almacen.cards
         FactoriaCard.sincronizar(this)
+        Almacen.cards = FactoriaCard.inicioAdmin(this)
+        val adapter = Adaptador(Almacen.cards, this, this)
 
-        Almacen.cards=FactoriaCard.inicioAdmin(this)
-        val adaptador=Adaptador(Almacen.cards,this,this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
 
-        rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter=adaptador
-
-
-        //Para la autenticación, de cualquier tipo.
+        // Para la autenticación, de cualquier tipo.
         firebaseauth = FirebaseAuth.getInstance()
 
         binding.bCerrarSesion.setOnClickListener {
-            Log.e(TAG, firebaseauth.currentUser.toString())
 
-            firebaseauth.signOut()
+            val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+            prefs.clear()
+            prefs.apply()
+
+            FirebaseAuth.getInstance().signOut()
             finish()
         }
     }
+
     // Implementa la función de la interfaz para manejar la navegación
     override fun onCardClick(card: Card) {
         // Aquí puedes manejar la navegación según el clic en el RecyclerView

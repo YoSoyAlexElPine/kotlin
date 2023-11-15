@@ -2,18 +2,23 @@ package Modelo
 
 import android.content.Context
 import android.content.Intent
-import com.example.gestionviajes.AsignarTarea
-import com.example.gestionviajes.Camiones
-import com.example.gestionviajes.Detalle
-import com.example.gestionviajes.Empleados
-import com.example.gestionviajes.Inicio
-import com.example.gestionviajes.R
+import com.example.gestionviajes.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * FactoriaCard es un objeto singleton que contiene métodos para generar objetos Card y sincronizar datos con Firestore.
+ * @author Alex Pineño Sanchez
+ */
 object FactoriaCard {
-    private val db= FirebaseFirestore.getInstance()
-    fun inicioAdmin(contexto: Context):ArrayList<Card> {
+    private val db = FirebaseFirestore.getInstance()
+
+    /**
+     * Genera una lista de Cards para la pantalla de inicio del administrador.
+     * @param contexto El contexto actual de la aplicación.
+     * @return Una lista de objetos Card.
+     */
+    fun inicioAdmin(contexto: Context): ArrayList<Card> {
         val listaCards = arrayListOf(
             Card(
                 contexto.getString(R.string.Camiones),
@@ -34,61 +39,76 @@ object FactoriaCard {
                 ""
             )
         )
-
-
         return listaCards
     }
 
-
-
-
-    fun documentoACardCamion(contexto: Context, document: DocumentSnapshot):Card{
-        return Card(document.id,"@drawable/"+document.getString("marca").toString(),Intent(contexto,Detalle::class.java),document.getString("km").toString())
+    /**
+     * Convierte un DocumentSnapshot relacionado con un camión en un objeto Card.
+     * @param contexto El contexto actual de la aplicación.
+     * @param document El DocumentSnapshot que contiene los datos del camión.
+     * @return Un objeto Card con los detalles del camión.
+     */
+    fun documentoACardCamion(contexto: Context, document: DocumentSnapshot): Card {
+        return Card(
+            document.id,
+            "@drawable/" + document.getString("marca").toString(),
+            Intent(contexto, Detalle::class.java),
+            document.getString("km").toString()
+        )
     }
-    fun documentoACardEmpleado(contexto: Context, document: DocumentSnapshot):Card{
-        return Card(document.id,"@drawable/empleado",Intent(contexto,Detalle::class.java),document.getString("telefono").toString())
+
+    /**
+     * Convierte un DocumentSnapshot relacionado con un empleado en un objeto Card.
+     * @param contexto El contexto actual de la aplicación.
+     * @param document El DocumentSnapshot que contiene los datos del empleado.
+     * @return Un objeto Card con los detalles del empleado.
+     */
+    fun documentoACardEmpleado(contexto: Context, document: DocumentSnapshot): Card {
+        return Card(
+            document.id,
+            "@drawable/empleado",
+            Intent(contexto, Detalle::class.java),
+            document.getString("telefono").toString()
+        )
     }
 
+    /**
+     * Sincroniza datos de Firestore para camiones, empleados y claves de administrador.
+     * @param contexto El contexto actual de la aplicación.
+     */
     fun sincronizar(contexto: Context) {
         val db = FirebaseFirestore.getInstance()
-        val camionesCollection = db.collection("camiones")
 
+        // Sincronización de datos para la colección 'camiones'
+        val camionesCollection = db.collection("camiones")
         camionesCollection.get()
             .addOnSuccessListener { documents ->
                 Almacen.camiones.clear()
                 for (document in documents) {
-                    // Convierte cada documento en un objeto Card y agrégalo a Almacen.camiones
-                    val card = documentoACardCamion(contexto,document)
+                    val card = documentoACardCamion(contexto, document)
                     Almacen.camiones.add(card)
                 }
-
-
             }
             .addOnFailureListener { exception ->
-                // Manejar errores al obtener documentos
                 exception.printStackTrace()
             }
 
+        // Sincronización de datos para la colección 'empleados'
         val empleadosCollection = db.collection("empleados")
-
         empleadosCollection.get()
             .addOnSuccessListener { documents ->
                 Almacen.empleados.clear()
                 for (document in documents) {
-                    // Convierte cada documento en un objeto Card y agrégalo a Almacen.camiones
-                    val card = documentoACardEmpleado(contexto,document)
+                    val card = documentoACardEmpleado(contexto, document)
                     Almacen.empleados.add(card)
                 }
-
-
             }
             .addOnFailureListener { exception ->
-                // Manejar errores al obtener documentos
                 exception.printStackTrace()
             }
 
+        // Sincronización de datos para la colección 'claveAdmin'
         val claves = db.collection("claveAdmin")
-
         claves.get()
             .addOnSuccessListener { documents ->
                 Almacen.adminClaves.clear()
@@ -97,7 +117,6 @@ object FactoriaCard {
                 }
             }
             .addOnFailureListener { exception ->
-                // Manejar errores al obtener documentos
                 exception.printStackTrace()
             }
     }

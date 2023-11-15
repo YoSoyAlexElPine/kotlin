@@ -6,118 +6,126 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gestionviajes.AuxiliarDB.AdminConexion
 import com.example.gestionviajes.Detalle
-import java.util.Locale
 
-
+/**
+ * Objeto Singleton para gestionar operaciones en la base de datos.
+ *
+ * Este objeto proporciona funciones para operar la base de datos, como agregar, eliminar, modificar y buscar registros.
+ * También proporciona una función para obtener la lista de empleados desde la base de datos.
+ *
+ * @property DATABASE_NAME Nombre de la base de datos.
+ * @property DATABASE_VERSION Número de versión de la base de datos.
+ * @constructor Crea un objeto para gestionar operaciones en la base de datos.
+ * @author Alex Pineño Sanchez
+ */
 object Conexion {
 
-    private  var DATABASE_NAME = "administracion.db3"
-    private  var DATABASE_VERSION = 1
+    private var DATABASE_NAME = "administracion.db3" // Nombre de la base de datos
+    private var DATABASE_VERSION = 1 // Número de versión de la base de datos
 
-
-    fun cambiarBD(nacionalidadBD:String){
+    /**
+     * Función para cambiar el nombre de la base de datos.
+     *
+     * @param nacionalidadBD Nuevo nombre de la base de datos.
+     */
+    fun cambiarBD(nacionalidadBD: String) {
         this.DATABASE_NAME = nacionalidadBD
     }
 
-    fun addCard(contexto: AppCompatActivity, p: Card):Long{
-        val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
-        val bd = admin.writableDatabase //habilito la BBDD para escribir en ella, tambié deja leer.
-        val registro = ContentValues() //objeto de kotlin, contenido de valores, un Map. Si haceis ctrl+clic lo veis.
-        registro.put("nombre", p.titulo)
-        registro.put("nacionalidad", p.imagen)
-        val codigo = bd.insert("personas", null, registro)
-        bd.close()
-        return codigo
-    }
-
-    fun delCard(contexto: AppCompatActivity, nombre: String):Int{
-        val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
-        val bd = admin.writableDatabase
-
-        val cant = bd.delete("personas", "nombre=?", arrayOf(nombre))
-        bd.close()
-        return cant
-    }
-
-    fun modCard(contexto: AppCompatActivity, nombre:String, p:Card):Int {
+    /**
+     * Agrega una tarjeta (registro) a la base de datos.
+     *
+     * @param contexto Contexto de la actividad.
+     * @param p Tarjeta a agregar.
+     * @return Código de la fila insertada.
+     */
+    fun addCard(contexto: AppCompatActivity, p: Card): Long {
         val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
         val bd = admin.writableDatabase
         val registro = ContentValues()
 
+        registro.put("nombre", p.nombre)
+        registro.put("telefono", p.imagen)
 
-        val cant = bd.update("personas", registro, "nombre=?", arrayOf(nombre.toString()))
+        val codigo = bd.insert("empleados", null, registro)
+        bd.close()
+        return codigo
+    }
 
+    /**
+     * Elimina una tarjeta (registro) de la base de datos.
+     *
+     * @param contexto Contexto de la actividad.
+     * @param nombre Nombre de la tarjeta a eliminar.
+     * @return Cantidad de filas eliminadas.
+     */
+    fun delCard(contexto: AppCompatActivity, nombre: String): Int {
+        val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
+        val bd = admin.writableDatabase
+
+        val cant = bd.delete("empleados", "nombre=?", arrayOf(nombre))
         bd.close()
         return cant
     }
 
-    fun buscarCard(contexto: AppCompatActivity, nombre:String,objeto:String):Card? {
-        var p:Card? = null
+    /**
+     * Modifica una tarjeta (registro) de la base de datos.
+     *
+     * @param contexto Contexto de la actividad.
+     * @param nombre Nombre de la tarjeta a modificar.
+     * @param p Nueva tarjeta con los datos actualizados.
+     * @param objeto Objeto relacionado con la tarjeta.
+     * @return Cantidad de filas modificadas.
+     */
+    fun modCard(contexto: AppCompatActivity, nombre: String, p: Card, objeto: String): Int {
+        val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
+        val bd = admin.writableDatabase
+        val registro = ContentValues()
+
+        registro.put("telefono", p.detalle)
+
+        val cant = bd.update("empleados", registro, "nombre=?", arrayOf(nombre))
+        bd.close()
+        return cant
+    }
+
+    /**
+     * Busca una tarjeta (registro) en la base de datos por nombre y la devuelve como un objeto Card.
+     *
+     * @param contexto Contexto de la actividad.
+     * @param nombre Nombre de la tarjeta a buscar.
+     * @return Objeto Card encontrado o null si no se encuentra.
+     */
+    fun buscarCard(contexto: AppCompatActivity, nombre: String): Card? {
+        var p: Card? = null
         val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
         val bd = admin.readableDatabase
 
-        var fila =bd.rawQuery(
-            "SELECT * FROM empleados WHERE nombre=?",
-            arrayOf(nombre)
-        )
-
-        if (objeto=="empleado"){
-            fila =bd.rawQuery(
-                "SELECT telefono FROM empleados WHERE nombre=?",
-                arrayOf(nombre)
-            )
-        }
-        if (objeto=="camion"){
-            fila =bd.rawQuery(
-                "SELECT marca,km FROM camiones WHERE nombre=?",
-                arrayOf(nombre)
-            )
-        }
+        val fila = bd.rawQuery("SELECT telefono FROM empleados WHERE nombre=?", arrayOf(nombre))
 
         if (fila.moveToFirst()) {
-
-            if (objeto=="empleado"){
-                p = Card(nombre,"drawable/empleado", Intent(contexto,Detalle::class.java),fila.getString(0))
-            }
-            if (objeto=="camion"){
-                p = Card(nombre,"drawable/"+fila.getString(0), Intent(contexto,Detalle::class.java),fila.getString(1))
-            }
-
+            p = Card(nombre, "drawable/empleado", Intent(contexto, Detalle::class.java), fila.getString(0))
         }
         bd.close()
         return p
     }
 
-    fun obtenerEmpleados(contexto: AppCompatActivity):MutableList<Card>{
-        val Cards:MutableList<Card> = mutableListOf()
+    /**
+     * Obtiene la lista de empleados como una lista de objetos Card desde la base de datos.
+     *
+     * @param contexto Contexto de la actividad.
+     * @return Lista de objetos Card (empleados) desde la base de datos.
+     */
+    fun obtenerEmpleados(contexto: AppCompatActivity): MutableList<Card> {
+        val Cards: MutableList<Card> = mutableListOf()
 
         val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
-
         val bd = admin.readableDatabase
+
         val fila = bd.rawQuery("select nombre,telefono from empleados", null)
         while (fila.moveToNext()) {
-
-            val imagen="@drawable/empleado"
-
-            val p = Card(fila.getString(0),imagen,Intent(contexto,Detalle::class.java),fila.getString(1))
-            Cards.add(p)
-        }
-        bd.close()
-        return Cards
-    }
-
-    fun obtenerCamiones(contexto: AppCompatActivity):MutableList<Card>{
-        val Cards:MutableList<Card> = mutableListOf()
-
-        val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
-
-        val bd = admin.readableDatabase
-        val fila = bd.rawQuery("select nombre,marca,km from camiones", null)
-        while (fila.moveToNext()) {
-
-            val imagen="@drawable/"+fila.getString(1).toString().toLowerCase(Locale.ROOT)
-
-            val p = Card(fila.getString(0),imagen,Intent(contexto,Detalle::class.java),fila.getString(2))
+            val imagen = "@drawable/empleado"
+            val p = Card(fila.getString(0), imagen, Intent(contexto, Detalle::class.java), fila.getString(1))
             Cards.add(p)
         }
         bd.close()

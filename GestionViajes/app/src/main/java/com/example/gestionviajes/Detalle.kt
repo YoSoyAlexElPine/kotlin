@@ -8,87 +8,85 @@ import android.widget.Toast
 import com.example.gestionviajes.databinding.DetalleBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * Actividad que muestra los detalles de un camión o empleado y permite editar o eliminar la información.
+ * También permite actualizar los datos de Almacen.camiones o Almacen.empleados si se realizaron cambios.
+ * @author Alex Pineño Sanchez
+ */
 class Detalle : AppCompatActivity() {
-    private val db= FirebaseFirestore.getInstance()
+    private val db = FirebaseFirestore.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var b = DetalleBinding.inflate(layoutInflater)
-        setContentView(b.root)
+        // Inflar y establecer la vista de la actividad
+        var binding = DetalleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        // Obtener datos del intent
+        val nombre = intent.getStringExtra("nombre")
+        val marca = intent.getStringExtra("marca")
+        val detalle = intent.getStringExtra("detalle")
 
-        var nombre = intent.getStringExtra("nombre")
-        var marca = intent.getStringExtra("marca")
-        var detalle = intent.getStringExtra("detalle")
+        // Mostrar detalles en la interfaz gráfica
+        binding.tvTitulo.isEnabled = false
+        binding.tvTitulo.setText(nombre)
+        binding.tvDetalle.setText(detalle)
 
-        b.tvTitulo.isEnabled=false
-        b.tvTitulo.setText(nombre)
-        b.tvDetalle.setText(detalle)
-
+        // Establecer la imagen del camión/empleado
         val imageResource: Int = this.resources.getIdentifier(marca, null, this.packageName)
-        var res: Drawable = this.resources.getDrawable(imageResource)
+        val drawable: Drawable = this.resources.getDrawable(imageResource)
+        binding.tvImagen.setImageDrawable(drawable)
 
-        b.tvImagen.setImageDrawable(res)
+        // Variables para controlar la colección y lista de almacenamiento
+        lateinit var coleccion: String
+        var almacen = Almacen.cards
 
-        lateinit var coleccion:String
-        var almacen=Almacen.cards
-
-        if(intent.getStringExtra("objeto")=="camion"){
-            coleccion="camiones"
-
-            b.tvTituloDetalle.text="KM"
-
-            almacen=Almacen.camiones
+        // Determinar el tipo de objeto y su colección correspondiente
+        if (intent.getStringExtra("objeto") == "camion") {
+            coleccion = "camiones"
+            binding.tvTituloDetalle.text = "KM"
+            almacen = Almacen.camiones
+        } else if (intent.getStringExtra("objeto") == "empleado") {
+            coleccion = "empleados"
+            binding.tvTituloDetalle.text = this.getString(R.string.Telefono)
+            almacen = Almacen.empleados
         }
 
-        if(intent.getStringExtra("objeto")=="empleado"){
-            coleccion="empleados"
-
-            b.tvTituloDetalle.text=this.getString(R.string.Telefono)
-
-            almacen=Almacen.empleados
-        }
-
-        b.bEliminarCard.setOnClickListener(){
-
+        // Acción al hacer clic en el botón "Eliminar"
+        binding.bEliminarCard.setOnClickListener() {
             db.collection(coleccion).document(nombre.toString()).delete()
-
-            almacen.removeIf { it.titulo == nombre}
-
+            almacen.removeIf { it.nombre == nombre }
             finish()
         }
 
-        b.bCerrarAsignar.setOnClickListener(){
-            if(intent.getStringExtra("objeto")=="camion"){
-                Almacen.camiones=almacen
-            }
-            if(intent.getStringExtra("objeto")=="empleado"){
-                Almacen.empleados=almacen
+        // Acción al hacer clic en el botón "Cerrar"
+        binding.bCerrarAsignar.setOnClickListener() {
+            if (intent.getStringExtra("objeto") == "camion") {
+                Almacen.camiones = almacen
+            } else if (intent.getStringExtra("objeto") == "empleado") {
+                Almacen.empleados = almacen
             }
             finish()
         }
 
-        b.bEditarCard.setOnClickListener(){
+        // Acción al hacer clic en el botón "Editar"
+        binding.bEditarCard.setOnClickListener() {
+            val id = binding.tvTitulo.text.toString()
 
-            var id=b.tvTitulo.text.toString()
-
-            if(b.bEditarCard.text=="Editar"){
-                b.bEditarCard.text="Confirmar"
-                b.tvTitulo.isEnabled=true
-            }else {
-                if (b.bEditarCard.text == "Confirmar") {
-                    if (b.tvTitulo.text.isNullOrEmpty()) {
-                        Toast.makeText(this, "Introduce un nombre", Toast.LENGTH_SHORT).show()
+            if (binding.bEditarCard.text == this.getString(R.string.Editar)) {
+                binding.bEditarCard.text = this.getString(R.string.Confirmar)
+                binding.tvTitulo.isEnabled = true
+            } else {
+                if (binding.bEditarCard.text == this.getString(R.string.Confirmar)) {
+                    if (binding.tvTitulo.text.isNullOrEmpty()) {
+                        Toast.makeText(this, this.getString(R.string.IntroduceNombre), Toast.LENGTH_SHORT).show()
                     } else {
-                        b.tvTitulo.isEnabled=false
-                        b.bEditarCard.text="Editar"
-
+                        binding.tvTitulo.isEnabled = false
+                        binding.bEditarCard.text = this.getString(R.string.Editar)
                     }
                 }
             }
-
-
         }
-
     }
 }
