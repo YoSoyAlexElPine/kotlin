@@ -38,12 +38,15 @@ class RegistarNuevoUsuario : AppCompatActivity() {
 
         // Crear un nuevo usuario
         b.bCrearUsuario.setOnClickListener {
-            if (b.tbMail.text.isNullOrEmpty() || b.tbClave.text.isNullOrEmpty() || b.tbNombreCompleto.text.isNullOrEmpty() || b.tbApodo.text.isNullOrEmpty()) {
+            if (b.tbMail.text.isNullOrEmpty() || b.tbClave.text.isNullOrEmpty() || b.tbTelefono.text.isNullOrEmpty() || b.tbApodo.text.isNullOrEmpty()) {
                 // Verificar si algún campo está vacío y mostrar un mensaje
                 Toast.makeText(this, this.getString(R.string.RellenaCampos), Toast.LENGTH_SHORT).show()
             } else {
+
                 val mail = b.tbMail.text.toString()
-                val nombre = b.tbNombreCompleto.text.toString()
+                val telefono = b.tbTelefono.text.toString()
+                val clave = b.tbClave.text.toString()
+                val nombre = b.tbApodo.text.toString()
 
                 // Verificar si el correo ya está en uso en la colección 'usuarios'
                 db.collection("usuarios")
@@ -66,6 +69,8 @@ class RegistarNuevoUsuario : AppCompatActivity() {
                                             hashMapOf(
                                                 "mail" to mail,
                                                 "nombre" to nombre,
+                                                "telefono" to telefono,
+                                                "clave" to clave,
                                                 "admin" to b.sAdministrador.isChecked,
                                             )
                                         )

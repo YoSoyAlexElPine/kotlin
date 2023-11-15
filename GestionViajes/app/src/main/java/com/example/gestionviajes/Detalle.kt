@@ -28,9 +28,14 @@ class Detalle : AppCompatActivity() {
         val marca = intent.getStringExtra("marca")
         val detalle = intent.getStringExtra("detalle")
 
+        var bd=""
+        var dato=""
+
         // Mostrar detalles en la interfaz gráfica
         binding.tvTitulo.isEnabled = false
         binding.tvTitulo.setText(nombre)
+
+        binding.tvDetalle.isEnabled = false
         binding.tvDetalle.setText(detalle)
 
         // Establecer la imagen del camión/empleado
@@ -46,10 +51,18 @@ class Detalle : AppCompatActivity() {
         if (intent.getStringExtra("objeto") == "camion") {
             coleccion = "camiones"
             binding.tvTituloDetalle.text = "KM"
+
+            bd="camiones"
+            dato="km"
+
             almacen = Almacen.camiones
         } else if (intent.getStringExtra("objeto") == "empleado") {
             coleccion = "empleados"
             binding.tvTituloDetalle.text = this.getString(R.string.Telefono)
+
+            bd="usuarios"
+            dato="telefono"
+
             almacen = Almacen.empleados
         }
 
@@ -70,23 +83,38 @@ class Detalle : AppCompatActivity() {
             finish()
         }
 
-        // Acción al hacer clic en el botón "Editar"
+// Acción al hacer clic en el botón "Editar"
         binding.bEditarCard.setOnClickListener() {
             val id = binding.tvTitulo.text.toString()
 
             if (binding.bEditarCard.text == this.getString(R.string.Editar)) {
                 binding.bEditarCard.text = this.getString(R.string.Confirmar)
-                binding.tvTitulo.isEnabled = true
+                binding.tvDetalle.isEnabled = true
             } else {
                 if (binding.bEditarCard.text == this.getString(R.string.Confirmar)) {
-                    if (binding.tvTitulo.text.isNullOrEmpty()) {
+                    val nuevoDetalle = binding.tvDetalle.text.toString()
+
+                    if (nuevoDetalle.isNullOrEmpty()) {
                         Toast.makeText(this, this.getString(R.string.IntroduceNombre), Toast.LENGTH_SHORT).show()
                     } else {
-                        binding.tvTitulo.isEnabled = false
-                        binding.bEditarCard.text = this.getString(R.string.Editar)
+                        // Aquí se actualiza el campo "detalle" en Firestore
+                        val documento = db.collection(bd).document(id)
+
+                        documento.update(dato, nuevoDetalle)
+                            .addOnSuccessListener {
+
+                                Modelo.FactoriaCard.sincronizar(this)
+
+                                binding.tvDetalle.isEnabled = false
+                                binding.bEditarCard.text = this.getString(R.string.Editar)
+                            }
+                            .addOnFailureListener { exception ->
+                                exception.printStackTrace()
+                            }
                     }
                 }
             }
         }
+
     }
 }

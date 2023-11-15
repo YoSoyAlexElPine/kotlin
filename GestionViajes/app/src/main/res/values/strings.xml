@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">GestionViajes</string>
-    <string name="your_web_client_id">54315647192-s328bkjnfj9m808s6p8ps3kh2ela13a1.apps.googleusercontent.com</string>
+    <string name="your_web_client_id">54315647192-i0utimuj8ses7jsn5uomi23l0v3ncouv.apps.googleusercontent.com</string>
     <string name="Bienvenida">Buenos dias y bienvenido</string>
     <string name="BienvenidaRegistro">Registrate para continuar</string>
     <string name="Constrasena">Contraseña</string>
@@ -38,4 +38,5 @@
     <string name="UsuarioCreado">Usuario creado</string>
     <string name="ErroMail">Error verificando mail</string>
     <string name="ErrorNombre">Error verificando nombre usuario</string>
+    <string name="Aceptar">Aceptar</string>
 </resources>

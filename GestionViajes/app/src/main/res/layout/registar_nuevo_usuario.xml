@@ -104,25 +104,7 @@
                 app:boxStrokeColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:textColorHint="@color/white"
-            app:hintTextColor="@color/white"
-            app:boxStrokeColor="@color/white">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tb_nombreCompleto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nombre Completo"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:outlineAmbientShadowColor="@color/white"
-                android:outlineSpotShadowColor="@color/white"
-                app:boxStrokeColor="@color/white" />
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -143,7 +125,25 @@
                 android:textColorHint="@color/white"
                 app:boxStrokeColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:textColorHint="@color/white"
+            app:hintTextColor="@color/white"
+            app:boxStrokeColor="@color/white">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tb_telefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/Telefono"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:outlineAmbientShadowColor="@color/white"
+                android:outlineSpotShadowColor="@color/white"
+                app:boxStrokeColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Switch
             android:id="@+id/s_administrador"

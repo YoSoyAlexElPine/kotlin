@@ -37,6 +37,12 @@ object FactoriaCard {
                 "@drawable/tarea",
                 Intent(contexto, AsignarTarea::class.java),
                 ""
+            ),
+            Card(
+                "Mail",
+                "@drawable/fantasma",
+                Intent(contexto, EnviarMail::class.java),
+                ""
             )
         )
         return listaCards
@@ -93,19 +99,21 @@ object FactoriaCard {
                 exception.printStackTrace()
             }
 
-        // Sincronización de datos para la colección 'empleados'
-        val empleadosCollection = db.collection("empleados")
-        empleadosCollection.get()
+        // Sincronización de datos para la colección 'usuarios' con campo 'admin' igual a false
+        val usuariosCollection = db.collection("usuarios")
+        usuariosCollection.whereEqualTo("admin", false)
+            .get()
             .addOnSuccessListener { documents ->
-                Almacen.empleados.clear()
+                Almacen.empleados.clear() // Limpiar la lista de empleados (o usuarios)
                 for (document in documents) {
                     val card = documentoACardEmpleado(contexto, document)
-                    Almacen.empleados.add(card)
+                    Almacen.empleados.add(card) // Agregar los usuarios filtrados a la lista
                 }
             }
             .addOnFailureListener { exception ->
                 exception.printStackTrace()
             }
+
 
         // Sincronización de datos para la colección 'claveAdmin'
         val claves = db.collection("claveAdmin")

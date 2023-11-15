@@ -42,7 +42,7 @@ class Empleados : AppCompatActivity(), OnCardClickListener {
 
         // Acción al hacer clic en el botón "Agregar Empleado"
         binding.bAddCamion.setOnClickListener() {
-            val intent = Intent(this, CrearEmpleado::class.java)
+            val intent = Intent(this, RegistarNuevoUsuario::class.java)
             startActivity(intent)
         }
 

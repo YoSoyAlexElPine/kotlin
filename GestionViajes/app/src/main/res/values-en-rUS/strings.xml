@@ -39,4 +39,5 @@
     <string name="UsuarioCreado">User created</string>
     <string name="ErroMail">Error verify mail</string>
     <string name="ErrorNombre">Error verfy user</string>
+    <string name="Aceptar">Acept</string>
 </resources>

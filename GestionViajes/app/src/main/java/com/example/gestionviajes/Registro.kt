@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 /**
@@ -60,25 +61,67 @@ class Registro : AppCompatActivity() {
         }
 
         binding.bRegistroEntrar.setOnClickListener {
-            // Verificar si los campos de correo y contraseña no están vacíos
-            if (binding.tbMail.text!!.isNotEmpty() && binding.tbContrasena.text!!.isNotEmpty()) {
-                // Iniciar sesión con correo y contraseña
-                fa.signInWithEmailAndPassword(
-                    binding.tbMail.text.toString(),
-                    binding.tbContrasena.text.toString()
-                ).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        // Ir a la pantalla de inicio según el usuario y su proveedor
-                        irHome(binding.tbMail.text.toString(), Proveedor.BASIC)
+
+            val usuariosRef: DocumentReference = db.collection("usuarios").document(binding.tbMail.text.toString())
+            var clave=""
+
+
+            usuariosRef.get().addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    // Documento existe, obtener el email
+                    val email = documentSnapshot.getString("clave")
+                    if (email != null) {
+                        clave=email
+                        // Hacer algo con el email obtenido
+                        println("Email del usuario: $email")
                     } else {
-                        showAlert() // Mostrar diálogo de alerta en caso de error
+                        // El campo de email está vacío
+                        println("El campo de email está vacío para este usuario")
                     }
-                }.addOnFailureListener {
-                    Toast.makeText(this, "Conexión no establecida", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Documento no existe
+                    println("El documento con ID $binding.tbMail.text.toString() no existe en la colección 'usuarios'")
+                }
+            }.addOnFailureListener { e ->
+                // Error al obtener el documento
+                println("Error al obtener el documento: $e")
+            }
+
+
+
+
+
+// Verificar si los campos de usuario y contraseña no están vacíos
+            if (binding.tbMail.text!!.isNotEmpty() && binding.tbContrasena.text!!.isNotEmpty()) {
+                val usuario = binding.tbMail.text.toString()
+                val contrasena = binding.tbContrasena.text.toString()
+
+                val usuariosRef = db.collection("usuarios").document(usuario)
+
+                usuariosRef.get().addOnSuccessListener { documentSnapshot ->
+                    if (documentSnapshot.exists()) {
+                        // El usuario existe en Firestore, verificar la contraseña
+                        val claveAlmacenada = documentSnapshot.getString("clave")
+
+                        if (claveAlmacenada == contrasena) {
+                            // La contraseña coincide, inicio de sesión exitoso
+                            irHome(usuario, Proveedor.BASIC)
+                        } else {
+                            // Contraseña incorrecta, mostrar mensaje de error
+                            showAlert("Contraseña incorrecta")
+                        }
+                    } else {
+                        // El usuario no existe, mostrar mensaje de error
+                        showAlert("El usuario no existe")
+                    }
+                }.addOnFailureListener { e ->
+                    // Error al buscar el usuario en Firestore
+                    showAlert("Error al buscar el usuario: $e")
                 }
             } else {
                 showAlert("Rellene los campos") // Mostrar diálogo de alerta para campos vacíos
             }
+
         }
 
         // Obtener extras del intent para guardar datos en SharedPreferences
@@ -114,7 +157,7 @@ class Registro : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 100) {
+        if (requestCode == GOOGLE_SIGN_IN) { // Usar la constante GOOGLE_SIGN_IN
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
 
             try {
@@ -123,28 +166,33 @@ class Registro : AppCompatActivity() {
                 if (cuenta != null) {
                     val credencial = GoogleAuthProvider.getCredential(cuenta.idToken, null)
 
-                    FirebaseAuth.getInstance().signInWithCredential(credencial)
-                        .addOnCompleteListener() {
-                            if (it.isSuccessful) {
+                    fa.signInWithCredential(credencial)
+                        .addOnCompleteListener(this) { signInTask ->
+                            if (signInTask.isSuccessful) {
                                 irHome(cuenta.email ?: "", Proveedor.GOOGLE)
                             } else {
                                 showAlert()
                             }
                         }
+                        .addOnFailureListener(this) { exception ->
+                            // Manejar errores específicos al iniciar sesión con Google
+                            Log.e(TAG, "Error Google: ${exception.message}", exception)
+                            showAlert("Error Google: ${exception.message}")
+                        }
                 }
-            } catch(e: ApiException){
-                Log.e("APS",e.toString())
-                showAlert()
+            } catch(e: ApiException) {
+                Log.e(TAG, "Error ApiException Google: ${e.message}", e)
+                showAlert("Error Api Google: ${e.message}")
             }
         }
     }
 
     // Función para mostrar un diálogo de alerta
-    private fun showAlert(msg:String = "Se ha producido un error autenticando al usuario"){
+    private fun showAlert(msg:String = this.getString(R.string.ErrorNombre)){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
         builder.setMessage(msg)
-        builder.setPositiveButton("Aceptar",null)
+        builder.setPositiveButton(this.getString(R.string.Aceptar),null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
@@ -157,7 +205,7 @@ class Registro : AppCompatActivity() {
         camionesCollection.get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    if (document.getString("mail").toString() == mail){
+                    if (document.getString("nombre").toString() == mail){
                         admin = document.getBoolean("admin") ?: false
                     }
                 }
@@ -189,4 +237,14 @@ class Registro : AppCompatActivity() {
             irHome(mail, Proveedor.valueOf(provider))
         }
     }
+
+
+
+
+
+
+
+
+
+
 }
