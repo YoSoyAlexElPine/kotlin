@@ -1,13 +1,17 @@
 package com.example.gestionviajes
 
+import AuxiliarDB.Conexion
 import Modelo.Almacen
+import Modelo.Card
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.isVisible
+import androidx.appcompat.app.AlertDialog
 import com.example.gestionviajes.databinding.DetalleBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.FirebaseFirestore
 
 class Detalle : AppCompatActivity() {
@@ -20,8 +24,10 @@ class Detalle : AppCompatActivity() {
         setContentView(binding.root)
 
         val nombre = intent.getStringExtra("nombre").toString()
-        val marca = intent.getStringExtra("marca")
-        val detalle = intent.getStringExtra("detalle")
+        val marca = intent.getStringExtra("marca").toString()
+        val detalle = intent.getStringExtra("detalle").toString()
+        val objeto = intent.getStringExtra("objeto").toString()
+
 
         var usuario = ""
         var bd = ""
@@ -40,15 +46,18 @@ class Detalle : AppCompatActivity() {
         lateinit var coleccion: String
         var almacen = Almacen.cards
 
-        if (intent.getStringExtra("objeto") == "camion") {
+        if (objeto == "camion") {
             coleccion = "camiones"
             binding.tvTituloDetalle.text = "KM"
+
+            binding.llDetalle4!!.visibility=View.VISIBLE
+            binding.llBoton!!.visibility=View.VISIBLE
 
             bd = "camiones"
             dato = "km"
 
             almacen = Almacen.camiones
-        } else if (intent.getStringExtra("objeto") == "empleado") {
+        } else if (objeto == "empleado") {
             coleccion = "usuarios"
             binding.tvTituloDetalle.text = this.getString(R.string.Telefono)
 
@@ -56,7 +65,7 @@ class Detalle : AppCompatActivity() {
             dato = "telefono"
 
             almacen = Almacen.empleados
-        } else if (intent.getStringExtra("objeto") == "viaje") {
+        } else if (objeto == "viaje") {
 
             coleccion = "usuarios"
             usuario = intent.getStringExtra("usuario").toString()
@@ -66,21 +75,42 @@ class Detalle : AppCompatActivity() {
         }
 
         binding.bEliminarCard.setOnClickListener() {
-            if (intent.getStringExtra("objeto") == "viaje") {
-                eliminarViajeDeUsuario(usuario, nombre)
 
-            } else {
-                db.collection(coleccion).document(nombre.toString()).delete()
-                almacen.removeIf { it.nombre == nombre }
-                finish()
-            }
+            MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
+                .setTitle(resources.getString(R.string.Eliminar))
+                .setMessage(this.getString(R.string.EliminarSeguro))
+
+                .setPositiveButton(resources.getString(R.string.Si)) { dialog, which ->
+                    if (objeto == "viaje") {
+                        eliminarViajeDeUsuario(usuario, nombre)
+                    }
+
+                    if(objeto == "camion"){
+                        Conexion.delCard(this,nombre)
+                        Almacen.camiones=Conexion.obtenerCamiones(this)
+                    }
+
+                    if(objeto == "empleado"){
+                        db.collection(coleccion).document(nombre.toString()).delete()
+                        almacen.removeIf { it.nombre == nombre }
+                    }
+
+                    finish()
+
+                }.setNegativeButton(resources.getString(R.string.No)){ dialog, which ->
+                    Toast.makeText(
+                        this,
+                        this.getString(R.string.NoEliminado),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }.show()
 
         }
 
         binding.bCerrarAsignar.setOnClickListener() {
-            if (intent.getStringExtra("objeto") == "camion") {
+            if (objeto == "camion") {
                 Almacen.camiones = almacen
-            } else if (intent.getStringExtra("objeto") == "empleado") {
+            } else if (objeto == "empleado") {
                 Almacen.empleados = almacen
             }
             finish()
@@ -103,21 +133,85 @@ class Detalle : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
-                        val documento = db.collection(bd).document(id)
 
-                        documento.update(dato, nuevoDetalle)
-                            .addOnSuccessListener {
-                                Modelo.FactoriaCard.sincronizar(this)
-                                binding.tvDetalle.isEnabled = false
-                                binding.bEditarCard.text = this.getString(R.string.Editar)
-                            }
-                            .addOnFailureListener { exception ->
-                                exception.printStackTrace()
-                            }
+                        if (objeto == "empleado") {
+
+                            val documento = db.collection(bd).document(id)
+
+                            documento.update(dato, nuevoDetalle)
+                                .addOnSuccessListener {
+                                    Modelo.FactoriaCard.sincronizar(this)
+                                    binding.tvDetalle.isEnabled = false
+                                    binding.bEditarCard.text = this.getString(R.string.Editar)
+                                }
+                                .addOnFailureListener { exception ->
+                                    exception.printStackTrace()
+                                }
+                        }
+
+                        if (objeto == "camion"){
+
+                            val card = Card(nombre,marca, Intent(this,Detalle::class.java),detalle)
+                            Conexion.modCard(this,nombre,card)
+                            Almacen.camiones=Conexion.obtenerCamiones(this)
+
+                        }
+
+                        this.getString(R.string.Editar)
+                        binding.tvDetalle.isEnabled = false
+
                     }
                 }
             }
         }
+
+
+        binding.bBuscar!!.setOnClickListener(){
+
+            val busqueda = binding.tbBuscar?.text.toString()
+
+            if (!busqueda.isNullOrEmpty()){
+
+                val resultado=Conexion.buscarCard(this, busqueda)
+
+
+                // Configurar el diálogo
+                if(resultado!=null) {
+
+                    val marca = resultado.imagen.substring(10)
+
+                   MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
+                        .setTitle(resources.getString(R.string.ResultadoBusqueda))
+                        .setMessage(this.getString(R.string.Nombre)+" = "+resultado.nombre +"\n"+
+                                this.getString(R.string.Marca)+" = "+marca +"\n"+
+                                "km = "+resultado.detalle)
+
+                        .setPositiveButton(resources.getString(R.string.Aceptar)) { dialog, which ->
+
+                        }.show()
+
+
+
+
+                } else {
+
+                    MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
+                        .setTitle(resources.getString(R.string.NoEncontrado))
+                        .setMessage(this.getString(R.string.NoEncontradoContenido))
+                        .setPositiveButton(resources.getString(R.string.Aceptar)) { dialog, which ->
+                        }.show()
+
+
+                }
+
+            }else{
+                Toast.makeText(this,this.getString(R.string.IntroduceNombre),Toast.LENGTH_SHORT).show()
+            }
+
+
+
+        }
+
     }
 
     private fun eliminarViajeDeUsuario(idUsuario: String, nombreViaje: String) {

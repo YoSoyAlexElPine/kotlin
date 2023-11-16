@@ -51,4 +51,13 @@
     <string name="AcercaDe">Acerca de</string>
     <string name="AcercaDeContenido">Hecho completamente por Alex Pineño Sanchez. Destinado para la mejor empresa, Pinetrans2000</string>
     <string name="PaginaWeb">Pagina Web</string>
+    <string name="Buscar">Buscar</string>
+    <string name="NoEncontrado">No encontrado</string>
+    <string name="NoEncontradoContenido">No se encontro ningun camion con ese nombre</string>
+    <string name="Nombre">Nombre</string>
+    <string name="ResultadoBusqueda">Resultado Busqueda</string>
+    <string name="Si">Si</string>
+    <string name="No">No</string>
+    <string name="EliminarSeguro">¿Estas seguro de que quieres eliminarlo?</string>
+    <string name="NoEliminado">Nada fue eliminado</string>
 </resources>

@@ -52,4 +52,13 @@
     <string name="AcercaDe">More about</string>
     <string name="AcercaDeContenido">Completely made by Alex Pineño Sanchez. Destined for the best company, Pinetrans2000</string>
     <string name="PaginaWeb">Website</string>
+    <string name="Buscar">Shearh</string>
+    <string name="NoEncontrado">Not foun</string>
+    <string name="NoEncontradoContenido">Threre is no a truck with that name</string>
+    <string name="Nombre">Name</string>
+    <string name="ResultadoBusqueda">Result of shearch</string>
+    <string name="Si">Yes</string>
+    <string name="No">No</string>
+    <string name="EliminarSeguro">¿Are you sure?</string>
+    <string name="NoEliminado">None was eliminated</string>
 </resources>

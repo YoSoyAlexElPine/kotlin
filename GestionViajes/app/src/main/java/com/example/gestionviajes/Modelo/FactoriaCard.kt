@@ -4,7 +4,6 @@ import AuxiliarDB.Conexion
 import android.content.Context
 import android.content.Intent
 import com.example.gestionviajes.*
-import com.example.gestionviajes.AuxiliarDB.AdminConexion
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -88,18 +87,7 @@ object FactoriaCard {
         val db = FirebaseFirestore.getInstance()
 
         // Sincronización de datos para la colección 'camiones'
-        val camionesCollection = db.collection("camiones")
-        camionesCollection.get()
-            .addOnSuccessListener { documents ->
-                Almacen.camiones.clear()
-                for (document in documents) {
-                    val card = documentoACardCamion(contexto, document)
-                    Almacen.camiones.add(card)
-                }
-            }
-            .addOnFailureListener { exception ->
-                exception.printStackTrace()
-            }
+        Almacen.camiones=Conexion.obtenerCamiones(contexto)
 
         // Sincronización de datos para la colección 'usuarios' con campo 'admin' igual a false
         val usuariosCollection = db.collection("usuarios")

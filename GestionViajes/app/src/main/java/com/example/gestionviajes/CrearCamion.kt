@@ -1,5 +1,6 @@
 package com.example.gestionviajes
 
+import AuxiliarDB.Conexion
 import Modelo.Almacen
 import Modelo.Card
 import android.content.Intent
@@ -30,8 +31,6 @@ class CrearCamion : AppCompatActivity() {
                 !b.tbKm.text.isNullOrEmpty()
             ) {
 
-                var chofer = b.tbChofer.text.toString()
-                var nombre = b.tbNombre.text.toString()
                 var km = b.tbKm.text.toString()
 
                 var marca = b.tbMarca.text.toString().trim().toLowerCase()
@@ -39,42 +38,48 @@ class CrearCamion : AppCompatActivity() {
                 if (!Almacen.camiones.any { it.nombre == b.tbNombre.text.toString() }) {
                     try {
                         // Guardar en Firestore
-                        db.collection("camiones").document(nombre).set(
+                        /*db.collection("camiones").document(nombre).set(
                             hashMapOf(
                                 "chofer" to chofer,
                                 "marca" to marca,
                                 "km" to km
                             )
+                        )*/
+
+                        val card=Card(
+                            b.tbNombre.text.toString(),
+                            "@drawable/" + marca,
+                            Intent(this, Detalle::class.java),
+                            km
                         )
 
+                        // Guardar en SQLite
+                        Conexion.addCard(this,card)
+
                         // Agregar a Almacen.camiones
-                        Almacen.camiones.add(
-                            Card(
-                                b.tbNombre.text.toString(),
-                                "@drawable/" + marca,
-                                Intent(this, Detalle::class.java),
-                                km
-                            )
-                        )
+                        Almacen.camiones.add(card)
                         b.tbNombre.setText("")
                     } catch (e: Exception) {
                         // Manejo de excepciones al guardar en Firestore
-                        db.collection("camiones").document(nombre).set(
+                        /*db.collection("camiones").document(nombre).set(
                             hashMapOf(
                                 "chofer" to chofer,
                                 "marca" to marca,
                                 "km" to km
                             )
+                        )*/
+
+
+                        val card = Card(
+                            b.tbNombre.text.toString(),
+                            "@drawable/camion2",
+                            Intent(this, Detalle::class.java),
+                            km
                         )
 
-                        Almacen.camiones.add(
-                            Card(
-                                b.tbNombre.text.toString(),
-                                "@drawable/camion2",
-                                Intent(this, Detalle::class.java),
-                                km
-                            )
-                        )
+                        Conexion.addCard(this,card)
+
+                        Almacen.camiones.add(card)
                         b.tbNombre.setText("")
                     }
                 } else {

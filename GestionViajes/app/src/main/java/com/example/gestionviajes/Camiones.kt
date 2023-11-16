@@ -53,9 +53,11 @@ class Camiones : AppCompatActivity(), OnCardClickListener {
         super.onResume()
 
         // Actualizar el adaptador y notificar los cambios en los datos al volver a la actividad
+
         val adaptador2 = Adaptador(Almacen.camiones, this, this)
         binding.rvCamiones.adapter = adaptador2
         adaptador2.notifyDataSetChanged()
+
     }
 
     /**

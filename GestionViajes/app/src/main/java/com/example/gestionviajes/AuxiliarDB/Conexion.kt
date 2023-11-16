@@ -12,7 +12,7 @@ import com.example.gestionviajes.Detalle
  * Objeto Singleton para gestionar operaciones en la base de datos.
  *
  * Este objeto proporciona funciones para operar la base de datos, como agregar, eliminar, modificar y buscar registros.
- * También proporciona una función para obtener la lista de empleados desde la base de datos.
+ * También proporciona una función para obtener la lista de camiones desde la base de datos.
  *
  * @property DATABASE_NAME Nombre de la base de datos.
  * @property DATABASE_VERSION Número de versión de la base de datos.
@@ -40,13 +40,13 @@ object Conexion {
      * @param p Tarjeta a agregar.
      * @return Código de la fila insertada.
      */
-    fun addCard(contexto: AppCompatActivity, p: Card): Long {
+    fun addCard(contexto: Context, p: Card): Long {
         val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
         val bd = admin.writableDatabase
         val registro = ContentValues()
 
         registro.put("nombre", p.nombre)
-        registro.put("marca", "@drawable/"+p.imagen)
+        registro.put("marca", p.imagen)
         registro.put("km",p.detalle)
 
         val codigo = bd.insert("camiones", null, registro)
@@ -61,7 +61,7 @@ object Conexion {
      * @param nombre Nombre de la tarjeta a eliminar.
      * @return Cantidad de filas eliminadas.
      */
-    fun delCard(contexto: AppCompatActivity, nombre: String): Int {
+    fun delCard(contexto: Context, nombre: String): Int {
         val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
         val bd = admin.writableDatabase
 
@@ -79,7 +79,7 @@ object Conexion {
      * @param objeto Objeto relacionado con la tarjeta.
      * @return Cantidad de filas modificadas.
      */
-    fun modCard(contexto: AppCompatActivity, nombre: String, p: Card, objeto: String): Int {
+    fun modCard(contexto: AppCompatActivity, nombre: String, p: Card): Int {
         val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
         val bd = admin.writableDatabase
         val registro = ContentValues()
@@ -98,35 +98,35 @@ object Conexion {
      * @param nombre Nombre de la tarjeta a buscar.
      * @return Objeto Card encontrado o null si no se encuentra.
      */
-    fun buscarCard(contexto: AppCompatActivity, nombre: String): Card? {
+    fun buscarCard(contexto: Context, nombre: String): Card? {
         var p: Card? = null
         val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
         val bd = admin.readableDatabase
 
-        val fila = bd.rawQuery("SELECT telefono FROM empleados WHERE nombre=?", arrayOf(nombre))
+        val fila = bd.rawQuery("SELECT marca,km FROM camiones WHERE nombre=?", arrayOf(nombre))
 
         if (fila.moveToFirst()) {
-            p = Card(nombre, "drawable/", Intent(contexto, Detalle::class.java), fila.getString(0))
+            p = Card(nombre, fila.getString(0), Intent(contexto, Detalle::class.java), fila.getString(1))
         }
         bd.close()
         return p
     }
 
     /**
-     * Obtiene la lista de empleados como una lista de objetos Card desde la base de datos.
+     * Obtiene la lista de camiones como una lista de objetos Card desde la base de datos.
      *
      * @param contexto Contexto de la actividad.
-     * @return Lista de objetos Card (empleados) desde la base de datos.
+     * @return Lista de objetos Card (camiones) desde la base de datos.
      */
-    fun obtenerEmpleados(contexto: Context): MutableList<Card> {
+    fun obtenerCamiones(contexto: Context): MutableList<Card> {
         val Cards: MutableList<Card> = mutableListOf()
 
         val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
         val bd = admin.readableDatabase
 
-        val fila = bd.rawQuery("select nombre,marca,km from empleados", null)
+        val fila = bd.rawQuery("select nombre,marca,km from camiones", null)
         while (fila.moveToNext()) {
-            val imagen = "@drawable/"+fila.getString(1)
+            val imagen = fila.getString(1)
             val km = fila.getString(2)
             val p = Card(fila.getString(0), imagen, Intent(contexto, Detalle::class.java), km)
             Cards.add(p)

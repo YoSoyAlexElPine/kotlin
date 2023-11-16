@@ -23,6 +23,7 @@ import com.example.gestionviajes.databinding.RegistroBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.DocumentReference
@@ -286,20 +287,27 @@ class Registro : AppCompatActivity() {
                 return true
             }
             2-> {
-                val builder = AlertDialog.Builder(this)
 
-                // Configurar el diálogo
+                MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
+                    .setTitle(resources.getString(R.string.AcercaDe))
+                    .setMessage(resources.getString(R.string.AcercaDeContenido))
+
+                    .setPositiveButton(resources.getString(R.string.Aceptar)) { dialog, which ->
+                        // Respond to positive button press
+                    }
+                    .show()
+
+
+                /*val builder = AlertDialog.Builder(this, R.style.AlertDialogTheme
+                )
                 builder.setTitle(this.getString(R.string.AcercaDe))
                 builder.setMessage(this.getString(R.string.AcercaDeContenido))
-
-                // Agregar botón "Aceptar" al diálogo
                 builder.setPositiveButton(this.getString(R.string.Aceptar)) { dialog, _ ->
                     dialog.dismiss() // Cerrar el diálogo al hacer clic en "Aceptar"
                 }
-
-                // Crear y mostrar el diálogo
                 val dialog = builder.create()
-                dialog.show()
+                dialog.show()*/
+
                 return true
             }
             3-> {
