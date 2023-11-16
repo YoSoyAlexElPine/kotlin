@@ -39,4 +39,13 @@
     <string name="ErroMail">Error verificando mail</string>
     <string name="ErrorNombre">Error verificando nombre usuario</string>
     <string name="Aceptar">Aceptar</string>
+    <string name="Provincia">Provincia</string>
+    <string name="Localidad">Localidad</string>
+    <string name="Guardar">Guardar</string>
+    <string name="Direccion">Direccion</string>
+    <string name="Enviar">Enviar</string>
+    <string name="UsuarioNoExiste">El usuario no existe</string>
+    <string name="UsuarioAdminNoViaje">No puedes asignar un viaje a un admin</string>
+    <string name="ViajeAsignado">Viaje asignado</string>
+    <string name="AsignarViajeError">Error al asignar el viaje</string>
 </resources>

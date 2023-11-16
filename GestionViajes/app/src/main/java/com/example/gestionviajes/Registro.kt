@@ -6,6 +6,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -49,6 +52,19 @@ class Registro : AppCompatActivity() {
         // Inflar y establecer la vista usando el archivo de diseño "RegistroBinding"
         binding = RegistroBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Encuentra la ImageView en tu diseño (registro.xml)
+        val imageView = binding.ivLogoInicio
+
+        // Registra la ImageView para recibir eventos de menú contextual
+        registerForContextMenu(imageView)
+
+        // Establece el Listener para la pulsación larga en la ImageView
+        imageView.setOnLongClickListener {
+            // Muestra el menú contextual
+            imageView.showContextMenu()
+            true
+        }
 
         // Asignar clic listeners a los botones
         binding.bRegistroRegistrarse.setOnClickListener(){
@@ -198,14 +214,14 @@ class Registro : AppCompatActivity() {
     }
 
     // Función para redirigir a la pantalla de inicio según el usuario y su proveedor
-    private fun irHome(mail: String, proveedor: Proveedor) {
+    private fun irHome(usuario: String, proveedor: Proveedor) {
         val camionesCollection = db.collection("usuarios")
         var admin:Boolean=true
 
         camionesCollection.get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    if (document.getString("nombre").toString() == mail){
+                    if (document.getString("nombre").toString() == usuario){
                         admin = document.getBoolean("admin") ?: false
                     }
                 }
@@ -216,6 +232,7 @@ class Registro : AppCompatActivity() {
                     homeIntent = Intent(this, Inicio::class.java)
                 } else {
                     homeIntent = Intent(this, InicioEmpleado::class.java)
+                    homeIntent.putExtra("usuario",usuario)
                 }
 
                 startActivity(homeIntent)
@@ -241,7 +258,33 @@ class Registro : AppCompatActivity() {
 
 
 
+    // Sobrescribe este método para crear el menú contextual
+    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        menu.setHeaderTitle("Opciones de la imagen")
 
+        // Agrega elementos al menú contextual
+        menu.add(0, v.id, 0, "Opción 1")
+        menu.add(0, v.id, 0, "Opción 2")
+        // Agrega más opciones si es necesario
+    }
+
+    // Sobrescribe este método para manejar las selecciones del menú contextual
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return when (item.title) {
+            "Opción 1" -> {
+                // Acción para la Opción 1
+                Toast.makeText(this, "Seleccionaste Opción 1", Toast.LENGTH_SHORT).show()
+                true
+            }
+            "Opción 2" -> {
+                // Acción para la Opción 2
+                Toast.makeText(this, "Seleccionaste Opción 2", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onContextItemSelected(item)
+        }
+    }
 
 
 

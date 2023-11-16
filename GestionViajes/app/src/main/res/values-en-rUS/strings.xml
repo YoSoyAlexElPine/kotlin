@@ -40,4 +40,13 @@
     <string name="ErroMail">Error verify mail</string>
     <string name="ErrorNombre">Error verfy user</string>
     <string name="Aceptar">Acept</string>
+    <string name="Provincia">State</string>
+    <string name="Localidad">Locality</string>
+    <string name="Guardar">Save</string>
+    <string name="Direccion">Adress</string>
+    <string name="Enviar">Send</string>
+    <string name="UsuarioNoExiste">That user doesnt exist</string>
+    <string name="UsuarioAdminNoViaje">Cant asing trip to admin</string>
+    <string name="ViajeAsignado">Trip asigned</string>
+    <string name="AsignarViajeError">Error to asing trip</string>
 </resources>

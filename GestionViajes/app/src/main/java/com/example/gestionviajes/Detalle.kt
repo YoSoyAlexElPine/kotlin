@@ -4,7 +4,9 @@ import Modelo.Almacen
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.example.gestionviajes.databinding.DetalleBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -24,10 +26,11 @@ class Detalle : AppCompatActivity() {
         setContentView(binding.root)
 
         // Obtener datos del intent
-        val nombre = intent.getStringExtra("nombre")
+        val nombre = intent.getStringExtra("nombre").toString()
         val marca = intent.getStringExtra("marca")
         val detalle = intent.getStringExtra("detalle")
 
+        var usuario=""
         var bd=""
         var dato=""
 
@@ -57,19 +60,33 @@ class Detalle : AppCompatActivity() {
 
             almacen = Almacen.camiones
         } else if (intent.getStringExtra("objeto") == "empleado") {
-            coleccion = "empleados"
+            coleccion = "usuarios"
             binding.tvTituloDetalle.text = this.getString(R.string.Telefono)
 
             bd="usuarios"
             dato="telefono"
 
             almacen = Almacen.empleados
+        }else if (intent.getStringExtra("objeto") == "viaje") {
+
+            coleccion = "usuarios"
+            usuario = intent.getStringExtra("usuario").toString()
+
+            binding.tvTituloDetalle.text = this.getString(R.string.Direccion)
+            binding.bEditarCard.visibility = View.GONE
+
         }
 
         // Acción al hacer clic en el botón "Eliminar"
         binding.bEliminarCard.setOnClickListener() {
-            db.collection(coleccion).document(nombre.toString()).delete()
-            almacen.removeIf { it.nombre == nombre }
+
+            if (intent.getStringExtra("objeto") == "viaje") {
+                eliminarViajeDeUsuario(usuario,nombre)
+            } else {
+
+                db.collection(coleccion).document(nombre.toString()).delete()
+                almacen.removeIf { it.nombre == nombre }
+            }
             finish()
         }
 
@@ -83,7 +100,7 @@ class Detalle : AppCompatActivity() {
             finish()
         }
 
-// Acción al hacer clic en el botón "Editar"
+        // Acción al hacer clic en el botón "Editar"
         binding.bEditarCard.setOnClickListener() {
             val id = binding.tvTitulo.text.toString()
 
@@ -116,5 +133,35 @@ class Detalle : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun eliminarViajeDeUsuario(idUsuario: String, nombreViaje: String) {
+        val usuarioRef = db.collection("usuarios").document(idUsuario)
+
+        usuarioRef.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists()) {
+                val viajes = documentSnapshot.get("viajes") as? MutableList<Map<String, String>> ?: mutableListOf()
+
+                val viajeEncontrado = viajes.find { it["localidad"] == nombreViaje }
+
+                viajeEncontrado?.let {
+                    viajes.remove(it)
+
+                    usuarioRef.update("viajes", viajes)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Viaje eliminado correctamente", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Error al eliminar el viaje", Toast.LENGTH_SHORT).show()
+                        }
+                } ?: run {
+                    Toast.makeText(this, "No se encontró el viaje", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "El usuario no existe", Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener {
+            Toast.makeText(this, "Error al obtener el usuario", Toast.LENGTH_SHORT).show()
+        }
     }
 }
