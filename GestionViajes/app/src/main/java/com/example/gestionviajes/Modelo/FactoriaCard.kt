@@ -1,8 +1,10 @@
 package Modelo
 
+import AuxiliarDB.Conexion
 import android.content.Context
 import android.content.Intent
 import com.example.gestionviajes.*
+import com.example.gestionviajes.AuxiliarDB.AdminConexion
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -127,5 +129,30 @@ object FactoriaCard {
             .addOnFailureListener { exception ->
                 exception.printStackTrace()
             }
+
+        // Sincronización de datos para 'viajes'
+        val viajesCollection = db.collection("usuarios")
+        viajesCollection.whereEqualTo("admin", false)
+            .get()
+            .addOnSuccessListener { documents ->
+                Almacen.viajes.clear()
+                for (document in documents) {
+                    val viajes = document.get("viajes") as? List<Map<String, String>> ?: listOf()
+                    for (viaje in viajes) {
+                        val card = Card(
+                            viaje["localidad"] ?: "",
+                            "@drawable/fantasma", // Reemplaza con la imagen correspondiente
+                            Intent(contexto, Detalle::class.java), // Reemplaza con el Intent correspondiente
+                            viaje["direccion"] ?: ""
+                        )
+                        Almacen.viajes.add(card)
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                exception.printStackTrace()
+            }
+
+
     }
 }

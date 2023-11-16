@@ -3,6 +3,10 @@ package com.example.gestionviajes
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +14,8 @@ import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.webkit.WebChromeClient
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.gestionviajes.Notificacion.mostrarNotificacion
@@ -21,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Locale
 
 /**
  * Clase Registro para manejar el registro e inicio de sesión de usuarios.
@@ -257,33 +264,64 @@ class Registro : AppCompatActivity() {
 
 
 
-
-    // Sobrescribe este método para crear el menú contextual
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        menu.setHeaderTitle("Opciones de la imagen")
-
-        // Agrega elementos al menú contextual
-        menu.add(0, v.id, 0, "Opción 1")
-        menu.add(0, v.id, 0, "Opción 2")
-        // Agrega más opciones si es necesario
+        menu.setHeaderTitle("Configuracion")
+        menu.add(0, 0, 0, "English")
+        menu.add(0, 1, 0, "Español")
+        menu.add(0, 2, 0, this.getString(R.string.AcercaDe))
+        menu.add(0, 3, 0, this.getString(R.string.PaginaWeb))
     }
 
-    // Sobrescribe este método para manejar las selecciones del menú contextual
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        return when (item.title) {
-            "Opción 1" -> {
-                // Acción para la Opción 1
-                Toast.makeText(this, "Seleccionaste Opción 1", Toast.LENGTH_SHORT).show()
-                true
+        when (item.itemId) {
+            0 -> {
+                setLocale(this, "en")
+                recreate()
+                return true
             }
-            "Opción 2" -> {
-                // Acción para la Opción 2
-                Toast.makeText(this, "Seleccionaste Opción 2", Toast.LENGTH_SHORT).show()
-                true
+            1-> {
+                setLocale(this, "es")
+                recreate()
+                return true
             }
-            else -> super.onContextItemSelected(item)
+            2-> {
+                val builder = AlertDialog.Builder(this)
+
+                // Configurar el diálogo
+                builder.setTitle(this.getString(R.string.AcercaDe))
+                builder.setMessage(this.getString(R.string.AcercaDeContenido))
+
+                // Agregar botón "Aceptar" al diálogo
+                builder.setPositiveButton(this.getString(R.string.Aceptar)) { dialog, _ ->
+                    dialog.dismiss() // Cerrar el diálogo al hacer clic en "Aceptar"
+                }
+
+                // Crear y mostrar el diálogo
+                val dialog = builder.create()
+                dialog.show()
+                return true
+            }
+            3-> {
+
+                // Cargar la URL deseada en el WebView
+                val url = "https://transgarciavillaracosl.negocio.site"
+
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+
+                return true
+            }
         }
+        return super.onContextItemSelected(item)
+    }
+
+    private fun setLocale(context: Context, languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        val configuration = Configuration()
+        configuration.locale = locale
+        context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
     }
 
 

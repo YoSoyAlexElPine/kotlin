@@ -2,6 +2,7 @@ package AuxiliarDB
 
 import Modelo.Card
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gestionviajes.AuxiliarDB.AdminConexion
@@ -20,7 +21,7 @@ import com.example.gestionviajes.Detalle
  */
 object Conexion {
 
-    private var DATABASE_NAME = "administracion.db3" // Nombre de la base de datos
+    private var DATABASE_NAME = "camiones.db3" // Nombre de la base de datos
     private var DATABASE_VERSION = 1 // Número de versión de la base de datos
 
     /**
@@ -45,9 +46,10 @@ object Conexion {
         val registro = ContentValues()
 
         registro.put("nombre", p.nombre)
-        registro.put("telefono", p.imagen)
+        registro.put("marca", "@drawable/"+p.imagen)
+        registro.put("km",p.detalle)
 
-        val codigo = bd.insert("empleados", null, registro)
+        val codigo = bd.insert("camiones", null, registro)
         bd.close()
         return codigo
     }
@@ -63,7 +65,7 @@ object Conexion {
         val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
         val bd = admin.writableDatabase
 
-        val cant = bd.delete("empleados", "nombre=?", arrayOf(nombre))
+        val cant = bd.delete("camiones", "nombre=?", arrayOf(nombre))
         bd.close()
         return cant
     }
@@ -82,9 +84,9 @@ object Conexion {
         val bd = admin.writableDatabase
         val registro = ContentValues()
 
-        registro.put("telefono", p.detalle)
+        registro.put("km", p.detalle)
 
-        val cant = bd.update("empleados", registro, "nombre=?", arrayOf(nombre))
+        val cant = bd.update("camiones", registro, "nombre=?", arrayOf(nombre))
         bd.close()
         return cant
     }
@@ -104,7 +106,7 @@ object Conexion {
         val fila = bd.rawQuery("SELECT telefono FROM empleados WHERE nombre=?", arrayOf(nombre))
 
         if (fila.moveToFirst()) {
-            p = Card(nombre, "drawable/empleado", Intent(contexto, Detalle::class.java), fila.getString(0))
+            p = Card(nombre, "drawable/", Intent(contexto, Detalle::class.java), fila.getString(0))
         }
         bd.close()
         return p
@@ -116,16 +118,17 @@ object Conexion {
      * @param contexto Contexto de la actividad.
      * @return Lista de objetos Card (empleados) desde la base de datos.
      */
-    fun obtenerEmpleados(contexto: AppCompatActivity): MutableList<Card> {
+    fun obtenerEmpleados(contexto: Context): MutableList<Card> {
         val Cards: MutableList<Card> = mutableListOf()
 
         val admin = AdminConexion(contexto, this.DATABASE_NAME, null, DATABASE_VERSION)
         val bd = admin.readableDatabase
 
-        val fila = bd.rawQuery("select nombre,telefono from empleados", null)
+        val fila = bd.rawQuery("select nombre,marca,km from empleados", null)
         while (fila.moveToNext()) {
-            val imagen = "@drawable/empleado"
-            val p = Card(fila.getString(0), imagen, Intent(contexto, Detalle::class.java), fila.getString(1))
+            val imagen = "@drawable/"+fila.getString(1)
+            val km = fila.getString(2)
+            val p = Card(fila.getString(0), imagen, Intent(contexto, Detalle::class.java), km)
             Cards.add(p)
         }
         bd.close()

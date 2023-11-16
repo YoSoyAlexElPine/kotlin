@@ -49,4 +49,7 @@
     <string name="UsuarioAdminNoViaje">Cant asing trip to admin</string>
     <string name="ViajeAsignado">Trip asigned</string>
     <string name="AsignarViajeError">Error to asing trip</string>
+    <string name="AcercaDe">More about</string>
+    <string name="AcercaDeContenido">Completely made by Alex Pineño Sanchez. Destined for the best company, Pinetrans2000</string>
+    <string name="PaginaWeb">Website</string>
 </resources>

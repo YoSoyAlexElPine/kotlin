@@ -49,4 +49,7 @@
     <string name="UsuarioAdminNoViaje">No puedes asignar viaje a admin</string>
     <string name="ViajeAsignado">Viaje asignado</string>
     <string name="AsignarViajeError">Error al asignar viaje</string>
+    <string name="AcercaDe">Acerca de</string>
+    <string name="AcercaDeContenido">Hecho completamente por Alex Pineño Sanchez. Destinado para la mejor empresa del mundo mundial Pinetrans2000</string>
+    <string name="PaginaWeb">Pagina Web</string>
 </resources>

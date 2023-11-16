@@ -31,7 +31,7 @@ class AdminConexion(
         Log.e("APS", "Paso por OnCreate del AdminSQLLite")
 
         // Crea una tabla 'empleados' con las columnas 'nombre' y 'telefono'
-        db.execSQL("create table empleados(nombre text primary key, telefono text)")
+        db.execSQL("create table camiones(nombre text primary key, marca text,km text)")
     }
 
     /**
@@ -45,6 +45,6 @@ class AdminConexion(
         Log.e("APS", "Paso por OnUpgrade del AdminSQLLite")
 
         // Actualiza la tabla 'empleados' si es necesario en una nueva versión
-        db.execSQL("create table empleados(nombre text primary key, telefono text)")
+        db.execSQL("create table camiones(nombre text primary key, marca text,km text)")
     }
 }

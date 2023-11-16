@@ -15,5 +15,5 @@ object Almacen {
     var camiones: MutableList<Card> = mutableListOf()
     var empleados: MutableList<Card> = mutableListOf()
     var adminClaves: MutableList<String> = mutableListOf()
-    var viajes: MutableList<String> = mutableListOf()
+    var viajes: MutableList<Card> = mutableListOf()
 }
