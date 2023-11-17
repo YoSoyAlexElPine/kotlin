@@ -50,7 +50,7 @@
     <string name="ViajeAsignado">Viaje asignado</string>
     <string name="AsignarViajeError">Error al asignar viaje</string>
     <string name="AcercaDe">Acerca de</string>
-    <string name="AcercaDeContenido">Hecho completamente por Alex Pineño Sanchez. Destinado para la mejor empresa del mundo mundial Pinetrans2000</string>
+    <string name="AcercaDeContenido">"Hecho completamente por Alex Pineño Sanchez  y apoyo de Alexandra "</string>
     <string name="PaginaWeb">Pagina Web</string>
     <string name="Buscar">Buscar</string>
     <string name="NoEncontrado">No encontrado</string>
@@ -61,4 +61,9 @@
     <string name="No">No</string>
     <string name="EliminarSeguro">¿Estas seguro de que quieres eliminarlo?</string>
     <string name="NoEliminado">Nada fue eliminado</string>
+    <string name="Configuracion">Configuracion</string>
+    <string name="UsuarioCreadoContenido">Se ha creado un nuevo usuario</string>
+    <string name="UsuarioCreadoContenido2">Pulsa para ver los detalles</string>
+    <string name="AcercaDeContenido2">Destinado para la mejor empresa del mundo mundial , Pinetrans2000</string>
+    <string name="AcercaDeContenido3">"FELIZ NAVIDAD PAPA Y MAMA "</string>
 </resources>

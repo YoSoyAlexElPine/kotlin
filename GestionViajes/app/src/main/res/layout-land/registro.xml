@@ -44,14 +44,14 @@
         android:textSize="18sp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:textColorHint="@color/white"
@@ -139,17 +139,6 @@
             android:background="#0000"
             android:elevation="0dp"
             android:text="@string/Google"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/b_notificacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="5dp"
-            android:background="#0000"
-            android:elevation="0dp"
-            android:text="Notificacion"
             android:textColor="@color/white" />
 
     </LinearLayout>

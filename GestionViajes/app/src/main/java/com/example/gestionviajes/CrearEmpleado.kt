@@ -2,10 +2,12 @@ package com.example.gestionviajes
 
 import Modelo.Almacen
 import Modelo.Card
+import android.app.Notification
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.gestionviajes.Notificacion.mostrarNotificacion
 import com.example.gestionviajes.databinding.CrearEmpleadoBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -28,6 +30,14 @@ class CrearEmpleado : AppCompatActivity() {
 
                 if (!Almacen.empleados.any { it.nombre == b.tbNombre.text.toString() }) {
                     try {
+
+                        val card = Card(
+                            b.tbNombre.text.toString(),
+                            "@drawable/empleado",
+                            Intent(this, Detalle::class.java),
+                            b.tbTelefono.text.toString()
+                        )
+
                         // Guardar en Firestore
                         db.collection("empleados").document(b.tbNombre.text.toString()).set(
                             hashMapOf(
@@ -37,35 +47,13 @@ class CrearEmpleado : AppCompatActivity() {
                         )
 
                         // Agregar a Almacen.empleados
-                        Almacen.empleados.add(
-                            Card(
-                                b.tbNombre.text.toString(),
-                                "@drawable/empleado",
-                                Intent(this, Detalle::class.java),
-                                b.tbTelefono.text.toString()
-                            )
-                        )
+                        Almacen.empleados.add(card)
+
+                        mostrarNotificacion(this,this.getString(R.string.UsuarioCreado),this.getString(R.string.UsuarioCreadoContenido)+"\n\n"+this.getString(R.string.UsuarioCreadoContenido2),card)
 
                         b.tbNombre.setText("")
                     } catch (e: Exception) {
-                        // Manejo de excepciones al guardar en Firestore
-                        db.collection("empleados").document(b.tbNombre.text.toString()).set(
-                            hashMapOf(
-                                "nombre" to b.tbNombre.text.toString(),
-                                "telefono" to b.tbTelefono.text.toString()
-                            )
-                        )
-
-                        Almacen.empleados.add(
-                            Card(
-                                b.tbNombre.text.toString(),
-                                "@drawable/empleado",
-                                Intent(this, Detalle::class.java),
-                                b.tbTelefono.text.toString()
-                            )
-                        )
-
-                        b.tbNombre.setText("")
+                        Toast.makeText(this,this.getString(R.string.ErrorNombre),Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     // Mostrar mensaje si el empleado ya existe

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GestionViajes</string>
-    <string name="your_web_client_id">54315647192-s328bkjnfj9m808s6p8ps3kh2ela13a1.apps.googleusercontent.com</string>
+    <string name="your_web_client_id">54315647192-i0utimuj8ses7jsn5uomi23l0v3ncouv.apps.googleusercontent.com</string>
     <string name="Bienvenida">Hello there, and wellcome</string>
     <string name="BienvenidaRegistro">Log in to continue</string>
     <string name="Constrasena">Password</string>
@@ -23,7 +23,7 @@
     <string name="Marca">Brand</string>
     <string name="Viaje">Trip</string>
     <string name="Eliminar">Delete</string>
-    <string name="Detalle">Details</string>
+    <string name="Detalle">Detail</string>
     <string name="Administrador">Admin</string>
     <string name="AdminContrasena">Admin password</string>
     <string name="Usuario">User</string>
@@ -50,7 +50,7 @@
     <string name="ViajeAsignado">Trip asigned</string>
     <string name="AsignarViajeError">Error to asing trip</string>
     <string name="AcercaDe">More about</string>
-    <string name="AcercaDeContenido">Completely made by Alex Pineño Sanchez. Destined for the best company, Pinetrans2000</string>
+    <string name="AcercaDeContenido">"Completely made by Alex Pineño Sanchez and support from Alexandra. "</string>
     <string name="PaginaWeb">Website</string>
     <string name="Buscar">Shearh</string>
     <string name="NoEncontrado">Not foun</string>
@@ -61,4 +61,9 @@
     <string name="No">No</string>
     <string name="EliminarSeguro">¿Are you sure?</string>
     <string name="NoEliminado">None was eliminated</string>
+    <string name="Configuracion">Settings</string>
+    <string name="UsuarioCreadoContenido">A new user was created</string>
+    <string name="UsuarioCreadoContenido2">Click to see details</string>
+    <string name="AcercaDeContenido2">Destined to the best company in the world, Pinetrans2000.</string>
+    <string name="AcercaDeContenido3">MERRY CHRISTMAS DAD AND MOM</string>
 </resources>

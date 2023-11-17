@@ -1,9 +1,12 @@
 package com.example.gestionviajes
 
+import Modelo.Card
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.example.gestionviajes.Notificacion.mostrarNotificacion
 import com.example.gestionviajes.databinding.RegistarNuevoUsuarioBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -74,6 +77,12 @@ class RegistarNuevoUsuario : AppCompatActivity() {
                                                 "admin" to b.sAdministrador.isChecked,
                                             )
                                         )
+
+                                        val card = Card(nombre,"@drawable/empleado",
+                                            Intent(this,Detalle::class.java),telefono
+                                        )
+
+                                        mostrarNotificacion(this,this.getString(R.string.UsuarioCreado),this.getString(R.string.UsuarioCreadoContenido)+"\n\n"+this.getString(R.string.UsuarioCreadoContenido2),card)
                                         Toast.makeText(this, this.getString(R.string.UsuarioCreado), Toast.LENGTH_SHORT).show()
                                     }
                                 }

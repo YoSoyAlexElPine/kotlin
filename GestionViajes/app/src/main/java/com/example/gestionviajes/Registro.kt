@@ -44,7 +44,7 @@ class Registro : AppCompatActivity() {
     private var fa = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
-    val TAG = "ACSCO"
+    val TAG = "APS"
 
     // Función onCreate, se llama al crear la actividad
     @SuppressLint("ResourceAsColor")
@@ -80,9 +80,6 @@ class Registro : AppCompatActivity() {
             startActivity(i)
         }
 
-        binding.bNotificacion.setOnClickListener(){
-            mostrarNotificacion(this, "Título de la Notificación", "Contenido de la Notificación")
-        }
 
         binding.bRegistroEntrar.setOnClickListener {
 
@@ -115,7 +112,7 @@ class Registro : AppCompatActivity() {
 
 
 
-// Verificar si los campos de usuario y contraseña no están vacíos
+            // Verificar si los campos de usuario y contraseña no están vacíos
             if (binding.tbMail.text!!.isNotEmpty() && binding.tbContrasena.text!!.isNotEmpty()) {
                 val usuario = binding.tbMail.text.toString()
                 val contrasena = binding.tbContrasena.text.toString()
@@ -267,7 +264,10 @@ class Registro : AppCompatActivity() {
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        menu.setHeaderTitle("Configuracion")
+
+        menu.setHeaderTitle(this.getString(R.string.Configuracion))
+
+
         menu.add(0, 0, 0, "English")
         menu.add(0, 1, 0, "Español")
         menu.add(0, 2, 0, this.getString(R.string.AcercaDe))
@@ -290,23 +290,13 @@ class Registro : AppCompatActivity() {
 
                 MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                     .setTitle(resources.getString(R.string.AcercaDe))
-                    .setMessage(resources.getString(R.string.AcercaDeContenido))
+                    .setMessage(resources.getString(R.string.AcercaDeContenido)+"\n\n"+resources.getString(R.string.AcercaDeContenido2)+"\n\n"+resources.getString(R.string.AcercaDeContenido3)+"\n\n")
 
                     .setPositiveButton(resources.getString(R.string.Aceptar)) { dialog, which ->
                         // Respond to positive button press
                     }
                     .show()
 
-
-                /*val builder = AlertDialog.Builder(this, R.style.AlertDialogTheme
-                )
-                builder.setTitle(this.getString(R.string.AcercaDe))
-                builder.setMessage(this.getString(R.string.AcercaDeContenido))
-                builder.setPositiveButton(this.getString(R.string.Aceptar)) { dialog, _ ->
-                    dialog.dismiss() // Cerrar el diálogo al hacer clic en "Aceptar"
-                }
-                val dialog = builder.create()
-                dialog.show()*/
 
                 return true
             }

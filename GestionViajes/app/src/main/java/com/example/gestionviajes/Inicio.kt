@@ -6,7 +6,6 @@ import Modelo.FactoriaCard
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gestionviajes.Adaptador.Adaptador
@@ -22,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth
 class Inicio : AppCompatActivity(), OnCardClickListener {
     lateinit var binding: InicioBinding
     private lateinit var firebaseauth: FirebaseAuth
-    val TAG = "APS" // Etiqueta para logs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

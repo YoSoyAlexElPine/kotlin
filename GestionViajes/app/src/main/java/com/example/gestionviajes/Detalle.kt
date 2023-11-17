@@ -39,9 +39,15 @@ class Detalle : AppCompatActivity() {
         binding.tvDetalle.isEnabled = false
         binding.tvDetalle.setText(detalle)
 
-        val imageResource: Int = this.resources.getIdentifier(marca, null, this.packageName)
-        val drawable: Drawable = this.resources.getDrawable(imageResource)
-        binding.tvImagen.setImageDrawable(drawable)
+        val imagen: Int = this.resources.getIdentifier(marca, null, this.packageName)
+        if (imagen != 0) {
+            val drawable: Drawable = this.resources.getDrawable(imagen)
+            binding.tvImagen.setImageDrawable(drawable)
+        } else {
+            val imagen: Int = this.resources.getIdentifier("@drawable/empleado", null, this.packageName)
+            val drawable: Drawable = this.resources.getDrawable(imagen)
+            binding.tvImagen.setImageDrawable(drawable)
+        }
 
         lateinit var coleccion: String
         var almacen = Almacen.cards
@@ -151,14 +157,14 @@ class Detalle : AppCompatActivity() {
 
                         if (objeto == "camion"){
 
-                            val card = Card(nombre,marca, Intent(this,Detalle::class.java),detalle)
+                            val card = Card(nombre,marca, Intent(this,Detalle::class.java),binding.tvDetalle.text.toString())
                             Conexion.modCard(this,nombre,card)
+                            binding.tvDetalle.isEnabled = false
+                            binding.bEditarCard.text = this.getString(R.string.Editar)
                             Almacen.camiones=Conexion.obtenerCamiones(this)
 
                         }
 
-                        this.getString(R.string.Editar)
-                        binding.tvDetalle.isEnabled = false
 
                     }
                 }
