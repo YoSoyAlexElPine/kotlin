@@ -30,19 +30,16 @@
             android:name=".EnviarMail"
             android:exported="false" />
         <activity
-            android:name=".CrearEmpleado"
-            android:exported="false" />
-        <activity
             android:name=".Empleados"
             android:exported="false" />
         <activity
             android:name=".Detalle"
             android:exported="false" />
+
         <activity
-            android:name=".Registro"
+            android:name=".Presentacion"
             android:exported="true"
             android:theme="@style/Base.Theme.GestionViajes">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -62,7 +59,7 @@
             android:name=".AsignarTarea"
             android:exported="false" />
         <activity
-            android:name=".Presentacion"
+            android:name=".Registro"
             android:exported="false" />
         <activity
             android:name=".Inicio"
@@ -70,14 +67,6 @@
         <activity
             android:name=".Camiones"
             android:exported="false" />
-
-        <service
-            android:name=".MyFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
 
         <meta-data
             android:name="preloaded_fonts"
