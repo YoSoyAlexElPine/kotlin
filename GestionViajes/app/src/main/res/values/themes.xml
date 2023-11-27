@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.GestionViajes" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.GestionViajes" parent="Theme.MaterialComponents.DayNight">
 
         <item name="colorPrimary">#FFFFFF</item>
         <item name="colorPrimaryDark">#000</item>
@@ -15,5 +15,13 @@
         <item name="android:background">@color/white</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="MenuStyle" parent="Theme.AppCompat.Light">
+        <!-- Cambia el color de fondo del menú -->
+        <item name="android:windowBackground">@color/white</item>
+        <!-- Cambia el color del texto del menú -->
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="Theme.GestionViajes" parent="Base.Theme.GestionViajes" />
 </resources>
