@@ -66,4 +66,6 @@
     <string name="UsuarioCreadoContenido2">Pulsa para ver los detalles</string>
     <string name="AcercaDeContenido2">Destinado para la mejor empresa del mundo mundial , Pinetrans2000</string>
     <string name="AcercaDeContenido3">"FELIZ NAVIDAD PAPA Y MAMA "</string>
+    <string name="Informacion">Informacion</string>
+    <string name="InformacionContenido">Con estas targetas con un borde blanco podras navegar por la aplicacion gestionando empleados, usuarios y camiones</string>
 </resources>

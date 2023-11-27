@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gestionviajes.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * Interfaz que define la acción de clic sobre una tarjeta (Card).
@@ -93,6 +94,24 @@ class Adaptador(
                 // Llama al método de la interfaz para manejar la navegación
                 onCardClickListener.onCardClick(card)
             }
+
+            // Maneja el clic sobre la Card
+            itemView.setOnLongClickListener() {
+
+                MaterialAlertDialogBuilder(contexto, R.style.AlertDialogTheme)
+                    .setTitle(contexto.getString(R.string.Informacion))
+                    .setMessage(contexto.getString(R.string.InformacionContenido))
+
+                    .setPositiveButton(contexto.getString(R.string.Aceptar)) { dialog, which ->
+                        // Respond to positive button press
+                    }
+                    .show()
+                true
+            }
+
+
+
+
         }
     }
 }

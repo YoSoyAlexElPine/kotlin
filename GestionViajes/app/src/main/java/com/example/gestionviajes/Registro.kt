@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextMenu
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -52,10 +53,11 @@ class Registro : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Configuración de la ventana
-        window.setFlags(
+        /*window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
+        )*/
+
 
         // Inflar y establecer la vista usando el archivo de diseño "RegistroBinding"
         binding = RegistroBinding.inflate(layoutInflater)
@@ -173,6 +175,33 @@ class Registro : AppCompatActivity() {
         // Verificar si existe una sesión guardada al iniciar la actividad
         session()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.web -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://transgarciavillaracosl.negocio.site")))
+            R.id.info -> {
+
+                MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
+                    .setTitle(resources.getString(R.string.AcercaDe))
+                    .setMessage(resources.getString(R.string.AcercaDeContenido)+"\n\n"+resources.getString(R.string.AcercaDeContenido2)+"\n\n"+resources.getString(R.string.AcercaDeContenido3)+"\n\n")
+
+                    .setPositiveButton(resources.getString(R.string.Aceptar)) { dialog, which ->
+                        // Respond to positive button press
+                    }
+                    .show()
+            }
+
+            R.id.email -> startActivity(Intent(this, EnviarMail::class.java))
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
     // Función para manejar el resultado del inicio de sesión con Google
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
