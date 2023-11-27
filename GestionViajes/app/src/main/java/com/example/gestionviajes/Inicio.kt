@@ -4,13 +4,18 @@ import Modelo.Almacen
 import Modelo.Card
 import Modelo.FactoriaCard
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gestionviajes.Adaptador.Adaptador
 import com.example.gestionviajes.Adaptador.OnCardClickListener
 import com.example.gestionviajes.databinding.InicioBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 
 /**
@@ -29,11 +34,6 @@ class Inicio : AppCompatActivity(), OnCardClickListener {
         binding = InicioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Establecer la pantalla en modo de pantalla completa
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
 
         val recyclerView = binding.rvInicio
 
@@ -57,6 +57,32 @@ class Inicio : AppCompatActivity(), OnCardClickListener {
             FirebaseAuth.getInstance().signOut()
             finish()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.top_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.web -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://transgarciavillaracosl.negocio.site")))
+            R.id.info -> {
+
+                MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
+                    .setTitle(resources.getString(R.string.AcercaDe))
+                    .setMessage(resources.getString(R.string.AcercaDeContenido)+"\n\n"+resources.getString(R.string.AcercaDeContenido2)+"\n\n"+resources.getString(R.string.AcercaDeContenido3)+"\n\n")
+
+                    .setPositiveButton(resources.getString(R.string.Aceptar)) { dialog, which ->
+                        // Respond to positive button press
+                    }
+                    .show()
+            }
+
+            R.id.email -> startActivity(Intent(this, EnviarMail::class.java))
+
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // Implementa la función de la interfaz para manejar la navegación

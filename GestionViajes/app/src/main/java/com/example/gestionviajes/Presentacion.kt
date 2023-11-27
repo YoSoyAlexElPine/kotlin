@@ -31,10 +31,10 @@ class Presentacion : AppCompatActivity() {
         setContentView(R.layout.presentacion)
 
         // Establece la pantalla en modo de pantalla completa
-        /*window.setFlags(
+        window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )*/
+        )
 
         // Cargar animaciones
         topAnimation = AnimationUtils.loadAnimation(this, R.anim.top_animation)

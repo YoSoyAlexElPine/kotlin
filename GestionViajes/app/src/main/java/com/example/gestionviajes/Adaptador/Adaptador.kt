@@ -110,8 +110,6 @@ class Adaptador(
             }
 
 
-
-
         }
     }
 }

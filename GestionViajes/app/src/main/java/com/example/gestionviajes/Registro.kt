@@ -53,11 +53,10 @@ class Registro : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Configuración de la ventana
-        /*window.setFlags(
+        window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )*/
-
+        )
 
         // Inflar y establecer la vista usando el archivo de diseño "RegistroBinding"
         binding = RegistroBinding.inflate(layoutInflater)
@@ -177,7 +176,7 @@ class Registro : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu,menu)
+        menuInflater.inflate(R.menu.top_menu,menu)
         return true
     }
 
@@ -201,7 +200,6 @@ class Registro : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
 
     // Función para manejar el resultado del inicio de sesión con Google
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
