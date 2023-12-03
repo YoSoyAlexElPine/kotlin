@@ -96,7 +96,7 @@ class Detalle : AppCompatActivity() {
             coleccion = "recordatorios"
             usuario = intent.getStringExtra("usuario").toString()
 
-            binding.tvTituloDetalle.text = "Contenido"
+            binding.tvTituloDetalle.visibility = View.GONE
             binding.tvImagen.visibility = View.GONE
 
             bd = "recordatorios"
