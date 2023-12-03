@@ -1,6 +1,5 @@
 package com.example.gestionviajes
 
-import Modelo.Almacen
 import Modelo.Card
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gestionviajes.Adaptador.Adaptador
 import com.example.gestionviajes.Adaptador.OnCardClickListener
 import com.example.gestionviajes.databinding.InicioEmpleadoBinding
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class InicioEmpleado : AppCompatActivity(), OnCardClickListener {

@@ -44,6 +44,12 @@ object FactoriaCard {
                 "@drawable/fantasma",
                 Intent(contexto, EnviarMail::class.java),
                 ""
+            ),
+            Card(
+                "Recordatorio",
+                "@drawable/recordatorio",
+                Intent(contexto, Recordatorio::class.java),
+                ""
             )
         )
         return listaCards
@@ -135,6 +141,28 @@ object FactoriaCard {
                         )
                         Almacen.viajes.add(card)
                     }
+                }
+            }
+            .addOnFailureListener { exception ->
+                exception.printStackTrace()
+            }
+
+        // Sincronización de datos para 'recodatorios'
+        val recordatorios = db.collection("recordatorios")
+        recordatorios.get()
+            .addOnSuccessListener { documents ->
+                Almacen.recordatorios.clear()
+                for (document in documents) {
+                    val contenido = document.getString("contenido").toString()
+                    val asunto = document.getString("asunto").toString()
+                        val card = Card(
+                            asunto,
+                            "@drawable/fantasma", // Reemplaza con la imagen correspondiente
+                            Intent(contexto, Detalle::class.java), // Reemplaza con el Intent correspondiente
+                            contenido
+                        )
+                        Almacen.viajes.add(card)
+
                 }
             }
             .addOnFailureListener { exception ->

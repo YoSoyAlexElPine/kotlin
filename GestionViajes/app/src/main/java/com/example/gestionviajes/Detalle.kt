@@ -3,22 +3,33 @@ package com.example.gestionviajes
 import AuxiliarDB.Conexion
 import Modelo.Almacen
 import Modelo.Card
+import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.gestionviajes.databinding.DetalleBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.FirebaseFirestore
 
 class Detalle : AppCompatActivity() {
+
     private val db = FirebaseFirestore.getInstance()
+    private val permiso =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()){
+            isGranted ->
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        permiso.launch(Manifest.permission.CALL_PHONE)
 
         var binding = DetalleBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -27,7 +38,6 @@ class Detalle : AppCompatActivity() {
         val marca = intent.getStringExtra("marca").toString()
         val detalle = intent.getStringExtra("detalle").toString()
         val objeto = intent.getStringExtra("objeto").toString()
-
 
         var usuario = ""
         var bd = ""
@@ -67,6 +77,8 @@ class Detalle : AppCompatActivity() {
             coleccion = "usuarios"
             binding.tvTituloDetalle.text = this.getString(R.string.Telefono)
 
+            binding.llDetalle5!!.visibility=View.VISIBLE
+
             bd = "usuarios"
             dato = "telefono"
 
@@ -78,6 +90,17 @@ class Detalle : AppCompatActivity() {
 
             binding.tvTituloDetalle.text = this.getString(R.string.Direccion)
             binding.bEditarCard.visibility = View.GONE
+        }
+        else if (objeto == "recordatorio") {
+
+            coleccion = "recordatorios"
+            usuario = intent.getStringExtra("usuario").toString()
+
+            binding.tvTituloDetalle.text = "Contenido"
+            binding.tvImagen.visibility = View.GONE
+
+            bd = "recordatorios"
+            dato = "contenido"
         }
 
         binding.bEliminarCard.setOnClickListener() {
@@ -97,6 +120,11 @@ class Detalle : AppCompatActivity() {
                     }
 
                     if(objeto == "empleado"){
+                        db.collection(coleccion).document(nombre.toString()).delete()
+                        almacen.removeIf { it.nombre == nombre }
+                    }
+
+                    if(objeto == "recordatorio"){
                         db.collection(coleccion).document(nombre.toString()).delete()
                         almacen.removeIf { it.nombre == nombre }
                     }
@@ -155,6 +183,21 @@ class Detalle : AppCompatActivity() {
                                 }
                         }
 
+                        if (objeto == "recordatorio") {
+
+                            val documento = db.collection(bd).document(id)
+
+                            documento.update(dato, nuevoDetalle)
+                                .addOnSuccessListener {
+                                    Modelo.FactoriaCard.sincronizar(this)
+                                    binding.tvDetalle.isEnabled = false
+                                    binding.bEditarCard.text = this.getString(R.string.Editar)
+                                }
+                                .addOnFailureListener { exception ->
+                                    exception.printStackTrace()
+                                }
+                        }
+
                         if (objeto == "camion"){
 
                             val card = Card(nombre,marca, Intent(this,Detalle::class.java),binding.tvDetalle.text.toString())
@@ -169,6 +212,42 @@ class Detalle : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        binding.bLlamar!!.setOnClickListener(){
+
+            val numeroTelefono = binding.tvDetalle.text // Reemplaza con el número de teléfono al que deseas llamar
+
+            val intent = Intent(Intent.ACTION_CALL) // Acción para realizar una llamada
+            intent.data = Uri.parse("tel:$numeroTelefono") // Establecer el número de teléfono
+
+            if (intent.resolveActivity(packageManager) != null) {
+                // Verificar si hay una aplicación que pueda manejar la acción de llamada
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Erro al intentar llamar", Toast.LENGTH_SHORT)
+                    .show()
+                finish()
+            }
+
+        }
+
+        binding.bWasa!!.setOnClickListener(){
+            val numeroTelefono = binding.tvDetalle.text // Reemplaza con el número de teléfono de WhatsApp al que deseas enviar el mensaje
+
+            val uri = Uri.parse("https://api.whatsapp.com/send?phone=$numeroTelefono")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+
+            intent.setPackage("com.whatsapp")
+
+            try {
+                startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(this, "Erro al mandar mensaje por Whatsapp", Toast.LENGTH_SHORT)
+                    .show()
+                finish()
+            }
+
         }
 
 

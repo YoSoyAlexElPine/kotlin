@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.gestionviajes.databinding.CrearCamionBinding
-import com.google.firebase.firestore.FirebaseFirestore
 
 /**
  * Actividad para crear un nuevo camión y almacenarlo en Firestore y Almacen.camiones.
@@ -16,7 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
  * @author Alex Pineño Sanchez
  */
 class CrearCamion : AppCompatActivity() {
-    private val db = FirebaseFirestore.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
