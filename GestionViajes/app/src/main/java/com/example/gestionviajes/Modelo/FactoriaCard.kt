@@ -41,7 +41,7 @@ object FactoriaCard {
             ),
             Card(
                 "Mail",
-                "@drawable/fantasma",
+                "@drawable/email",
                 Intent(contexto, EnviarMail::class.java),
                 ""
             ),
@@ -157,11 +157,11 @@ object FactoriaCard {
                     val asunto = document.getString("asunto").toString()
                         val card = Card(
                             asunto,
-                            "@drawable/fantasma", // Reemplaza con la imagen correspondiente
+                            "@drawable/recordatorio", // Reemplaza con la imagen correspondiente
                             Intent(contexto, Detalle::class.java), // Reemplaza con el Intent correspondiente
                             contenido
                         )
-                        Almacen.viajes.add(card)
+                        Almacen.recordatorios.add(card)
 
                 }
             }

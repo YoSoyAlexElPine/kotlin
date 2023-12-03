@@ -101,6 +101,8 @@ class Detalle : AppCompatActivity() {
 
             bd = "recordatorios"
             dato = "contenido"
+
+            almacen = Almacen.recordatorios
         }
 
         binding.bEliminarCard.setOnClickListener() {
@@ -127,6 +129,7 @@ class Detalle : AppCompatActivity() {
                     if(objeto == "recordatorio"){
                         db.collection(coleccion).document(nombre.toString()).delete()
                         almacen.removeIf { it.nombre == nombre }
+
                     }
 
                     finish()
