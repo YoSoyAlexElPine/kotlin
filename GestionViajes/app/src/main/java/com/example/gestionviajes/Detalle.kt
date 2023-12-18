@@ -153,6 +153,7 @@ class Detalle : AppCompatActivity() {
             finish()
         }
 
+        // Acción al hacer clic en el botón "Editar"
         binding.bEditarCard.setOnClickListener() {
             val id = binding.tvTitulo.text.toString()
 

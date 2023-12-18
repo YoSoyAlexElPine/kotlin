@@ -7,16 +7,22 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gestionviajes.databinding.CrearRecordatorioBinding
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
+
+
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CrearRecordatorio : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
+    private val notificacion = FirebaseMessaging.getInstance()
 
     private var horaSeleccionada: String = ""
     private var fechaSeleccionada: String = ""
