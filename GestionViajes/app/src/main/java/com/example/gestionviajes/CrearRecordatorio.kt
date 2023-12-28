@@ -48,7 +48,7 @@ class CrearRecordatorio : AppCompatActivity() {
             ) {
 
                 var asunto = b.tbAsunto.text.toString()
-                var contenido = b.tbContenido.text.toString()+"\n\nDia: "+fechaSeleccionada+"\nHora: "+horaSeleccionada
+                var contenido = b.tbContenido.text.toString()+"\nDia: "+fechaSeleccionada+"\nHora: "+horaSeleccionada
 
                 scheduleNotification(asunto)
 

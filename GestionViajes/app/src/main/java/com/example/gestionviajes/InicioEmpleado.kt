@@ -1,5 +1,6 @@
 package com.example.gestionviajes
 
+import Modelo.Almacen
 import Modelo.Card
 import android.content.Intent
 import android.os.Bundle

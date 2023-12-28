@@ -17,4 +17,5 @@ object Almacen {
     var adminClaves: MutableList<String> = mutableListOf()
     var viajes: MutableList<Card> = mutableListOf()
     var recordatorios: MutableList<Card> = mutableListOf()
+    var viajesEmpleados: MutableList<Card> = mutableListOf()
 }

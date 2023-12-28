@@ -32,7 +32,7 @@
             android:exported="false" />
 
         <receiver android:name=".NotificationReceiver" />
-
+        <receiver android:name=".Notificacion.NotificationReceiver" />
         <activity
             android:name=".CrearRecordatorio"
             android:exported="false" />

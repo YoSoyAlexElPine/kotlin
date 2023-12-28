@@ -14,7 +14,7 @@
     <string name="Camion">Camion</string>
     <string name="Empleados">Empleados</string>
     <string name="Empleado">Empleado</string>
-    <string name="AsignarViaje">Asignar Viaje</string>
+    <string name="AsignarViaje">Viaje asignado</string>
     <string name="AddCamion">Añadir Camion</string>
     <string name="AddEmploye">Añadir Chofer</string>
     <string name="Add">Añadir</string>

@@ -19,7 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore
  * @author Alex Pineño Sanchez
  */
 class Empleados : AppCompatActivity(), OnCardClickListener {
-    private val db = FirebaseFirestore.getInstance()
     lateinit var binding: EmpleadosBinding // Propiedad para acceder a los elementos de la vista
 
     override fun onCreate(savedInstanceState: Bundle?) {
